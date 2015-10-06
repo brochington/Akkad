@@ -6,10 +6,10 @@ import sceneActions from "./SceneActions";
 import shapeActions from "./ShapeActions";
 
 export default {
-	...appActions,
-	...cameraActions,
-	...lightActions,
-	...meshActions,
-	...sceneActions,
-	...shapeActions	
+    ...appActions,
+    ...cameraActions,
+    ...lightActions,
+    ...meshActions,
+    ...sceneActions,
+    ...shapeActions 
 };

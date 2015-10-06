@@ -3,21 +3,21 @@ import AbstractCamera from "./AbstractCamera";
 import Babylon from "babylonjs";
 
 class Camera extends AbstractCamera {
-	static contextTypes = {
-		appState: PropTypes.object,
-		actions: PropTypes.object
-	}
+    static contextTypes = {
+        appState: PropTypes.object,
+        actions: PropTypes.object
+    }
 
-	componentWillUpdate(nextProps, nextState, nextContext) {
-		const {appState, actions} = nextContext;
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        const {appState, actions} = nextContext;
 
-		if (appState && appState.has("scene") && !appState.has("camera")) {
-			const {id} = this.props;
-			actions.setCamera({
-				type: "freeCamera"
-			});
-		}
-	}
+        if (appState && appState.has("scene") && !appState.has("camera")) {
+            const {id} = this.props;
+            actions.setCamera({
+                type: "freeCamera"
+            });
+        }
+    }
 }
 
 export default Camera;
