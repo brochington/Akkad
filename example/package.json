@@ -1,0 +1,41 @@
+{
+  "name": "akkad-example-app",
+  "version": "0.0.1",
+  "description": "An Akkad example application",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js",
+    "build": "npm run clean && npm run build:webpack",
+    "start": "node devServer.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brochington/Akkad"
+  },
+  "author": "Broch Stilley <brochington@gmail.com> (http://github.com/brochington)",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/brochington/Akkad/issues"
+  },
+  "devDependencies": {
+    "babel-core": "^5.4.7",
+    "babel-eslint": "^3.1.9",
+    "babel-loader": "^5.1.2",
+    "babel-plugin-react-transform": "^1.1.1",
+    "eslint": "^1.3.1",
+    "eslint-plugin-react": "^2.3.0",
+    "express": "^4.13.3",
+    "react-transform-catch-errors": "^1.0.0",
+    "react-transform-hmr": "^1.0.0",
+    "redbox-react": "^1.0.1",
+    "rimraf": "^2.4.3",
+    "webpack": "^1.9.6",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.0.0"
+  },
+  "dependencies": {
+    "react": "^0.14.0-rc1",
+    "react-dom": "^0.14.0-rc1"
+  }
+}
