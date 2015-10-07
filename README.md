@@ -13,6 +13,7 @@ $ cd akkad
 $ npm link
 $ cd ../example
 $ npm link akkad
+$ npm start
 ```
 
 In another terminal tab, navigate back to project root. Start up Akkad watch compilation:
