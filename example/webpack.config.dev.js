@@ -1,6 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 
+console.log(path.join(__dirname, 'node_modules/akkad'));
+
 module.exports = {
   devtool: 'eval',
   entry: [
@@ -20,7 +22,9 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel'],
-      include: path.join(__dirname, 'src')
+      include: [
+        path.join(__dirname, 'src')
+      ]
     }]
   }
 };

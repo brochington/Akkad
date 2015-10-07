@@ -14,7 +14,6 @@
     "url": "https://github.com/brochington/Akkad"
   },
   "author": "Broch Stilley <brochington@gmail.com> (http://github.com/brochington)",
-  "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/brochington/Akkad/issues"
   },
@@ -35,6 +34,11 @@
     "webpack-hot-middleware": "^2.0.0"
   },
   "dependencies": {
+    "akkad": "^0.0.1",
+    "babylonjs": "^2.2.0",
+    "immutable": "^3.7.5"
+  },
+  "peerDependencies": {
     "react": "^0.14.0-rc1",
     "react-dom": "^0.14.0-rc1"
   }
