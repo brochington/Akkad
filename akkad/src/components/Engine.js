@@ -1,4 +1,5 @@
 import React, {PropTypes} from "react";
+import ReactDOM from "react-dom";
 import Immutable from "immutable";
 import AkkadComponent from "./AkkadComponent";
 import Babylon from "babylonjs";
@@ -28,8 +29,8 @@ class Engine extends AkkadComponent {
 
     componentDidMount() {
         
-
-        const {canvas} = this.refs;
+        // TODO: figure out rootNode issue, so that refs and react.findDOMNode() can be used.
+        const canvas = document.getElementById("akkad-canvas");
 
         stateManager.init(
             actions, // actions object
@@ -55,9 +56,9 @@ class Engine extends AkkadComponent {
         const {canvasStyles} = this.props;
         return (
             <div>
-                <canvas
-                    style={canvasStyles}
-                    ref="canvas"
+                <canvas 
+                    id="akkad-canvas"
+                    style={canvasStyles} 
                 />
             </div>
         );

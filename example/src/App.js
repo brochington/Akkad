@@ -1,18 +1,33 @@
 import React, {Component} from 'react';
-import {Engine} from "akkad";
+import {Scene, cameras, lights, shapes, meshes} from "akkad";
 
-const canvasStyles = {
-	height: 480,
-	width: 640
-}
+
+const {FreeCamera} = cameras;
+const {HemisphericLight} = lights;
+const {Sphere} = shapes;
+const {Ground} = meshes;
 
 export class App extends Component {
   render() {
-  	console.log("Akkad", Engine);
     return (
-      	<Engine canvasStyles={canvasStyles} >
-		
-		</Engine>
+        <Scene>
+            <FreeCamera 
+                active={true}
+                target={[0, 0, 0]}
+            />
+            <HemisphericLight />
+            <Sphere 
+                segments={24}
+                diameter={2}
+                position={[0, 3, -1]}
+            />
+            <Sphere
+                segments={24}
+                diameter={1}
+                position={[0, 1, 0]}
+            />
+            <Ground />
+        </Scene>
     );
   }
 }

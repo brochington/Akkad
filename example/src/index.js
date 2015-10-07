@@ -3,4 +3,17 @@ import ReactDOM from "react-dom";
 import {Engine} from "akkad";
 import {App} from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const canvasStyles = {
+	height: 480,
+	width: 640
+}
+
+const AkkadApp = (
+	<Engine canvasStyles={canvasStyles} >
+		<App />
+	</Engine>
+);
+
+console.log("AkkadApp", AkkadApp);
+
+ReactDOM.render(AkkadApp, document.getElementById('root'));
