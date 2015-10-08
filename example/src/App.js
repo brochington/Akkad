@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
-import {Scene, cameras, lights, shapes, meshes} from "akkad";
-
+import {
+    Scene,
+    Entity,
+    cameras,
+    lights,
+    shapes,
+    ecsComponents
+} from "akkad";
 
 const {FreeCamera} = cameras;
 const {HemisphericLight} = lights;
-const {Sphere} = shapes;
-const {Ground} = meshes;
+const {Sphere, Box} = shapes;
+const {Position} = ecsComponents;
 
 export class App extends Component {
   render() {
@@ -16,17 +22,20 @@ export class App extends Component {
                 target={[0, 0, 0]}
             />
             <HemisphericLight />
-            <Sphere
-                segments={24}
-                diameter={2}
-                position={[0, 3, -1]}
-            />
-            <Sphere
-                segments={24}
-                diameter={1}
-                position={[0, 1, 0]}
-            />
-            <Ground />
+            <Sphere>
+                <Position
+                    x={2}
+                    y={-1}
+                    z={0}
+                />
+            </Sphere>
+            <Box>
+                <Position
+                    x={0}
+                    y={0}
+                    z={0}
+                />
+            </Box>
         </Scene>
     );
   }

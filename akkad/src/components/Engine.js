@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import Immutable from "immutable";
 import Babylon from "babylonjs";
 import actions from "../actions";
+import systems from "../systems";
 import {StateManager} from "../classes";
 
 const stateManager = new StateManager();
@@ -91,7 +92,8 @@ class Engine extends React.Component {
 
         this.mountAppChildren({
             actions: stateManager.actions,
-            appState: stateManager.appState
+            appState: stateManager.appState,
+            systems
         });
     }
 

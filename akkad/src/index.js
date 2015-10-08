@@ -1,12 +1,14 @@
-import {Engine, Scene} from "./components";
+import components from "./components";
+import ecsComponents from "./components/ecsComponents";
+
 import lights from "./components/lights";
 import cameras from "./components/cameras";
 import meshes from "./components/meshes";
 import shapes from "./components/shapes";
 
 export default {
-	Engine,
-	Scene,
+	...components,
+	ecsComponents,
 	lights,
 	cameras,
 	meshes,

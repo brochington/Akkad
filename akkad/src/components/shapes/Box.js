@@ -3,16 +3,15 @@ import Entity from "../Entity";
 import {RenderShape} from "../ecsComponents";
 import Babylon from "babylonjs";
 
-class Sphere extends React.Component {
+class Box extends React.Component {
     render() {
         return (
             <Entity>
                 <RenderShape 
-                    type="sphere"
-                    segments={24}
-                    diameterX={3}
-                    diameterY={3}
-                    diameterZ={3}
+                    type="box"
+                    height={1}
+                    width={1}
+                    faceColors={[100, 255, 23, 0.5]}
                 />
                 {this.props.children}
             </Entity>
@@ -20,4 +19,4 @@ class Sphere extends React.Component {
     }
 }
 
-export default Sphere;
+export default Box;
