@@ -2807,18 +2807,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Box, [{
 	        key: "render",
 	        value: function render() {
+	            console.log(this.props);
+	            var _props = this.props;
+	            var _props$height = _props.height;
+	            var height = _props$height === undefined ? 1 : _props$height;
+	            var _props$width = _props.width;
+	            var width = _props$width === undefined ? 1 : _props$width;
+
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
 	                null,
 	                _react2["default"].createElement(_ecsComponents.RenderShape, {
 	                    type: "box",
-	                    height: 1,
-	                    width: 1,
-	                    faceColors: [100, 255, 23, 0.5]
+	                    height: height,
+	                    width: width
 	                }),
 	                this.props.children
 	            );
 	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            height: _react.PropTypes.number,
+	            width: _react.PropTypes.number
+	        },
+	        enumerable: true
 	    }]);
 
 	    return Box;

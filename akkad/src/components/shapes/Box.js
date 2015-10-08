@@ -4,14 +4,20 @@ import {RenderShape} from "../ecsComponents";
 import Babylon from "babylonjs";
 
 class Box extends React.Component {
+    static propTypes = {
+        height: PropTypes.number,
+        width: PropTypes.number
+    }
+
     render() {
+        console.log(this.props);
+        const {height = 1, width = 1} = this.props;
         return (
             <Entity>
                 <RenderShape 
                     type="box"
-                    height={1}
-                    width={1}
-                    faceColors={[100, 255, 23, 0.5]}
+                    height={height}
+                    width={width}
                 />
                 {this.props.children}
             </Entity>
