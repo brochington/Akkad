@@ -1,8 +1,8 @@
 import React, {PropTypes} from "react";
-import AbstractCamera from "./AbstractCamera";
+import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
-class Camera extends AbstractCamera {
+class Camera extends AkkadAbstractComponent {
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object

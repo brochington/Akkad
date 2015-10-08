@@ -1,8 +1,8 @@
 import React, {PropTypes} from "react";
-import AbstractLight from "./AbstractLight";
+import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
-class HemisphericLight extends AbstractLight {
+class HemisphericLight extends AkkadAbstractComponent {
     componentWillUpdate(nextState, nextProps, nextContext) {
         const {appState, actions} = nextContext;
         

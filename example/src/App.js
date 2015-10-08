@@ -16,7 +16,7 @@ export class App extends Component {
                 target={[0, 0, 0]}
             />
             <HemisphericLight />
-            <Sphere 
+            <Sphere
                 segments={24}
                 diameter={2}
                 position={[0, 3, -1]}

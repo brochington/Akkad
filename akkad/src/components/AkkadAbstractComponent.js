@@ -1,9 +1,10 @@
 import React, {PropTypes} from "react";
 
-class AbstractCamera extends React.Component {
+class AkkadAbstractComponent extends React.Component {
     constructor() {
         super();
-        this.id = Math.floor((1 + Math.random()) * 10000000000).toString();
+        
+        this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
     }
     
     static contextTypes = {
@@ -20,4 +21,4 @@ class AbstractCamera extends React.Component {
     }
 }
 
-export default AbstractCamera;
+export default AkkadAbstractComponent;

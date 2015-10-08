@@ -1,8 +1,7 @@
 import React, {PropTypes} from "react";
-import AkkadComponent from "./AkkadComponent";
 import Babylon from "babylonjs";
 
-class Scene extends AkkadComponent {
+class Scene extends React.Component {
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object

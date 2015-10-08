@@ -1,8 +1,8 @@
 import React, {PropTypes} from "react";
-import AbstractShape from "./AbstractShape";
+import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
-class Sphere extends AbstractShape {
+class Sphere extends AkkadAbstractComponent {
     static propTypes = {
         segments: PropTypes.number.isRequired,
         diameter: PropTypes.number.isRequired

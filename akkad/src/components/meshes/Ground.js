@@ -1,8 +1,8 @@
 import React from "react";
-import AbstractMesh from "./AbstractMesh";
+import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
-class Ground extends AbstractMesh {
+class Ground extends AkkadAbstractComponent {
     componentWillUpdate(nextState, nextProps, nextContext) {
         const {appState, actions} = nextContext;
 

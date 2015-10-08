@@ -131,14 +131,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Scene2 = _interopRequireDefault(_Scene);
 
-	var _AkkadComponent = __webpack_require__(37);
-
-	var _AkkadComponent2 = _interopRequireDefault(_AkkadComponent);
-
 	exports["default"] = {
 	    Engine: _Engine2["default"],
-	    Scene: _Scene2["default"],
-	    AkkadComponent: _AkkadComponent2["default"]
+	    Scene: _Scene2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -156,6 +151,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classCallCheck = __webpack_require__(33)["default"];
 
+	var _Object$keys = __webpack_require__(38)["default"];
+
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -166,6 +163,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactLibReactMultiChild = __webpack_require__(42);
+
+	var _reactLibReactMultiChild2 = _interopRequireDefault(_reactLibReactMultiChild);
+
+	var _reactLibReactUpdates = __webpack_require__(43);
+
 	var _reactDom = __webpack_require__(35);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
@@ -173,10 +176,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _immutable = __webpack_require__(36);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
-
-	var _AkkadComponent2 = __webpack_require__(37);
-
-	var _AkkadComponent3 = _interopRequireDefault(_AkkadComponent2);
 
 	var _babylonjs = __webpack_require__(44);
 
@@ -194,18 +193,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	    meshes: {}
 	};
 
-	var Engine = (function (_AkkadComponent) {
-	    _inherits(Engine, _AkkadComponent);
+	var Engine = (function (_React$Component) {
+	    _inherits(Engine, _React$Component);
 
 	    function Engine() {
+	        var _this = this;
+
 	        _classCallCheck(this, Engine);
 
-	        _get(Object.getPrototypeOf(Engine.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Engine.prototype), "constructor", this).call(this);
+
+	        /* Poor man's way to do a mixin with a class */
+	        this._rootNodeID = ".0";
+	        _Object$keys(_reactLibReactMultiChild2["default"].Mixin).map(function (method) {
+	            return _this[method] = _reactLibReactMultiChild2["default"].Mixin[method];
+	        });
 	    }
 
 	    _createClass(Engine, [{
-	        key: "componentWillMount",
-	        value: function componentWillMount() {}
+	        key: "_performTransaction",
+	        value: function _performTransaction(func, scope, children, context) {
+	            var transaction = _reactLibReactUpdates.ReactReconcileTransaction.getPooled();
+	            transaction.perform(func, scope, children, transaction, context);
+	            _reactLibReactUpdates.ReactReconcileTransaction.release(transaction);
+	        }
+	    }, {
+	        key: "mountAppChildren",
+	        value: function mountAppChildren() {
+	            var context = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	            this._performTransaction(this._mountAppChildren, this, this.props.children, context);
+	        }
+	    }, {
+	        key: "_mountAppChildren",
+	        value: function _mountAppChildren() {
+	            var mountedImages = this.mountChildren.apply(this, arguments);
+	        }
+	    }, {
+	        key: "updateAppChildren",
+	        value: function updateAppChildren() {
+	            var context = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	            this._performTransaction(this.updateChildren, this, this.props.children, context);
+	        }
+	    }, {
+	        key: "_updateAppChildren",
+	        value: function _updateAppChildren() {
+	            this.updateChildren.apply(this, arguments);
+	        }
 	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState) {
@@ -217,7 +252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            var _this = this;
+	            var _this2 = this;
 
 	            // TODO: figure out rootNode issue, so that refs and react.findDOMNode() can be used.
 	            var canvas = document.getElementById("akkad-canvas");
@@ -227,7 +262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _immutable2["default"].fromJS(initState);
 	            }, // init function
 	            function (appState, actions) {
-	                return _this.setState({ appState: appState, actions: actions });
+	                return _this2.setState({ appState: appState, actions: actions });
 	            } // called after action is returned.
 	            );
 
@@ -264,11 +299,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: {
 	            canvasStyles: _react.PropTypes.object
 	        },
+
+	        /* Need to define the root node so that you don't get undefined.0 */
 	        enumerable: true
 	    }]);
 
 	    return Engine;
-	})(_AkkadComponent3["default"]);
+	})(_react2["default"].Component);
 
 	exports["default"] = Engine;
 	module.exports = exports["default"];
@@ -728,99 +765,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = __WEBPACK_EXTERNAL_MODULE_36__;
 
 /***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(5)["default"];
-
-	var _inherits = __webpack_require__(19)["default"];
-
-	var _createClass = __webpack_require__(30)["default"];
-
-	var _classCallCheck = __webpack_require__(33)["default"];
-
-	var _Object$keys = __webpack_require__(38)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(34);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactLibReactMultiChild = __webpack_require__(42);
-
-	var _reactLibReactMultiChild2 = _interopRequireDefault(_reactLibReactMultiChild);
-
-	var _reactLibReactUpdates = __webpack_require__(43);
-
-	var AkkadComponent = (function (_React$Component) {
-	    _inherits(AkkadComponent, _React$Component);
-
-	    function AkkadComponent() {
-	        var _this = this;
-
-	        _classCallCheck(this, AkkadComponent);
-
-	        _get(Object.getPrototypeOf(AkkadComponent.prototype), "constructor", this).call(this);
-
-	        /* Poor man's way to do a mixin with a class */
-	        this.displayName = "AkkadComponent";
-	        this._rootNodeID = ".0";
-	        _Object$keys(_reactLibReactMultiChild2["default"].Mixin).map(function (method) {
-	            return _this[method] = _reactLibReactMultiChild2["default"].Mixin[method];
-	        });
-	    }
-
-	    _createClass(AkkadComponent, [{
-	        key: "_performTransaction",
-	        value: function _performTransaction(func, scope, children, context) {
-	            var transaction = _reactLibReactUpdates.ReactReconcileTransaction.getPooled();
-	            transaction.perform(func, scope, children, transaction, context);
-	            _reactLibReactUpdates.ReactReconcileTransaction.release(transaction);
-	        }
-	    }, {
-	        key: "mountAppChildren",
-	        value: function mountAppChildren() {
-	            var context = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	            this._performTransaction(this._mountAppChildren, this, this.props.children, context);
-	        }
-	    }, {
-	        key: "_mountAppChildren",
-	        value: function _mountAppChildren() {
-	            var mountedImages = this.mountChildren.apply(this, arguments);
-	        }
-	    }, {
-	        key: "updateAppChildren",
-	        value: function updateAppChildren() {
-	            var context = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	            this._performTransaction(this.updateChildren, this, this.props.children, context);
-	        }
-	    }, {
-	        key: "_updateAppChildren",
-	        value: function _updateAppChildren() {
-	            this.updateChildren.apply(this, arguments);
-	        }
-	    }]);
-
-	    return AkkadComponent;
-	})(_react2["default"].Component);
-
-	;
-
-	exports["default"] = AkkadComponent;
-	module.exports = exports["default"];
-
-	/* Need to define the root node so that you don't get undefined.0 */
-
-/***/ },
+/* 37 */,
 /* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2181,16 +2126,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AkkadComponent2 = __webpack_require__(37);
-
-	var _AkkadComponent3 = _interopRequireDefault(_AkkadComponent2);
-
 	var _babylonjs = __webpack_require__(44);
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var Scene = (function (_AkkadComponent) {
-	    _inherits(Scene, _AkkadComponent);
+	var Scene = (function (_React$Component) {
+	    _inherits(Scene, _React$Component);
 
 	    function Scene() {
 	        _classCallCheck(this, Scene);
@@ -2241,7 +2182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return Scene;
-	})(_AkkadComponent3["default"]);
+	})(_react2["default"].Component);
 
 	exports["default"] = Scene;
 	module.exports = exports["default"];
@@ -2291,16 +2232,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AbstractLight2 = __webpack_require__(97);
+	var _AkkadAbstractComponent2 = __webpack_require__(107);
 
-	var _AbstractLight3 = _interopRequireDefault(_AbstractLight2);
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
 
 	var _babylonjs = __webpack_require__(44);
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var HemisphericLight = (function (_AbstractLight) {
-	    _inherits(HemisphericLight, _AbstractLight);
+	var HemisphericLight = (function (_AkkadAbstractComponent) {
+	    _inherits(HemisphericLight, _AkkadAbstractComponent);
 
 	    function HemisphericLight() {
 	        _classCallCheck(this, HemisphericLight);
@@ -2334,70 +2275,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return HemisphericLight;
-	})(_AbstractLight3["default"]);
+	})(_AkkadAbstractComponent3["default"]);
 
 	exports["default"] = HemisphericLight;
 	module.exports = exports["default"];
 
 /***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(5)["default"];
-
-	var _inherits = __webpack_require__(19)["default"];
-
-	var _createClass = __webpack_require__(30)["default"];
-
-	var _classCallCheck = __webpack_require__(33)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(34);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var AbstractLight = (function (_React$Component) {
-	    _inherits(AbstractLight, _React$Component);
-
-	    function AbstractLight() {
-	        _classCallCheck(this, AbstractLight);
-
-	        _get(Object.getPrototypeOf(AbstractLight.prototype), "constructor", this).call(this);
-	        this.id = Math.floor((1 + Math.random()) * 10000000000);
-	    }
-
-	    _createClass(AbstractLight, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2["default"].createElement(
-	                "div",
-	                null,
-	                this.props.children
-	            );
-	        }
-	    }], [{
-	        key: "contextTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return AbstractLight;
-	})(_react2["default"].Component);
-
-	exports["default"] = AbstractLight;
-	module.exports = exports["default"];
-
-/***/ },
+/* 97 */,
 /* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2442,16 +2326,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AbstractCamera2 = __webpack_require__(100);
+	var _AkkadAbstractComponent2 = __webpack_require__(107);
 
-	var _AbstractCamera3 = _interopRequireDefault(_AbstractCamera2);
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
 
 	var _babylonjs = __webpack_require__(44);
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var Camera = (function (_AbstractCamera) {
-	    _inherits(Camera, _AbstractCamera);
+	var Camera = (function (_AkkadAbstractComponent) {
+	    _inherits(Camera, _AkkadAbstractComponent);
 
 	    function Camera() {
 	        _classCallCheck(this, Camera);
@@ -2483,70 +2367,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return Camera;
-	})(_AbstractCamera3["default"]);
+	})(_AkkadAbstractComponent3["default"]);
 
 	exports["default"] = Camera;
 	module.exports = exports["default"];
 
 /***/ },
-/* 100 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(5)["default"];
-
-	var _inherits = __webpack_require__(19)["default"];
-
-	var _createClass = __webpack_require__(30)["default"];
-
-	var _classCallCheck = __webpack_require__(33)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(34);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var AbstractCamera = (function (_React$Component) {
-	    _inherits(AbstractCamera, _React$Component);
-
-	    function AbstractCamera() {
-	        _classCallCheck(this, AbstractCamera);
-
-	        _get(Object.getPrototypeOf(AbstractCamera.prototype), "constructor", this).call(this);
-	        this.id = Math.floor((1 + Math.random()) * 10000000000).toString();
-	    }
-
-	    _createClass(AbstractCamera, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2["default"].createElement(
-	                "div",
-	                null,
-	                this.props.children
-	            );
-	        }
-	    }], [{
-	        key: "contextTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return AbstractCamera;
-	})(_react2["default"].Component);
-
-	exports["default"] = AbstractCamera;
-	module.exports = exports["default"];
-
-/***/ },
+/* 100 */,
 /* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2591,16 +2418,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AbstractMesh2 = __webpack_require__(103);
+	var _AkkadAbstractComponent2 = __webpack_require__(107);
 
-	var _AbstractMesh3 = _interopRequireDefault(_AbstractMesh2);
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
 
 	var _babylonjs = __webpack_require__(44);
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var Ground = (function (_AbstractMesh) {
-	    _inherits(Ground, _AbstractMesh);
+	var Ground = (function (_AkkadAbstractComponent) {
+	    _inherits(Ground, _AkkadAbstractComponent);
 
 	    function Ground() {
 	        _classCallCheck(this, Ground);
@@ -2623,71 +2450,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return Ground;
-	})(_AbstractMesh3["default"]);
+	})(_AkkadAbstractComponent3["default"]);
 
 	exports["default"] = Ground;
 	module.exports = exports["default"];
 
 /***/ },
-/* 103 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(5)["default"];
-
-	var _inherits = __webpack_require__(19)["default"];
-
-	var _createClass = __webpack_require__(30)["default"];
-
-	var _classCallCheck = __webpack_require__(33)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(34);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var AbstractMesh = (function (_React$Component) {
-	    _inherits(AbstractMesh, _React$Component);
-
-	    function AbstractMesh() {
-	        _classCallCheck(this, AbstractMesh);
-
-	        _get(Object.getPrototypeOf(AbstractMesh.prototype), "constructor", this).call(this);
-
-	        this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
-	    }
-
-	    _createClass(AbstractMesh, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2["default"].createElement(
-	                "div",
-	                null,
-	                this.props.children
-	            );
-	        }
-	    }], [{
-	        key: "contextTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return AbstractMesh;
-	})(_react2["default"].Component);
-
-	exports["default"] = AbstractMesh;
-	module.exports = exports["default"];
-
-/***/ },
+/* 103 */,
 /* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2732,16 +2501,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AbstractShape2 = __webpack_require__(106);
+	var _AkkadAbstractComponent2 = __webpack_require__(107);
 
-	var _AbstractShape3 = _interopRequireDefault(_AbstractShape2);
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
 
 	var _babylonjs = __webpack_require__(44);
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var Sphere = (function (_AbstractShape) {
-	    _inherits(Sphere, _AbstractShape);
+	var Sphere = (function (_AkkadAbstractComponent) {
+	    _inherits(Sphere, _AkkadAbstractComponent);
 
 	    function Sphere() {
 	        _classCallCheck(this, Sphere);
@@ -2780,13 +2549,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return Sphere;
-	})(_AbstractShape3["default"]);
+	})(_AkkadAbstractComponent3["default"]);
 
 	exports["default"] = Sphere;
 	module.exports = exports["default"];
 
 /***/ },
-/* 106 */
+/* 106 */,
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2809,18 +2579,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var AbstractShape = (function (_React$Component) {
-	    _inherits(AbstractShape, _React$Component);
+	var AkkadAbstractComponent = (function (_React$Component) {
+	    _inherits(AkkadAbstractComponent, _React$Component);
 
-	    function AbstractShape() {
-	        _classCallCheck(this, AbstractShape);
+	    function AkkadAbstractComponent() {
+	        _classCallCheck(this, AkkadAbstractComponent);
 
-	        _get(Object.getPrototypeOf(AbstractShape.prototype), "constructor", this).call(this);
+	        _get(Object.getPrototypeOf(AkkadAbstractComponent.prototype), "constructor", this).call(this);
 
 	        this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
 	    }
 
-	    _createClass(AbstractShape, [{
+	    _createClass(AkkadAbstractComponent, [{
 	        key: "render",
 	        value: function render() {
 	            return _react2["default"].createElement(
@@ -2838,10 +2608,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        enumerable: true
 	    }]);
 
-	    return AbstractShape;
+	    return AkkadAbstractComponent;
 	})(_react2["default"].Component);
 
-	exports["default"] = AbstractShape;
+	exports["default"] = AkkadAbstractComponent;
 	module.exports = exports["default"];
 
 /***/ }
