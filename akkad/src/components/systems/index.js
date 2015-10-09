@@ -1,9 +1,11 @@
-import Position from "./Position";
+import PositionMesh from "./PositionMesh";
+import RotateMesh from "./RotateMesh";
 import RenderShape from "./RenderShape";
 import RenderLight from "./RenderLight";
 
 export default {
-	Position,
+	PositionMesh,
+	RotateMesh,
 	RenderShape,
 	RenderLight
 };

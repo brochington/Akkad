@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import {Helpers} from "../../classes";
 
-class Position extends AkkadAbstractComponent {
+class PositionMesh extends AkkadAbstractComponent {
 	static contextTypes = {
 		entityID: PropTypes.string,
 		appState: PropTypes.object,
@@ -27,4 +27,4 @@ class Position extends AkkadAbstractComponent {
     }
 }
 
-export default Position;
+export default PositionMesh;

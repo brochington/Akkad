@@ -5,13 +5,13 @@ import {
     cameras,
     lights,
     shapes,
-    ecsComponents
+    systems
 } from "akkad";
 
 const {FreeCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Sphere, Box} = shapes;
-const {Position} = ecsComponents;
+const {PositionMesh, RotateMesh} = systems;
 
 export class App extends Component {
   render() {
@@ -23,20 +23,26 @@ export class App extends Component {
             />
             <HemisphericLight />
             <Sphere>
-                <Position
-                    x={2}
+                <PositionMesh
+                    x={3}
                     y={-1}
                     z={0}
                 />
             </Sphere>
             <Box>
-                <Position
+                <PositionMesh
                     x={0}
                     y={0}
                     z={0}
+                />
+                <RotateMesh
+                    axis={[0, 1, 0]}
+                    amount={5}
+                    space="LOCAL"
                 />
             </Box>
         </Scene>
     );
   }
 }
+

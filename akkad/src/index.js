@@ -1,5 +1,5 @@
 import components from "./components";
-import ecsComponents from "./components/ecsComponents";
+import systems from "./components/systems";
 
 import lights from "./components/lights";
 import cameras from "./components/cameras";
@@ -8,7 +8,7 @@ import shapes from "./components/shapes";
 
 export default {
 	...components,
-	ecsComponents,
+	systems,
 	lights,
 	cameras,
 	meshes,

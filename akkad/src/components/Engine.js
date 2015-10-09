@@ -72,6 +72,7 @@ class Engine extends React.Component {
     componentWillUpdate(nextProps, nextState) {
         // for debugging state: 
         window.state = nextState.appState.toJS();
+        window.babylon = Babylon
         //
         this.updateAppChildren(nextState);
     }
