@@ -14,6 +14,4 @@ const AkkadApp = (
 	</Engine>
 );
 
-console.log("AkkadApp", AkkadApp);
-
 ReactDOM.render(AkkadApp, document.getElementById('root'));

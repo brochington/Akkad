@@ -14,10 +14,8 @@ class Position extends AkkadAbstractComponent {
 
         if(appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
             const {mesh} = appState.getIn(["meshes", entityID]);
-            console.log("mesh", mesh);
 
             const options = Helpers.convertShapeProps(nextProps);
-            console.log("options", options);
 
             for (let option in options) {
             	if (mesh.position.hasOwnProperty(option)) {

@@ -1,17 +1,18 @@
 import React, {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import Entity from "../Entity";
+import {RenderLight} from "../ecsComponents";
 import Babylon from "babylonjs";
 
-class HemisphericLight extends AkkadAbstractComponent {
-    componentWillUpdate(nextState, nextProps, nextContext) {
-        const {appState, actions} = nextContext;
-        
-        if (appState && appState.has("scene") && !appState.has("light")) {
-            const {id} = this.props;
-            actions.setLight({
-                type: "hemispheric"
-            });
-        }
+class HemisphericLight extends React.Component {
+    render() {
+        return (
+            <Entity>
+                <RenderLight 
+                    type="hemispheric"
+                />
+                {this.props.children}
+            </Entity>
+        );
     }
 }
 

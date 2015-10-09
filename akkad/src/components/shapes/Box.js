@@ -10,8 +10,11 @@ class Box extends React.Component {
     }
 
     render() {
-        console.log(this.props);
-        const {height = 1, width = 1} = this.props;
+        const {
+            height = 1,
+            width = 1
+        } = this.props;
+
         return (
             <Entity>
                 <RenderShape 

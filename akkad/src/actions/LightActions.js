@@ -1,11 +1,30 @@
 import Babylon from "babylonjs";
+import {Helpers} from "../classes";
+
+const lightCreators = {
+    hemispheric(scene, entityID, props) {
+        return new Babylon.HemisphericLight(entityID, new Babylon.Vector3(0, 1, 0), scene);
+    }
+};
 
 export default {
-    setLight(state, actions, config) {
-        const scene = state.get("scene");
+    createLight(state, actions, entityID, props) {
+        const {type} = props;
 
-        const light = new Babylon.HemisphericLight("light1", new Babylon.Vector3(0, 1, 0), scene);
+        if (type && lightCreators[type] && !state.hasIn(["lights", entityID])) {
+            const scene = state.get("scene");
+            const light = lightCreators[type](scene, entityID, props);
 
-        return state.set("light", light);
+            state = actions.updateLight({
+                id: entityID,
+                light
+            });
+        }
+
+        return state;
+    },
+
+    updateLight(state, actions, lightObj) {
+        return state.updateIn(["lights", lightObj.id], light => lightObj);
     }
 };

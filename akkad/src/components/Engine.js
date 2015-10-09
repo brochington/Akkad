@@ -11,7 +11,8 @@ import {StateManager} from "../classes";
 const stateManager = new StateManager();
 
 const initState = {
-    meshes: {}
+    meshes: {},
+    lights: {}
 }
 
 class Engine extends React.Component {
