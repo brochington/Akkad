@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import Immutable from "immutable";
 import Babylon from "babylonjs";
 import actions from "../actions";
-import systems from "../systems";
+import systems from "./systems";
 import {StateManager} from "../classes";
 
 const stateManager = new StateManager();

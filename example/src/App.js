@@ -11,7 +11,7 @@ import {
 const {FreeCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Sphere, Box} = shapes;
-const {PositionMesh, RotateMesh} = systems;
+const {PositionMesh, RotateMesh, MeshTrigger} = systems;
 
 export class App extends Component {
   render() {
@@ -39,6 +39,9 @@ export class App extends Component {
                     axis={[0, 1, 0]}
                     amount={5}
                     space="LOCAL"
+                />
+                <MeshTrigger
+                    onClick={() => console.log("onclick worked!!")}
                 />
             </Box>
         </Scene>

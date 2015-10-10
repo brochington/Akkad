@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
-import {RenderLight} from "../ecsComponents";
+import {RenderLight} from "../systems";
 import Babylon from "babylonjs";
 
 class HemisphericLight extends React.Component {
