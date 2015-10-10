@@ -21,8 +21,9 @@ const ShapeActions = {
         if (type && shapeCreators[type] && !state.hasIn(["meshes", entityID])) {
             const scene = state.get("scene");
             const shape = shapeCreators[type](scene, entityID, props);
+            const {updateMesh} = actions._internal;
 
-            state = actions.updateMesh({
+            state = updateMesh({
                 id: entityID,
                 mesh: shape
             });

@@ -9,7 +9,8 @@ class RenderShape extends AkkadAbstractComponent {
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        const {entityID, appState, actions: {createShape}} = this.context;
+        const {entityID, appState, actions} = this.context;
+        const {createShape} = actions._internal;
 
         if(appState && appState.has("scene")) {
             if (!appState.hasIn(["meshes", entityID])) {

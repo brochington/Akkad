@@ -8,8 +8,15 @@ const canvasStyles = {
 	width: 640
 }
 
+const myActions = {
+	doSomething: (state, actions) => console.log("I done did something!")
+}
+
 const AkkadApp = (
-	<Engine canvasStyles={canvasStyles} >
+	<Engine 
+		actions={myActions}
+		canvasStyles={canvasStyles} 
+	>
 		<App />
 	</Engine>
 );

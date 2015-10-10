@@ -10,10 +10,14 @@ class Camera extends AkkadAbstractComponent {
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         const {appState, actions} = nextContext;
+        const {setCamera} = actions._internal;
+
+        console.log("actions", actions._internal);
 
         if (appState && appState.has("scene") && !appState.has("camera")) {
             const {id} = this.props;
-            actions.setCamera({
+
+            setCamera({
                 type: "freeCamera"
             });
         }

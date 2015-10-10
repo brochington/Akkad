@@ -13,7 +13,8 @@ class RenderLight extends AkkadAbstractComponent {
 	}
 
 	componentWillUpdate(nextState, nextProps, nextContext) {
-        const {entityID, appState, actions: {createLight}} = this.context;
+        const {entityID, appState, actions} = this.context;
+        const {createLight} = actions._internal;
         const props = {
             ...this.props,
             ...nextProps

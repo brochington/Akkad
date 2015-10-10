@@ -4,7 +4,7 @@ import {ReactReconcileTransaction} from "react/lib/ReactUpdates";
 import ReactDOM from "react-dom";
 import Immutable from "immutable";
 import Babylon from "babylonjs";
-import actions from "../actions";
+import _actions from "../actions";
 import systems from "./systems";
 import {StateManager} from "../classes";
 
@@ -23,8 +23,10 @@ class Engine extends React.Component {
         Object.keys(ReactMultiChild.Mixin)
               .map(method => this[method] = ReactMultiChild.Mixin[method]);
     }
+
     static propTypes = {
         canvasStyles: PropTypes.object,
+        actions: PropTypes.object
     }
 
     /* Need to define the root node so that you don't get undefined.0 */
@@ -78,7 +80,12 @@ class Engine extends React.Component {
     }
 
     componentDidMount() {
-        
+        const actions = {
+            ...this.props.actions,
+            _internal: _actions
+        }
+
+        console.log(actions);
         // TODO: figure out rootNode issue, so that refs and react.findDOMNode() can be used.
         const canvas = document.getElementById("akkad-canvas");
 
@@ -88,7 +95,9 @@ class Engine extends React.Component {
             (appState, actions) => this.setState({appState, actions}) // called after action is returned.
         );
 
-        const {setEngine} = stateManager.actions;
+        const {setEngine} = stateManager.actions._internal;
+
+        console.log(stateManager.actions);
 
         setEngine(canvas);
 

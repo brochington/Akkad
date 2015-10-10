@@ -411,6 +411,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classCallCheck = __webpack_require__(41)["default"];
 
+	var _extends = __webpack_require__(2)["default"];
+
 	var _Object$keys = __webpack_require__(42)["default"];
 
 	var _interopRequireDefault = __webpack_require__(18)["default"];
@@ -441,9 +443,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var _actions = __webpack_require__(51);
+	var _actions2 = __webpack_require__(51);
 
-	var _actions2 = _interopRequireDefault(_actions);
+	var _actions3 = _interopRequireDefault(_actions2);
 
 	var _systems = __webpack_require__(97);
 
@@ -520,10 +522,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
+	            var actions = _extends({}, this.props.actions, {
+	                _internal: _actions3["default"]
+	            });
+
+	            console.log(actions);
 	            // TODO: figure out rootNode issue, so that refs and react.findDOMNode() can be used.
 	            var canvas = document.getElementById("akkad-canvas");
 
-	            stateManager.init(_actions2["default"], // actions object
+	            stateManager.init(actions, // actions object
 	            function (actions) {
 	                return _immutable2["default"].fromJS(initState);
 	            }, // init function
@@ -532,7 +539,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } // called after action is returned.
 	            );
 
-	            var setEngine = stateManager.actions.setEngine;
+	            var setEngine = stateManager.actions._internal.setEngine;
+
+	            console.log(stateManager.actions);
 
 	            setEngine(canvas);
 
@@ -564,7 +573,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "propTypes",
 	        value: {
-	            canvasStyles: _react.PropTypes.object
+	            canvasStyles: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
 	        },
 
 	        /* Need to define the root node so that you don't get undefined.0 */
@@ -1086,8 +1096,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (type && lightCreators[type] && !state.hasIn(["lights", entityID])) {
 	            var scene = state.get("scene");
 	            var light = lightCreators[type](scene, entityID, props);
+	            var updateLight = actions._internal.updateLight;
 
-	            state = actions.updateLight({
+	            state = updateLight({
 	                id: entityID,
 	                light: light
 	            });
@@ -1629,6 +1640,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classCallCheck = __webpack_require__(41)["default"];
 
+	var _extends = __webpack_require__(2)["default"];
+
 	var _Symbol = __webpack_require__(84)["default"];
 
 	var _interopRequireDefault = __webpack_require__(18)["default"];
@@ -1655,25 +1668,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(StateManager, [{
 	        key: "init",
 	        value: function init(actions, initFunc, stateSetCallback) {
-	            var _this = this;
-
 	            try {
 	                if (!this[_hasBeenInitialized]) {
 	                    this[_hasBeenInitialized] = true;
 
-	                    /* create wrapped actions */
-	                    this[_wrappedActions] = _immutable2["default"].Map(actions).reduce(function (acc, func, name) {
-	                        acc[name] = function () {
-	                            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	                                args[_key] = arguments[_key];
-	                            }
+	                    console.log("actions!", actions);
 
-	                            return _this.actionWrapper.apply(_this, [func].concat(args));
-	                        };
-	                        return acc;
-	                    }, {});
+	                    /* wrap actions */
+	                    var wrappedActions = _immutable2["default"].Map(actions).reduce(this.wrapActions.bind(this), {});
+	                    /* wrap internal actions */
+	                    var wrappedInternalActions = _immutable2["default"].Map(actions._internal).reduce(this.wrapActions.bind(this), {});
+	                    console.log("wrappedActions 1", wrappedActions);
+
+	                    this[_wrappedActions] = _extends({}, wrappedActions, {
+	                        _internal: wrappedInternalActions
+	                    });
 
 	                    this[_actions] = actions;
+
+	                    console.log("wrappedActions", this[_wrappedActions]);
 
 	                    /* Set initial state from init function */
 	                    this[_state] = initFunc(this[_wrappedActions]);
@@ -1687,6 +1700,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	                console.error(e);
 	            }
 	        }
+	    }, {
+	        key: "wrapActions",
+
+	        /* wraps actions with... the actionWrapper */
+	        value: function wrapActions(acc, val, name) {
+	            var _this = this;
+
+	            if (typeof val === "function") {
+	                acc[name] = function () {
+	                    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                        args[_key] = arguments[_key];
+	                    }
+
+	                    return _this.actionWrapper.apply(_this, [val].concat(args));
+	                };
+	            }
+	            return acc;
+	        }
+
+	        /* injects state and actions as args into actions that are called. */
 	    }, {
 	        key: "actionWrapper",
 	        value: function actionWrapper(func) {
@@ -2162,8 +2195,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (type && shapeCreators[type] && !state.hasIn(["meshes", entityID])) {
 	            var scene = state.get("scene");
 	            var shape = shapeCreators[type](scene, entityID, props);
+	            var updateMesh = actions._internal.updateMesh;
 
-	            state = actions.updateMesh({
+	            state = updateMesh({
 	                id: entityID,
 	                mesh: shape
 	            });
@@ -2221,9 +2255,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Scene, [{
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            var _context$actions = this.context.actions;
-	            var setScene = _context$actions.setScene;
-	            var startRenderLoop = _context$actions.startRenderLoop;
+	            var _context$actions$_internal = this.context.actions._internal;
+	            var setScene = _context$actions$_internal.setScene;
+	            var startRenderLoop = _context$actions$_internal.startRenderLoop;
 
 	            setScene();
 	            startRenderLoop();
@@ -2231,7 +2265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            var disposeScene = this.context.actions.disposeScene;
+	            var disposeScene = this.context.actions._internal.disposeScene;
 
 	            disposeScene();
 	        }
@@ -2630,7 +2664,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _context = this.context;
 	            var entityID = _context.entityID;
 	            var appState = _context.appState;
-	            var createShape = _context.actions.createShape;
+	            var actions = _context.actions;
+	            var createShape = actions._internal.createShape;
 
 	            if (appState && appState.has("scene")) {
 	                if (!appState.hasIn(["meshes", entityID])) {
@@ -2702,7 +2737,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _context = this.context;
 	            var entityID = _context.entityID;
 	            var appState = _context.appState;
-	            var createLight = _context.actions.createLight;
+	            var actions = _context.actions;
+	            var createLight = actions._internal.createLight;
 
 	            var props = _extends({}, this.props, nextProps);
 
@@ -2883,11 +2919,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
 	            var appState = nextContext.appState;
 	            var actions = nextContext.actions;
+	            var setCamera = actions._internal.setCamera;
+
+	            console.log("actions", actions._internal);
 
 	            if (appState && appState.has("scene") && !appState.has("camera")) {
 	                var id = this.props.id;
 
-	                actions.setCamera({
+	                setCamera({
 	                    type: "freeCamera"
 	                });
 	            }

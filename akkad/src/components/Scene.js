@@ -13,14 +13,14 @@ class Scene extends React.Component {
     }
 
     componentDidMount() {
-        const {setScene, startRenderLoop} = this.context.actions;
+        const {setScene, startRenderLoop} = this.context.actions._internal;
         
         setScene();
         startRenderLoop();
     }
 
     componentWillUnmount() {
-        const {disposeScene} = this.context.actions;
+        const {disposeScene} = this.context.actions._internal;
         
         disposeScene();
     }
