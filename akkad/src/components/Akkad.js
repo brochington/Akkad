@@ -32,12 +32,8 @@ class Akkad extends React.Component {
             actions => Immutable.fromJS(initState), // init function
             (appState, actions) => this.setState({appState, actions}) // called after action is returned.
         );
-        console.log("this.props.canvas", this.props.canvasNode);
+        
         stateManager.actions._internal.setCanvas(this.props.canvasNode);
-    }
-
-    componentDidMound() {
-        console.log("Akkad did mount");
     }
 
     render() {

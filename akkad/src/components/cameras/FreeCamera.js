@@ -9,7 +9,6 @@ class Camera extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
-        console.log("camera will mount", this.context);
         const {appState, actions} = this.context;
         const {setCamera} = actions._internal;
 

@@ -25,18 +25,16 @@ class MeshTrigger extends AkkadAbstractComponent {
 
 
     shouldComponentUpdate(nextProps) {
-        console.log("shouldComponentUpdate");
         for (let prop in nextProps) {
             if (nextProps[prop] !== this.props[prop]) {
                 return true
             }
         }
-        console.log("through");
+
         return false;
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        console.log("componentWillUpdate");
         const {entityID, appState, actions} = nextContext;
         const { createMeshTriggers, updateMeshTriggers} = actions._internal;
         const props = Immutable.Map(nextProps);
@@ -46,7 +44,6 @@ class MeshTrigger extends AkkadAbstractComponent {
             const scene = appState.get("scene");
 
             if (appState.hasIn(["meshes", entityID, "triggers"])) {
-                console.log("inside");
                 updateMeshTriggers(entityID, nextProps);
             } else {
                 createMeshTriggers(entityID, nextProps);

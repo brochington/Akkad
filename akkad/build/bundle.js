@@ -510,7 +510,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            console.log("Engine componentDidMount");
 	            var _props = this.props;
 	            var actions = _props.actions;
 	            var appState = _props.appState;
@@ -983,13 +982,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports["default"] = {
 	    setCanvas: function setCanvas(state, actions, canvas) {
-	        console.log("setCanvas");
 	        return state.set("canvas", canvas);
 	    },
 
 	    setEngine: function setEngine(state, actions) {
 	        var canvas = state.get("canvas");
-	        console.log("setEngine", canvas);
 
 	        return state.set("engine", new _babylonjs2["default"].Engine(canvas, true));
 	    },
@@ -1024,9 +1021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports["default"] = {
 	    setCamera: function setCamera(state, actions, config) {
-	        console.log("setCamera!");
 	        var canvas = state.get("canvas");
-
 	        var scene = state.get("scene");
 
 	        var camera = new _babylonjs2["default"].FreeCamera("camera1", new _babylonjs2["default"].Vector3(0, 5, -10), scene);
@@ -2159,6 +2154,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var options = _classes.Helpers.convertShapeProps(props);
 
 	        return new _babylonjs2["default"].Mesh.CreateSphere(entityID, options, scene);
+	    },
+	    ground: function ground(scene, entityID, props) {
+	        var options = _classes.Helpers.convertShapeProps(props);
+
+	        return new _babylonjs2["default"].Mesh.CreateGround(entityID, options, scene);
 	    }
 	};
 
@@ -2202,8 +2202,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MeshTriggerActions = {
 	    createMeshTriggers: function createMeshTriggers(state, actions, entityID, triggers) {
-	        console.log("createMeshTriggers");
-
 	        var mesh = state.getIn(["meshes", entityID, "mesh"]);
 
 	        if (!mesh.actionManager) {
@@ -2214,12 +2212,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        state = state.updateIn(["meshes", entityID], function (meshObj) {
 	            return meshObj.set("triggers", triggers);
 	        });
-	        console.log(state.toJS());
 
 	        return state;
 	    },
 	    updateMeshTriggers: function updateMeshTriggers(state, actions, entityID, updatedTriggers) {
-	        console.log("updateMeshTriggers");
 	        return state.setIn(["meshes", entityID, "triggers"], updatedTriggers);
 	    }
 	};
@@ -2701,19 +2697,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(MeshTrigger, [{
 	        key: "shouldComponentUpdate",
 	        value: function shouldComponentUpdate(nextProps) {
-	            console.log("shouldComponentUpdate");
 	            for (var prop in nextProps) {
 	                if (nextProps[prop] !== this.props[prop]) {
 	                    return true;
 	                }
 	            }
-	            console.log("through");
+
 	            return false;
 	        }
 	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
-	            console.log("componentWillUpdate");
 	            var entityID = nextContext.entityID;
 	            var appState = nextContext.appState;
 	            var actions = nextContext.actions;
@@ -2728,7 +2722,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var scene = appState.get("scene");
 
 	                if (appState.hasIn(["meshes", entityID, "triggers"])) {
-	                    console.log("inside");
 	                    updateMeshTriggers(entityID, nextProps);
 	                } else {
 	                    createMeshTriggers(entityID, nextProps);
@@ -2991,13 +2984,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _this.setState({ appState: appState, actions: actions });
 	            } // called after action is returned.
 	            );
-	            console.log("this.props.canvas", this.props.canvasNode);
+
 	            stateManager.actions._internal.setCanvas(this.props.canvasNode);
-	        }
-	    }, {
-	        key: "componentDidMound",
-	        value: function componentDidMound() {
-	            console.log("Akkad did mount");
 	        }
 	    }, {
 	        key: "render",
@@ -3189,7 +3177,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Camera, [{
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
-	            console.log("camera will mount", this.context);
 	            var _context = this.context;
 	            var appState = _context.appState;
 	            var actions = _context.actions;
@@ -3255,9 +3242,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Box2 = _interopRequireDefault(_Box);
 
+	var _Ground = __webpack_require__(114);
+
+	var _Ground2 = _interopRequireDefault(_Ground);
+
 	exports["default"] = {
 	    Sphere: _Sphere2["default"],
-	    Box: _Box2["default"]
+	    Box: _Box2["default"],
+	    Ground: _Ground2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -3405,6 +3397,72 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Box;
+	module.exports = exports["default"];
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(103);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _systems = __webpack_require__(95);
+
+	var _babylonjs = __webpack_require__(50);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var Sphere = (function (_React$Component) {
+	    _inherits(Sphere, _React$Component);
+
+	    function Sphere() {
+	        _classCallCheck(this, Sphere);
+
+	        _get(Object.getPrototypeOf(Sphere.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Sphere, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "ground",
+	                    width: 5,
+	                    height: 5
+
+	                }),
+	                this.props.children
+	            );
+	        }
+	    }]);
+
+	    return Sphere;
+	})(_react2["default"].Component);
+
+	exports["default"] = Sphere;
 	module.exports = exports["default"];
 
 /***/ }
