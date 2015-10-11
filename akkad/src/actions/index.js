@@ -4,6 +4,7 @@ import lightActions from "./LightActions";
 import meshActions from "./MeshActions";
 import sceneActions from "./SceneActions";
 import shapeActions from "./ShapeActions";
+import meshTriggerActions from "./MeshTriggerActions";
 
 export default {
     ...appActions,
@@ -11,5 +12,6 @@ export default {
     ...lightActions,
     ...meshActions,
     ...sceneActions,
-    ...shapeActions 
+    ...shapeActions,
+    ...meshTriggerActions
 };

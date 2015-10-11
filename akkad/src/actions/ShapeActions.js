@@ -1,4 +1,5 @@
 import Babylon from "babylonjs";
+import Immutable from "immutable";
 import {MeshManager, Helpers} from "../classes";
 
 const shapeCreators = {
@@ -21,18 +22,15 @@ const ShapeActions = {
         if (type && shapeCreators[type] && !state.hasIn(["meshes", entityID])) {
             const scene = state.get("scene");
             const shape = shapeCreators[type](scene, entityID, props);
-            const {updateMesh} = actions._internal;
 
-            state = updateMesh({
+            const meshObj = Immutable.Map({
                 id: entityID,
                 mesh: shape
             });
+
+            state = state.setIn(["meshes", entityID], meshObj);
         }
         return state;
-    },
-
-    updateMesh(state, actions, meshObj) {
-        return state.updateIn(["meshes", meshObj.id], mesh => meshObj);
     }
 }
 

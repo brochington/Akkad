@@ -1,12 +1,13 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
-import {RenderShape} from "../systems";
+import {RenderShape, MeshTrigger} from "../systems";
 import Babylon from "babylonjs";
 
 class Box extends React.Component {
     static propTypes = {
         height: PropTypes.number,
-        width: PropTypes.number
+        width: PropTypes.number,
+        onClick: PropTypes.func
     }
 
     render() {

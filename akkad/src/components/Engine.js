@@ -6,14 +6,6 @@ import Immutable from "immutable";
 import Babylon from "babylonjs";
 import _actions from "../actions";
 import systems from "./systems";
-import {StateManager} from "../classes";
-
-const stateManager = new StateManager();
-
-const initState = {
-    meshes: {},
-    lights: {}
-}
 
 class Engine extends React.Component {
     constructor() {
@@ -25,12 +17,12 @@ class Engine extends React.Component {
     }
 
     static propTypes = {
-        canvasStyles: PropTypes.object,
-        actions: PropTypes.object
+        actions: PropTypes.object,
+        appState: PropTypes.object
     }
 
     /* Need to define the root node so that you don't get undefined.0 */
-    _rootNodeID = ".0"
+    _rootNodeID = ""
     
     _performTransaction(func, scope, children, context) {
         const transaction = ReactReconcileTransaction.getPooled();
@@ -71,39 +63,20 @@ class Engine extends React.Component {
 
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        // for debugging state: 
-        window.state = nextState.appState.toJS();
-        window.babylon = Babylon
-        //
-        this.updateAppChildren(nextState);
+    componentWillUpdate(nextProps) {
+        this.updateAppChildren(nextProps);
     }
 
     componentDidMount() {
-        const actions = {
-            ...this.props.actions,
-            _internal: _actions
-        }
+        console.log("Engine componentDidMount");
+        const {actions, appState} = this.props;
+        const {setEngine} = actions._internal;
 
-        console.log(actions);
-        // TODO: figure out rootNode issue, so that refs and react.findDOMNode() can be used.
-        const canvas = document.getElementById("akkad-canvas");
-
-        stateManager.init(
-            actions, // actions object
-            actions => Immutable.fromJS(initState), // init function
-            (appState, actions) => this.setState({appState, actions}) // called after action is returned.
-        );
-
-        const {setEngine} = stateManager.actions._internal;
-
-        console.log(stateManager.actions);
-
-        setEngine(canvas);
+        setEngine();
 
         this.mountAppChildren({
-            actions: stateManager.actions,
-            appState: stateManager.appState,
+            actions,
+            appState,
             systems
         });
     }
@@ -113,15 +86,10 @@ class Engine extends React.Component {
     }
 
     render() {
-        const {canvasStyles} = this.props;
         return (
-            <div>
-                <canvas 
-                    id="akkad-canvas"
-                    style={canvasStyles} 
-                />
-            </div>
+            <div />
         );
+        
     }
 }
 

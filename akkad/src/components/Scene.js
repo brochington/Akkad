@@ -26,11 +26,13 @@ class Scene extends React.Component {
     }
 
     render() {
-        return (
+        const {appState} = this.context;
+
+        return appState.has("scene") ? (
             <div>
                 {this.props.children}
             </div>
-        );
+        ) : null;
     }
 }
 

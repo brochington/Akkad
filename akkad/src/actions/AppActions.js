@@ -1,10 +1,16 @@
 import Babylon from "babylonjs";
 
 export default {
-    setEngine(state, actions, canvas) {
-        state = state.set("canvas", canvas);
-        state = state.set("engine", new Babylon.Engine(canvas, true));
-        return state;
+    setCanvas(state, actions, canvas) {
+        console.log("setCanvas");
+        return state.set("canvas", canvas);
+    },
+
+    setEngine(state, actions) {
+        const canvas = state.get("canvas");
+        console.log("setEngine", canvas);
+
+        return state.set("engine", new Babylon.Engine(canvas, true));
     },
 
     setCamera(state, actions, config) {

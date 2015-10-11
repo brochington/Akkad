@@ -11,3 +11,4 @@ Todo List
 
 - Action delegation
 - add lifecycle methods
+- Live reload working

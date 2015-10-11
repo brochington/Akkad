@@ -2,6 +2,7 @@ import Babylon from "babylonjs";
 
 export default {
     setCamera(state, actions, config) {
+    	console.log("setCamera!");
         const canvas = state.get("canvas");
 
         const scene = state.get("scene");

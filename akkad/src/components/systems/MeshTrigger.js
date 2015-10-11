@@ -4,6 +4,7 @@ import Babylon, {ActionManager, ExecuteCodeAction} from "babylonjs";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import {Helpers} from "../../classes";
 
+
 const triggerHandlers = {
     onClick: () => ActionManager.OnPickTrigger,
     onLeftClick: () => ActionManager.OnLeftPickTrigger,
@@ -15,42 +16,50 @@ const triggerHandlers = {
 }
 
 class MeshTrigger extends AkkadAbstractComponent {
-    static propTypes = {
-        onClick: PropTypes.func,
-        onRightClick: PropTypes.func,
-        onLeftClick: PropTypes.func,
-        onRightClick: PropTypes.func,
-        onMouseOver: PropTypes.func,
-        onMouseOut: PropTypes.func,
-        onKeyDown: PropTypes.func,
-        onKeyUp: PropTypes.func
-    }
-
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
         actions: PropTypes.object
     }
 
+
+
+    shouldComponentUpdate(nextProps) {
+        console.log("shouldComponentUpdate");
+        for (let prop in nextProps) {
+            if (nextProps[prop] !== this.props[prop]) {
+                return true
+            }
+        }
+        console.log("through");
+        return false;
+    }
+
     componentWillUpdate(nextProps, nextState, nextContext) {
-        const {entityID, appState} = nextContext;
+        console.log("componentWillUpdate");
+        const {entityID, appState, actions} = nextContext;
+        const { createMeshTriggers, updateMeshTriggers} = actions._internal;
         const props = Immutable.Map(nextProps);
 
-        if(appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-            const {mesh} = appState.getIn(["meshes", entityID]);
+        if (appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
+            const mesh = appState.getIn(["meshes", entityID, "mesh"]);
             const scene = appState.get("scene");
 
-            if (!mesh.actionManager) {
-                mesh.actionManager = new ActionManager(scene);
+            if (appState.hasIn(["meshes", entityID, "triggers"])) {
+                console.log("inside");
+                updateMeshTriggers(entityID, nextProps);
+            } else {
+                createMeshTriggers(entityID, nextProps);
             }
+            
 
-            const actions = props
-                                .filter((func, prop) => triggerHandlers[prop])
-                                .reduce((acc, func, prop) => {
-                                    const trigger = triggerHandlers[prop](appState);
-                                    return acc.push(new ExecuteCodeAction(trigger, func));
-                                }, Immutable.List())
-                                .forEach(action => mesh.actionManager.registerAction(action));
+            // const actions = props
+            //                     .filter((func, prop) => triggerHandlers[prop])
+            //                     .reduce((acc, func, prop) => {
+            //                         const trigger = triggerHandlers[prop](appState);
+            //                         return acc.push(new ExecuteCodeAction(trigger, func));
+            //                     }, Immutable.List())
+            //                     .forEach(action => mesh.actionManager.registerAction(action));
         }
     }
 }

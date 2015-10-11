@@ -13,7 +13,7 @@ class PositionMesh extends AkkadAbstractComponent {
         const {entityID, appState} = nextContext;
 
         if(appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-            const {mesh} = appState.getIn(["meshes", entityID]);
+            const mesh = appState.getIn(["meshes", entityID, "mesh"]);
 
             const options = Helpers.convertShapeProps(nextProps);
 

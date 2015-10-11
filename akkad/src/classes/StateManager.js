@@ -12,13 +12,10 @@ class StateManager {
             if(!this[_hasBeenInitialized]) {
                 this[_hasBeenInitialized] = true;
 
-                console.log("actions!", actions);
-
                 /* wrap actions */
                 const wrappedActions = Immutable.Map(actions).reduce(::this.wrapActions, {});
                 /* wrap internal actions */
                 const wrappedInternalActions = Immutable.Map(actions._internal).reduce(::this.wrapActions, {});
-                console.log("wrappedActions 1", wrappedActions);
 
                 this[_wrappedActions] = {
                     ...wrappedActions,
@@ -26,8 +23,6 @@ class StateManager {
                 }
 
                 this[_actions] = actions;
-
-                console.log("wrappedActions", this[_wrappedActions]);
 
                 /* Set initial state from init function */
                 this[_state] = initFunc(this[_wrappedActions]);
