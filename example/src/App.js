@@ -9,7 +9,7 @@ import {
 
 const {FreeCamera} = cameras;
 const {HemisphericLight} = lights;
-const {Sphere, Box} = shapes;
+const {Sphere, Box, Ground} = shapes;
 const {PositionMesh, RotateMesh, MeshTrigger} = systems;
 
 class App extends Component {
@@ -25,10 +25,15 @@ class App extends Component {
                     target={[0, 0, 0]}
                 />
                 <HemisphericLight />
-                <Sphere>
+                <Sphere
+                    segments={24}
+                    diameterX={2}
+                    diameterY={2}
+                    diameterZ={2}
+                >
                     <PositionMesh
-                        x={3}
-                        y={-1}
+                        x={0}
+                        y={2}
                         z={0}
                     />
                 </Sphere>
@@ -47,6 +52,7 @@ class App extends Component {
                         onClick={this.clickMe}
                     />
                 </Box>
+                <Ground />
             </Scene>
         );
     }

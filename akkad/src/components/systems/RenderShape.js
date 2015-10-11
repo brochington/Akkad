@@ -8,18 +8,21 @@ class RenderShape extends AkkadAbstractComponent {
         appState: PropTypes.object.isRequired
     }
 
-    componentWillUpdate(nextProps, nextState, nextContext) {
+    shouldComponentUpdate(nextProps) {
+        for (let prop in nextProps) {
+            if (nextProps[prop] !== this.props[prop]) {
+                return true
+            }
+        }
+
+        return false;
+    }
+
+    componentWillMount() {
         const {entityID, appState, actions} = this.context;
         const {createShape} = actions._internal;
 
-        if(appState && appState.has("scene")) {
-            if (!appState.hasIn(["meshes", entityID])) {
-
-                createShape(entityID, nextProps);
-            } else {
-                // nothing yet...
-            }
-        }
+        createShape(entityID, this.props)
     }
 }
 

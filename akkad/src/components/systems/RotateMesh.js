@@ -15,15 +15,25 @@ class RotateMesh extends AkkadAbstractComponent {
         actions: PropTypes.object
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        const {entityID, appState} = nextContext;
+
+        return appState.hasIn(["meshes", entityID]);
+    }
+
     componentWillUpdate(nextProps, nextState, nextContext) {
         const {entityID, appState} = nextContext;
 
-        if(appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-            const mesh = appState.getIn(["meshes", entityID, "mesh"]);
+        const mesh = appState.getIn(["meshes", entityID, "mesh"]);
 
-            const options = Helpers.convertShapeProps(nextProps);
-            const {axis, amount, space} = options;
+        const options = Helpers.convertShapeProps(nextProps);
+        const {axis, amount, space} = options;
 
+        if (
+            axis !== this.props.axis ||
+            amount !== this.props.amount ||
+            space !== this.props.space
+        ) {
             mesh.rotate(axis, amount, space);
         }
     }

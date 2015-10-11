@@ -2304,24 +2304,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(PositionMesh, [{
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+	            var entityID = nextContext.entityID;
+	            var appState = nextContext.appState;
+
+	            return appState.hasIn(["meshes", entityID]);
+	        }
+	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
 	            var entityID = nextContext.entityID;
 	            var appState = nextContext.appState;
 
-	            if (appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-	                var mesh = appState.getIn(["meshes", entityID, "mesh"]);
+	            var mesh = appState.getIn(["meshes", entityID, "mesh"]);
 
-	                var options = _classes.Helpers.convertShapeProps(nextProps);
+	            var options = _classes.Helpers.convertShapeProps(nextProps);
 
-	                for (var option in options) {
-	                    if (mesh.position.hasOwnProperty(option)) {
-	                        mesh.position[option] = options[option];
-	                    }
+	            for (var option in options) {
+	                if (mesh.position.hasOwnProperty(option) && mesh.position[option] !== options[option]) {
+	                    mesh.position[option] = options[option];
 	                }
 	            }
 	        }
 	    }], [{
+	        key: "propTypes",
+	        value: {
+	            x: _react.PropTypes.number,
+	            y: _react.PropTypes.number,
+	            z: _react.PropTypes.number
+	        },
+	        enumerable: true
+	    }, {
 	        key: "contextTypes",
 	        value: {
 	            entityID: _react.PropTypes.string,
@@ -2436,19 +2450,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(RotateMesh, [{
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+	            var entityID = nextContext.entityID;
+	            var appState = nextContext.appState;
+
+	            return appState.hasIn(["meshes", entityID]);
+	        }
+	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
 	            var entityID = nextContext.entityID;
 	            var appState = nextContext.appState;
 
-	            if (appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-	                var mesh = appState.getIn(["meshes", entityID, "mesh"]);
+	            var mesh = appState.getIn(["meshes", entityID, "mesh"]);
 
-	                var options = _classes.Helpers.convertShapeProps(nextProps);
-	                var axis = options.axis;
-	                var amount = options.amount;
-	                var space = options.space;
+	            var options = _classes.Helpers.convertShapeProps(nextProps);
+	            var axis = options.axis;
+	            var amount = options.amount;
+	            var space = options.space;
 
+	            if (axis !== this.props.axis || amount !== this.props.amount || space !== this.props.space) {
 	                mesh.rotate(axis, amount, space);
 	            }
 	        }
@@ -2514,22 +2536,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(RenderShape, [{
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate(nextProps) {
+	            for (var prop in nextProps) {
+	                if (nextProps[prop] !== this.props[prop]) {
+	                    return true;
+	                }
+	            }
+
+	            return false;
+	        }
+	    }, {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
 	            var _context = this.context;
 	            var entityID = _context.entityID;
 	            var appState = _context.appState;
 	            var actions = _context.actions;
 	            var createShape = actions._internal.createShape;
 
-	            if (appState && appState.has("scene")) {
-	                if (!appState.hasIn(["meshes", entityID])) {
-
-	                    createShape(entityID, nextProps);
-	                } else {
-	                    // nothing yet...
-	                }
-	            }
+	            createShape(entityID, this.props);
 	        }
 	    }], [{
 	        key: "contextTypes",
@@ -3299,19 +3325,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Sphere, [{
 	        key: "render",
 	        value: function render() {
+	            var _props = this.props;
+	            var segments = _props.segments;
+	            var diameterX = _props.diameterX;
+	            var diameterY = _props.diameterY;
+	            var diameterZ = _props.diameterZ;
+
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
 	                null,
 	                _react2["default"].createElement(_systems.RenderShape, {
 	                    type: "sphere",
-	                    segments: 24,
-	                    diameterX: 3,
-	                    diameterY: 3,
-	                    diameterZ: 3
+	                    segments: segments,
+	                    diameterX: diameterX,
+	                    diameterY: diameterY,
+	                    diameterZ: diameterZ
 	                }),
 	                this.props.children
 	            );
 	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            segments: _react.PropTypes.number,
+	            diameterX: _react.PropTypes.number,
+	            diameterY: _react.PropTypes.number,
+	            diameterZ: _react.PropTypes.number
+	        },
+	        enumerable: true
 	    }]);
 
 	    return Sphere;

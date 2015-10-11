@@ -12,6 +12,11 @@ const shapeCreators = {
         const options = Helpers.convertShapeProps(props);
 
         return new Babylon.Mesh.CreateSphere(entityID, options, scene);
+    },
+    ground(scene, entityID, props) {
+        const options = Helpers.convertShapeProps(props);
+
+        return new Babylon.Mesh.CreateGround(entityID, options, scene);
     }
 }
 

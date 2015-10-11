@@ -4,15 +4,23 @@ import {RenderShape} from "../systems";
 import Babylon from "babylonjs";
 
 class Sphere extends React.Component {
+    static propTypes = {
+        segments: PropTypes.number,
+        diameterX: PropTypes.number,
+        diameterY: PropTypes.number,
+        diameterZ: PropTypes.number
+    }
+
     render() {
+        const {segments, diameterX, diameterY, diameterZ} = this.props;
         return (
             <Entity>
                 <RenderShape 
                     type="sphere"
-                    segments={24}
-                    diameterX={3}
-                    diameterY={3}
-                    diameterZ={3}
+                    segments={segments}
+                    diameterX={diameterX}
+                    diameterY={diameterY}
+                    diameterZ={diameterZ}
                 />
                 {this.props.children}
             </Entity>

@@ -3,26 +3,38 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import {Helpers} from "../../classes";
 
 class PositionMesh extends AkkadAbstractComponent {
-	static contextTypes = {
-		entityID: PropTypes.string,
-		appState: PropTypes.object,
-		actions: PropTypes.object
-	}
+    static propTypes = {
+        x: PropTypes.number,
+        y: PropTypes.number,
+        z: PropTypes.number
+    }
 
-	componentWillUpdate(nextProps, nextState, nextContext) {
+    static contextTypes = {
+        entityID: PropTypes.string,
+        appState: PropTypes.object,
+        actions: PropTypes.object
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
         const {entityID, appState} = nextContext;
 
-        if(appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-            const mesh = appState.getIn(["meshes", entityID, "mesh"]);
+        return appState.hasIn(["meshes", entityID]);
+    }
 
-            const options = Helpers.convertShapeProps(nextProps);
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        const {entityID, appState} = nextContext;
 
-            for (let option in options) {
-            	if (mesh.position.hasOwnProperty(option)) {
-            		mesh.position[option] = options[option];
-            	}
+        const mesh = appState.getIn(["meshes", entityID, "mesh"]);
+
+        const options = Helpers.convertShapeProps(nextProps);
+
+        for (let option in options) {
+            if (
+                mesh.position.hasOwnProperty(option) && 
+                mesh.position[option] !== options[option]
+            ) {
+                mesh.position[option] = options[option];
             }
-
         }
     }
 }
