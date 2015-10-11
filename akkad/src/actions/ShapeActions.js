@@ -24,7 +24,7 @@ const ShapeActions = {
     createShape(state, actions, entityID, props) {
         const {type} = props;
 
-        if (type && shapeCreators[type] && !state.hasIn(["meshes", entityID])) {
+        if (type && shapeCreators[type]) {
             const scene = state.get("scene");
             const shape = shapeCreators[type](scene, entityID, props);
 

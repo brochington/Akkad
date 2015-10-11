@@ -1009,6 +1009,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	var _toConsumableArray = __webpack_require__(57)["default"];
+
+	var _bind = __webpack_require__(82)["default"];
+
 	var _interopRequireDefault = __webpack_require__(18)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1019,14 +1023,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
+	var cameraCreators = {
+	    free: function free(entityID, config, scene) {
+	        var initialPosition = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(config.initialPosition))))();
+
+	        var camera = new _babylonjs2["default"].FreeCamera(entityID, initialPosition, scene);
+
+	        if (config.target) {
+	            var target = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(config.target))))();
+	            camera.setTarget(target);
+	        }
+
+	        return camera;
+	    },
+	    arcRotate: function arcRotate(entityID, config, scene) {
+	        var type = config.type;
+	        var _config$alpha = config.alpha;
+	        var alpha = _config$alpha === undefined ? 1 : _config$alpha;
+	        var _config$beta = config.beta;
+	        var beta = _config$beta === undefined ? 1 : _config$beta;
+	        var _config$radius = config.radius;
+	        var radius = _config$radius === undefined ? 10 : _config$radius;
+
+	        var target = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(config.target))))();
+
+	        return new _babylonjs2["default"].ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
+	    }
+	};
+
 	exports["default"] = {
-	    setCamera: function setCamera(state, actions, config) {
+	    setCamera: function setCamera(state, actions, entityID, config) {
 	        var canvas = state.get("canvas");
 	        var scene = state.get("scene");
 
-	        var camera = new _babylonjs2["default"].FreeCamera("camera1", new _babylonjs2["default"].Vector3(0, 5, -10), scene);
-
-	        camera.setTarget(_babylonjs2["default"].Vector3.Zero());
+	        var camera = cameraCreators[config.type](entityID, config, scene);
 
 	        camera.attachControl(canvas, false);
 
@@ -2166,7 +2196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    createShape: function createShape(state, actions, entityID, props) {
 	        var type = props.type;
 
-	        if (type && shapeCreators[type] && !state.hasIn(["meshes", entityID])) {
+	        if (type && shapeCreators[type]) {
 	            var scene = state.get("scene");
 	            var shape = shapeCreators[type](scene, entityID, props);
 
@@ -2255,12 +2285,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _MeshTrigger2 = _interopRequireDefault(_MeshTrigger);
 
+	var _RenderCamera = __webpack_require__(116);
+
+	var _RenderCamera2 = _interopRequireDefault(_RenderCamera);
+
 	exports["default"] = {
 		MeshTrigger: _MeshTrigger2["default"],
 		PositionMesh: _PositionMesh2["default"],
 		RotateMesh: _RotateMesh2["default"],
 		RenderShape: _RenderShape2["default"],
-		RenderLight: _RenderLight2["default"]
+		RenderLight: _RenderLight2["default"],
+		RenderCamera: _RenderCamera2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -2623,7 +2658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var props = _extends({}, this.props, nextProps);
 
-	            if (appState && appState.has("scene") && !appState.hasIn(["lights", entityID])) {
+	            if (!appState.hasIn(["lights", entityID])) {
 	                createLight(entityID, props);
 	            }
 	        }
@@ -2910,12 +2945,6 @@ return /******/ (function(modules) { // webpackBootstrap
 				};
 			}
 		}], [{
-			key: "contextTypes",
-			value: {
-				systems: _react.PropTypes.object
-			},
-			enumerable: true
-		}, {
 			key: "childContextTypes",
 			value: {
 				entityID: _react.PropTypes.string
@@ -3154,8 +3183,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _FreeCamera2 = _interopRequireDefault(_FreeCamera);
 
+	var _ArcRotateCamera = __webpack_require__(115);
+
+	var _ArcRotateCamera2 = _interopRequireDefault(_ArcRotateCamera);
+
 	exports["default"] = {
-	    FreeCamera: _FreeCamera2["default"]
+	    FreeCamera: _FreeCamera2["default"],
+	    ArcRotateCamera: _ArcRotateCamera2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -3191,43 +3225,46 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var Camera = (function (_AkkadAbstractComponent) {
-	    _inherits(Camera, _AkkadAbstractComponent);
+	var _systems = __webpack_require__(95);
 
-	    function Camera() {
-	        _classCallCheck(this, Camera);
+	var _Entity = __webpack_require__(103);
 
-	        _get(Object.getPrototypeOf(Camera.prototype), "constructor", this).apply(this, arguments);
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var FreeCamera = (function (_AkkadAbstractComponent) {
+	    _inherits(FreeCamera, _AkkadAbstractComponent);
+
+	    function FreeCamera() {
+	        _classCallCheck(this, FreeCamera);
+
+	        _get(Object.getPrototypeOf(FreeCamera.prototype), "constructor", this).apply(this, arguments);
 	    }
 
-	    _createClass(Camera, [{
-	        key: "componentWillMount",
-	        value: function componentWillMount() {
-	            var _context = this.context;
-	            var appState = _context.appState;
-	            var actions = _context.actions;
-	            var setCamera = actions._internal.setCamera;
+	    _createClass(FreeCamera, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var target = _props.target;
+	            var initialPosition = _props.initialPosition;
 
-	            setCamera({
-	                type: "freeCamera"
-	            });
-	        }
-	    }, {
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
-	            var appState = nextContext.appState;
-	            var actions = nextContext.actions;
-	            var setCamera = actions._internal.setCamera;
-
-	            if (appState && appState.has("scene") && !appState.has("camera")) {
-	                var id = this.props.id;
-
-	                setCamera({
-	                    type: "freeCamera"
-	                });
-	            }
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderCamera, {
+	                    type: "free",
+	                    target: target,
+	                    initialPosition: initialPosition
+	                })
+	            );
 	        }
 	    }], [{
+	        key: "propTypes",
+	        value: {
+	            initialPosition: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired,
+	            target: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired
+	        },
+	        enumerable: true
+	    }, {
 	        key: "contextTypes",
 	        value: {
 	            appState: _react.PropTypes.object,
@@ -3236,10 +3273,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        enumerable: true
 	    }]);
 
-	    return Camera;
+	    return FreeCamera;
 	})(_AkkadAbstractComponent3["default"]);
 
-	exports["default"] = Camera;
+	exports["default"] = FreeCamera;
 	module.exports = exports["default"];
 
 /***/ },
@@ -3330,6 +3367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var diameterX = _props.diameterX;
 	            var diameterY = _props.diameterY;
 	            var diameterZ = _props.diameterZ;
+	            var children = _props.children;
 
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
@@ -3486,24 +3524,190 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Sphere, [{
 	        key: "render",
 	        value: function render() {
+	            var _props = this.props;
+	            var height = _props.height;
+	            var width = _props.width;
+
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
 	                null,
 	                _react2["default"].createElement(_systems.RenderShape, {
 	                    type: "ground",
-	                    width: 5,
-	                    height: 5
+	                    width: width,
+	                    height: height
 
 	                }),
 	                this.props.children
 	            );
 	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            height: _react.PropTypes.number,
+	            width: _react.PropTypes.number
+	        },
+	        enumerable: true
 	    }]);
 
 	    return Sphere;
 	})(_react2["default"].Component);
 
 	exports["default"] = Sphere;
+	module.exports = exports["default"];
+
+/***/ },
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _AkkadAbstractComponent = __webpack_require__(97);
+
+	var _AkkadAbstractComponent2 = _interopRequireDefault(_AkkadAbstractComponent);
+
+	var _babylonjs = __webpack_require__(50);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _systems = __webpack_require__(95);
+
+	var _Entity = __webpack_require__(103);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var ArcRotateCamera = (function (_React$Component) {
+	    _inherits(ArcRotateCamera, _React$Component);
+
+	    function ArcRotateCamera() {
+	        _classCallCheck(this, ArcRotateCamera);
+
+	        _get(Object.getPrototypeOf(ArcRotateCamera.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(ArcRotateCamera, [{
+	        key: "render",
+	        value: function render() {
+	            var target = this.props.target;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderCamera, {
+	                    type: "arcRotate",
+	                    target: target
+	                })
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            target: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired
+	        },
+	        enumerable: true
+	    }, {
+	        key: "contextTypes",
+	        value: {
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return ArcRotateCamera;
+	})(_react2["default"].Component);
+
+	exports["default"] = ArcRotateCamera;
+	module.exports = exports["default"];
+
+/***/ },
+/* 116 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _AkkadAbstractComponent2 = __webpack_require__(97);
+
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
+
+	var RenderCamera = (function (_AkkadAbstractComponent) {
+	    _inherits(RenderCamera, _AkkadAbstractComponent);
+
+	    function RenderCamera() {
+	        _classCallCheck(this, RenderCamera);
+
+	        _get(Object.getPrototypeOf(RenderCamera.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(RenderCamera, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            var _context = this.context;
+	            var actions = _context.actions;
+	            var appState = _context.appState;
+	            var entityID = _context.entityID;
+	            var setCamera = actions._internal.setCamera;
+
+	            setCamera(entityID, this.props);
+	        }
+
+	        //TODO: Add a componentWillUnmount() to detach camera.
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            target: _react.PropTypes.array,
+	            type: _react.PropTypes.string.isRequired
+	        },
+	        enumerable: true
+	    }, {
+	        key: "contextTypes",
+	        value: {
+	            entityID: _react.PropTypes.string,
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return RenderCamera;
+	})(_AkkadAbstractComponent3["default"]);
+
+	exports["default"] = RenderCamera;
 	module.exports = exports["default"];
 
 /***/ }

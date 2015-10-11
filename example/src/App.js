@@ -7,7 +7,7 @@ import {
     systems
 } from "akkad";
 
-const {FreeCamera} = cameras;
+const {FreeCamera, ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Sphere, Box, Ground} = shapes;
 const {PositionMesh, RotateMesh, MeshTrigger} = systems;
@@ -20,8 +20,8 @@ class App extends Component {
     render() {
         return (
             <Scene>
-                <FreeCamera 
-                    active={true}
+                <ArcRotateCamera
+                    initialPosition={[0, 5, -10]}
                     target={[0, 0, 0]}
                 />
                 <HemisphericLight />
@@ -39,9 +39,9 @@ class App extends Component {
                 </Sphere>
                 <Box>
                     <PositionMesh
-                        x={0}
-                        y={0}
-                        z={0}
+                        x={2}
+                        y={2}
+                        z={2}
                     />
                     <RotateMesh
                         axis={[0, 1, 0]}
@@ -52,7 +52,10 @@ class App extends Component {
                         onClick={this.clickMe}
                     />
                 </Box>
-                <Ground />
+                <Ground 
+                    height={10}
+                    width={10}
+                />
             </Scene>
         );
     }

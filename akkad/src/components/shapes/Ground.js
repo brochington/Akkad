@@ -4,13 +4,19 @@ import {RenderShape} from "../systems";
 import Babylon from "babylonjs";
 
 class Sphere extends React.Component {
+    static propTypes = {
+        height: PropTypes.number,
+        width: PropTypes.number
+    }
+
     render() {
+        const {height, width} = this.props;
         return (
             <Entity>
                 <RenderShape 
                     type="ground"
-                    width={5}
-                    height={5}
+                    width={width}
+                    height={height}
 
                 />
                 {this.props.children}

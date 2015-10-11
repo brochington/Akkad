@@ -20,7 +20,7 @@ class RenderLight extends AkkadAbstractComponent {
             ...nextProps
         };
         
-        if (appState && appState.has("scene") && !appState.hasIn(["lights", entityID])) {
+        if (!appState.hasIn(["lights", entityID])) {
             createLight(entityID, props);
         }
     }

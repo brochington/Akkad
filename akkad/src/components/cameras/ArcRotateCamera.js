@@ -4,9 +4,8 @@ import Babylon from "babylonjs";
 import {RenderCamera} from "../systems";
 import Entity from "../Entity";
 
-class FreeCamera extends AkkadAbstractComponent {
+class ArcRotateCamera extends React.Component {
     static propTypes = {
-        initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
         target: PropTypes.arrayOf(PropTypes.number).isRequired
     }
 
@@ -16,18 +15,17 @@ class FreeCamera extends AkkadAbstractComponent {
     }
 
     render() {
-        const {target, initialPosition} = this.props;
-
+        const {target} = this.props;
+        
         return (
             <Entity>
                 <RenderCamera 
-                    type="free"
+                    type="arcRotate"
                     target={target}
-                    initialPosition={initialPosition}
                 />
             </Entity>
         );
     }
 }
 
-export default FreeCamera;
+export default ArcRotateCamera;
