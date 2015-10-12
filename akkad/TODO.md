@@ -1,7 +1,6 @@
 Todo List
 ============
 
-- More lifecycle methods, like EngineDidLoad, sceneDidLoad, etc.
 - Shape to create
 	- Plane
 	- Cylinder
@@ -10,5 +9,7 @@ Todo List
 	- Lines
 
 - Action delegation
-- add lifecycle methods
 - Live reload working
+- shaders...
+- prevent camera from going through ground
+- add materials.

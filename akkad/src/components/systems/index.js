@@ -4,6 +4,7 @@ import RenderShape from "./RenderShape";
 import RenderLight from "./RenderLight";
 import MeshTrigger from "./MeshTrigger";
 import RenderCamera from "./RenderCamera";
+import RenderMaterial from "./RenderMaterial";
 
 export default {
 	MeshTrigger,
@@ -11,5 +12,6 @@ export default {
 	RotateMesh,
 	RenderShape,
 	RenderLight,
-	RenderCamera
+	RenderCamera,
+	RenderMaterial
 };

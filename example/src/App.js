@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
     Scene,
+    Material,
     cameras,
     lights,
     shapes,
@@ -20,7 +21,7 @@ class App extends Component {
     render() {
         return (
             <Scene>
-                <ArcRotateCamera
+                <FreeCamera
                     initialPosition={[0, 5, -10]}
                     target={[0, 0, 0]}
                 />
@@ -36,6 +37,8 @@ class App extends Component {
                         y={2}
                         z={0}
                     />
+                    <Material>
+                    </Material>
                 </Sphere>
                 <Box>
                     <PositionMesh
