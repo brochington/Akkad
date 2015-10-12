@@ -14,6 +14,7 @@ class RenderCamera extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
+        console.log("componentWillMount RenderCamera");
         const {actions, appState, entityID} = this.context;
         const {setCamera} = actions._internal;
 

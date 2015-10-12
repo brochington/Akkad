@@ -15,18 +15,17 @@ class Texture extends AkkadAbstractComponent {
 	}
 
 	shouldComponentUpdate(nextProps, nextState, nextContext) {
-		return false
+		return nextProps.image !== this.props.image;
 	}
 
 	componentWillMount() {
 		const {appState, meshID} = this.context;
 		const {image} = this.props;
-		const scene = appState.get("scene");
+		const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
         const material = appState.getIn(["meshes", meshID, "material"]);
 
         material.diffuseTexture = new Babylon.Texture(image, scene);
-
     }
 
     componentWillUnmount() {

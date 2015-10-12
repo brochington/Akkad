@@ -5,7 +5,7 @@ const MeshTriggerActions = {
         const mesh = state.getIn(["meshes", entityID, "mesh"]);
 
         if (!mesh.actionManager) {
-            const scene = state.get("scene");
+            const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
             mesh.actionManager = new ActionManager(scene);
         }
 

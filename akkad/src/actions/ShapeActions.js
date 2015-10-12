@@ -15,8 +15,13 @@ const shapeCreators = {
     },
     ground(scene, entityID, props) {
         const options = Helpers.convertShapeProps(props);
+        
+        
+        const ground = new Babylon.Mesh.CreateGround(entityID, options, scene);
+        
+        ground.checkCollisions = true;
 
-        return new Babylon.Mesh.CreateGround(entityID, options, scene);
+        return ground;
     }
 }
 
@@ -25,7 +30,7 @@ const ShapeActions = {
         const {type} = props;
 
         if (type && shapeCreators[type]) {
-            const scene = state.get("scene");
+            const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
             const shape = shapeCreators[type](scene, entityID, props);
 
             const meshObj = Immutable.Map({

@@ -8,6 +8,7 @@ import RenderMaterial from "./RenderMaterial";
 import Wireframe from "./Wireframe";
 import Texture from "./Texture";
 import MaterialAlpha from "./MaterialAlpha";
+import Gravity from "./Gravity";
 
 export default {
 	MeshTrigger,
@@ -19,5 +20,6 @@ export default {
 	RenderMaterial,
 	Wireframe,
 	Texture,
-	MaterialAlpha
+	MaterialAlpha,
+	Gravity
 };

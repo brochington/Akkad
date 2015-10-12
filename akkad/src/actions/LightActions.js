@@ -12,7 +12,7 @@ export default {
         const {type} = props;
 
         if (type && lightCreators[type] && !state.hasIn(["lights", entityID])) {
-            const scene = state.get("scene");
+            const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
             const light = lightCreators[type](scene, entityID, props);
             const {updateLight} = actions._internal;
 

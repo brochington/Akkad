@@ -1,25 +1,30 @@
 import Babylon from "babylonjs";
+import Immutable from "immutable";
 
 export default {
-    setScene(state, actions) {
+    setScene(state, actions, sceneID) {
         const engine = state.get("engine");
+        const scene = new Babylon.Scene(engine);
 
-        return state.set("scene", new Babylon.Scene(engine));
-    },
+        const sceneObj = Immutable.Map({
+                id: sceneID,
+                entity: scene,
+                type: "scene"
+            });
 
-    disposeScene(state, actions) {
-        const scene = state.get("scene");
+        state = state.setIn(["entities", sceneID], sceneObj);
+        state = state.set("sceneID", sceneID);
 
-        scene.dispose();
-
-        state = state.delete("scene");
+        // scene.gravity = new Babylon.Vector3(0, -0.9, 0);
+        // scene.collisionsEnabled = true;
 
         return state;
     },
 
-    startRenderLoop(state, actions) {
+    startRenderLoop(state, actions, sceneID) {
+        console.log("startRenderLoop");
         const engine = state.get("engine");
-        const scene = state.get("scene");
+        const scene = state.getIn(["entities", sceneID, "entity"]);
 
         engine.runRenderLoop(function(){
             scene.render();

@@ -6,6 +6,10 @@ const cameraCreators = {
 
         const camera = new Babylon.FreeCamera(entityID, initialPosition, scene);
 
+        camera.applyGravity = true;
+
+        camera.checkCollisions = true;
+
         if(config.target) {
             const target = new Babylon.Vector3(...config.target);
             camera.setTarget(target);
@@ -29,8 +33,11 @@ const cameraCreators = {
 
 export default {
     setCamera(state, actions, entityID, config) {
+        console.log("setCamera");
         const canvas = state.get("canvas");
-        const scene = state.get("scene");
+        const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+
+        console.log("scene", scene);
 
         const camera = cameraCreators[config.type](entityID, config, scene)
 

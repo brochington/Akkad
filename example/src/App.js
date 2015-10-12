@@ -18,7 +18,8 @@ const {
     MeshTrigger, 
     Wireframe, 
     Texture,
-    MaterialAlpha
+    MaterialAlpha,
+    Gravity
 } = systems;
 
 class App extends Component {
@@ -27,12 +28,38 @@ class App extends Component {
     }
 
     render() {
+        const boxes = [1, 2, 3, 4, 5].map(val => {
+            return (
+                <Box key={`box-${val}`}>
+                    <PositionMesh
+                        x={val}
+                        y={val}
+                        z={val}
+                    />
+                    <RotateMesh
+                        axis={[0, 1, 0]}
+                        amount={35}
+                        space="LOCAL"
+                    />
+                    <MeshTrigger
+                        onClick={this.clickMe}
+                    />
+                    <Material>
+                        <Wireframe />
+                    </Material>
+                </Box>
+            );
+        });
+
         return (
             <Scene>
+                <Gravity />
                 <FreeCamera
                     initialPosition={[0, 5, -10]}
-                    target={[0, 0, 0]}
-                />
+                    target={[0, 1, 0]}
+                >
+
+                </FreeCamera>
                 <HemisphericLight />
                 <Sphere
                     segments={24}
@@ -54,27 +81,10 @@ class App extends Component {
                         />
                     </Material>
                 </Sphere>
-                <Box>
-                    <PositionMesh
-                        x={2}
-                        y={2}
-                        z={2}
-                    />
-                    <RotateMesh
-                        axis={[0, 1, 0]}
-                        amount={35}
-                        space="LOCAL"
-                    />
-                    <MeshTrigger
-                        onClick={this.clickMe}
-                    />
-                    <Material>
-                        <Wireframe />
-                    </Material>
-                </Box>
+                {boxes}
                 <Ground 
-                    height={10}
-                    width={10}
+                    height={300}
+                    width={300}
                 />
             </Scene>
         );

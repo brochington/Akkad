@@ -950,10 +950,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _LightActions2 = _interopRequireDefault(_LightActions);
 
-	var _MeshActions = __webpack_require__(91);
-
-	var _MeshActions2 = _interopRequireDefault(_MeshActions);
-
 	var _SceneActions = __webpack_require__(92);
 
 	var _SceneActions2 = _interopRequireDefault(_SceneActions);
@@ -970,7 +966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _MaterialActions2 = _interopRequireDefault(_MaterialActions);
 
-	exports["default"] = _extends({}, _appActions2["default"], _CameraActions2["default"], _LightActions2["default"], _MeshActions2["default"], _SceneActions2["default"], _ShapeActions2["default"], _MeshTriggerActions2["default"], _MaterialActions2["default"]);
+	exports["default"] = _extends({}, _appActions2["default"], _CameraActions2["default"], _LightActions2["default"], _SceneActions2["default"], _ShapeActions2["default"], _MeshTriggerActions2["default"], _MaterialActions2["default"]);
 	module.exports = exports["default"];
 
 /***/ },
@@ -998,16 +994,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var canvas = state.get("canvas");
 
 	        return state.set("engine", new _babylonjs2["default"].Engine(canvas, true));
-	    },
-
-	    setCamera: function setCamera(state, actions, config) {
-	        var name = config.name;
-
-	        var scene = state.get("scene");
-
-	        var camera = new _babylonjs2["default"].FreeCamera(name, new _babylonjs2["default"].Vector3(0, 5, -10), scene);
-
-	        return state.set("camera", camera);
 	    }
 	};
 	module.exports = exports["default"];
@@ -1038,6 +1024,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var camera = new _babylonjs2["default"].FreeCamera(entityID, initialPosition, scene);
 
+	        camera.applyGravity = true;
+
+	        camera.checkCollisions = true;
+
 	        if (config.target) {
 	            var target = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(config.target))))();
 	            camera.setTarget(target);
@@ -1062,8 +1052,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports["default"] = {
 	    setCamera: function setCamera(state, actions, entityID, config) {
+	        console.log("setCamera");
 	        var canvas = state.get("canvas");
-	        var scene = state.get("scene");
+	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+
+	        console.log("scene", scene);
 
 	        var camera = cameraCreators[config.type](entityID, config, scene);
 
@@ -1505,7 +1498,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var type = props.type;
 
 	        if (type && lightCreators[type] && !state.hasIn(["lights", entityID])) {
-	            var scene = state.get("scene");
+	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 	            var light = lightCreators[type](scene, entityID, props);
 	            var updateLight = actions._internal.updateLight;
 
@@ -2110,12 +2103,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 91 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-/***/ },
+/* 91 */,
 /* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2131,26 +2119,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
+	var _immutable = __webpack_require__(49);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
 	exports["default"] = {
-	    setScene: function setScene(state, actions) {
+	    setScene: function setScene(state, actions, sceneID) {
 	        var engine = state.get("engine");
+	        var scene = new _babylonjs2["default"].Scene(engine);
 
-	        return state.set("scene", new _babylonjs2["default"].Scene(engine));
-	    },
+	        var sceneObj = _immutable2["default"].Map({
+	            id: sceneID,
+	            entity: scene,
+	            type: "scene"
+	        });
 
-	    disposeScene: function disposeScene(state, actions) {
-	        var scene = state.get("scene");
+	        state = state.setIn(["entities", sceneID], sceneObj);
+	        state = state.set("sceneID", sceneID);
 
-	        scene.dispose();
-
-	        state = state["delete"]("scene");
+	        // scene.gravity = new Babylon.Vector3(0, -0.9, 0);
+	        // scene.collisionsEnabled = true;
 
 	        return state;
 	    },
 
-	    startRenderLoop: function startRenderLoop(state, actions) {
+	    startRenderLoop: function startRenderLoop(state, actions, sceneID) {
+	        console.log("startRenderLoop");
 	        var engine = state.get("engine");
-	        var scene = state.get("scene");
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
 
 	        engine.runRenderLoop(function () {
 	            scene.render();
@@ -2197,7 +2193,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ground: function ground(scene, entityID, props) {
 	        var options = _classes.Helpers.convertShapeProps(props);
 
-	        return new _babylonjs2["default"].Mesh.CreateGround(entityID, options, scene);
+	        var ground = new _babylonjs2["default"].Mesh.CreateGround(entityID, options, scene);
+
+	        ground.checkCollisions = true;
+
+	        return ground;
 	    }
 	};
 
@@ -2206,7 +2206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var type = props.type;
 
 	        if (type && shapeCreators[type]) {
-	            var scene = state.get("scene");
+	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 	            var shape = shapeCreators[type](scene, entityID, props);
 
 	            var meshObj = _immutable2["default"].Map({
@@ -2244,7 +2244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var mesh = state.getIn(["meshes", entityID, "mesh"]);
 
 	        if (!mesh.actionManager) {
-	            var scene = state.get("scene");
+	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 	            mesh.actionManager = new _babylonjs.ActionManager(scene);
 	        }
 
@@ -2285,7 +2285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var MaterialActions = {
 		createMaterial: function createMaterial(state, actions, meshID, entityID) {
 			var mesh = state.getIn(["meshes", meshID, "mesh"]);
-			var scene = state.get("scene");
+			var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
 			var material = new _babylonjs2["default"].StandardMaterial(entityID, scene);
 
@@ -2350,6 +2350,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _MaterialAlpha2 = _interopRequireDefault(_MaterialAlpha);
 
+	var _Gravity = __webpack_require__(122);
+
+	var _Gravity2 = _interopRequireDefault(_Gravity);
+
 	exports["default"] = {
 		MeshTrigger: _MeshTrigger2["default"],
 		PositionMesh: _PositionMesh2["default"],
@@ -2360,7 +2364,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		RenderMaterial: _RenderMaterial2["default"],
 		Wireframe: _Wireframe2["default"],
 		Texture: _Texture2["default"],
-		MaterialAlpha: _MaterialAlpha2["default"]
+		MaterialAlpha: _MaterialAlpha2["default"],
+		Gravity: _Gravity2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -2845,7 +2850,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
 	                var mesh = appState.getIn(["meshes", entityID, "mesh"]);
-	                var scene = appState.get("scene");
+	                var scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
 	                if (appState.hasIn(["meshes", entityID, "triggers"])) {
 	                    updateMeshTriggers(entityID, nextProps);
@@ -2918,6 +2923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(RenderCamera, [{
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
+	            console.log("componentWillMount RenderCamera");
 	            var _context = this.context;
 	            var actions = _context.actions;
 	            var appState = _context.appState;
@@ -3128,13 +3134,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
+	var _Entity = __webpack_require__(108);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
 	var Scene = (function (_React$Component) {
 	    _inherits(Scene, _React$Component);
 
 	    function Scene() {
 	        _classCallCheck(this, Scene);
 
-	        _get(Object.getPrototypeOf(Scene.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Scene.prototype), "constructor", this).call(this);
+
+	        this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
 	    }
 
 	    _createClass(Scene, [{
@@ -3144,8 +3156,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var setScene = _context$actions$_internal.setScene;
 	            var startRenderLoop = _context$actions$_internal.startRenderLoop;
 
-	            setScene();
-	            startRenderLoop();
+	            setScene(this.id);
+	            startRenderLoop(this.id);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
@@ -3159,7 +3171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var appState = this.context.appState;
 
-	            return appState.has("scene") ? _react2["default"].createElement(
+	            return appState.has("sceneID") ? _react2["default"].createElement(
 	                "div",
 	                null,
 	                this.props.children
@@ -4064,7 +4076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(Texture, [{
 			key: "shouldComponentUpdate",
 			value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-				return false;
+				return nextProps.image !== this.props.image;
 			}
 		}, {
 			key: "componentWillMount",
@@ -4074,7 +4086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var meshID = _context.meshID;
 				var image = this.props.image;
 
-				var scene = appState.get("scene");
+				var scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
 				var material = appState.getIn(["meshes", meshID, "material"]);
 
@@ -4204,6 +4216,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_AkkadAbstractComponent3["default"]);
 
 	exports["default"] = MaterialAlpha;
+	module.exports = exports["default"];
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _AkkadAbstractComponent2 = __webpack_require__(98);
+
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
+
+	var Gravity = (function (_AkkadAbstractComponent) {
+		_inherits(Gravity, _AkkadAbstractComponent);
+
+		function Gravity() {
+			_classCallCheck(this, Gravity);
+
+			_get(Object.getPrototypeOf(Gravity.prototype), "constructor", this).apply(this, arguments);
+		}
+
+		_createClass(Gravity, [{
+			key: "componentDidMount",
+			value: function componentDidMount() {
+				console.log("Gravity did mount", this.context);
+			}
+		}], [{
+			key: "contextTypes",
+			value: {
+				entityID: _react.PropTypes.string,
+				appState: _react.PropTypes.object,
+				actions: _react.PropTypes.object
+			},
+			enumerable: true
+		}]);
+
+		return Gravity;
+	})(_AkkadAbstractComponent3["default"]);
+
+	exports["default"] = Gravity;
 	module.exports = exports["default"];
 
 /***/ }
