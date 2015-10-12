@@ -32,9 +32,7 @@ class App extends Component {
             return (
                 <Box key={`box-${val}`}>
                     <PositionMesh
-                        x={val}
-                        y={val}
-                        z={val}
+                        vector={[val,val,val]}
                     />
                     <RotateMesh
                         axis={[0, 1, 0]}
@@ -53,7 +51,7 @@ class App extends Component {
 
         return (
             <Scene>
-                <Gravity />
+                <Gravity vector={[0, -0.9, 0]}/>
                 <FreeCamera
                     initialPosition={[0, 5, -10]}
                     target={[0, 1, 0]}
@@ -68,9 +66,7 @@ class App extends Component {
                     diameterZ={2}
                 >
                     <PositionMesh
-                        x={0}
-                        y={2}
-                        z={0}
+                        vector={[0,2,0]}
                     />
                     <Material>
                         <Texture 

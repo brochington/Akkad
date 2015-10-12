@@ -1,5 +1,6 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
+import EntityLoaded from "../EntityLoaded";
 import {RenderShape} from "../systems";
 import Babylon from "babylonjs";
 
@@ -29,7 +30,9 @@ class Sphere extends React.Component {
                     diameterY={diameterY}
                     diameterZ={diameterZ}
                 />
-                {this.props.children}
+                <EntityLoaded>
+                    {children}
+                </EntityLoaded>
             </Entity>
         );
     }

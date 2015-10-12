@@ -14,9 +14,19 @@ class Scene extends React.Component {
         actions: PropTypes.object
     }
 
+    static childContextTypes = {
+        entityID: PropTypes.string
+    }
+
     static propTypes = {
         beforeRender: PropTypes.func,
         backgroundColor: PropTypes.array
+    }
+
+    getChildContext() {
+        return {
+            entityID: this.id
+        }
     }
 
     componentDidMount() {

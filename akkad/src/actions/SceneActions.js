@@ -22,7 +22,6 @@ export default {
     },
 
     startRenderLoop(state, actions, sceneID) {
-        console.log("startRenderLoop");
         const engine = state.get("engine");
         const scene = state.getIn(["entities", sceneID, "entity"]);
 

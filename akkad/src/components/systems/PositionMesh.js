@@ -1,12 +1,10 @@
 import React, {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
-import {Helpers} from "../../classes";
+import Babylon from "babylonjs";
 
 class PositionMesh extends AkkadAbstractComponent {
     static propTypes = {
-        x: PropTypes.number,
-        y: PropTypes.number,
-        z: PropTypes.number
+        vector: PropTypes.arrayOf(PropTypes.number)
     }
 
     static contextTypes = {
@@ -18,24 +16,24 @@ class PositionMesh extends AkkadAbstractComponent {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         const {entityID, appState} = nextContext;
 
-        return appState.hasIn(["meshes", entityID]);
+        const newVector = nextProps.vector;
+        const oldVector = this.props.vector;
+            
+            for (let axis in newVector) {
+                if (newVector[axis] !== oldVector[axis]) {
+                    return true;
+                }
+            }
+
+        return false;
+
     }
 
-    componentWillUpdate(nextProps, nextState, nextContext) {
-        const {entityID, appState} = nextContext;
-
-        const mesh = appState.getIn(["entities", entityID, "entity"]);
-
-        const options = Helpers.convertShapeProps(nextProps);
-
-        for (let option in options) {
-            if (
-                mesh.position.hasOwnProperty(option) && 
-                mesh.position[option] !== options[option]
-            ) {
-                mesh.position[option] = options[option];
-            }
-        }
+    componentWillMount() {
+        const {appState, entityID} = this.context;
+        const entity = appState.getIn(["entities", entityID, "entity"]);
+        const {vector} = this.props;
+        entity.position = new Babylon.Vector3(...vector);
     }
 }
 

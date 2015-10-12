@@ -1,9 +1,15 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
+import EntityLoaded from "../EntityLoaded";
 import {RenderShape, MeshTrigger} from "../systems";
 import Babylon from "babylonjs";
 
 class Box extends React.Component {
+    static contextTypes = {
+        appState: PropTypes.object,
+        actions: PropTypes.object
+    }
+
     static propTypes = {
         height: PropTypes.number,
         width: PropTypes.number,
@@ -13,7 +19,8 @@ class Box extends React.Component {
     render() {
         const {
             height = 1,
-            width = 1
+            width = 1,
+            children
         } = this.props;
 
         return (
@@ -23,7 +30,9 @@ class Box extends React.Component {
                     height={height}
                     width={width}
                 />
-                {this.props.children}
+                <EntityLoaded>
+                    {children}
+                </EntityLoaded>
             </Entity>
         );
     }
