@@ -40,7 +40,7 @@ class MeshTrigger extends AkkadAbstractComponent {
         const props = Immutable.Map(nextProps);
 
         if (appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-            const mesh = appState.getIn(["meshes", entityID, "mesh"]);
+            const mesh = appState.getIn(["entities", entityID, "entity"]);
             const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
             if (appState.hasIn(["meshes", entityID, "triggers"])) {

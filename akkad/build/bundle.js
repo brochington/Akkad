@@ -2211,10 +2211,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var meshObj = _immutable2["default"].Map({
 	                id: entityID,
-	                mesh: shape
+	                entity: shape,
+	                type: "mesh"
 	            });
 
-	            state = state.setIn(["meshes", entityID], meshObj);
+	            state = state.setIn(["entities", entityID], meshObj);
 	        }
 	        return state;
 	    }
@@ -2241,7 +2242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MeshTriggerActions = {
 	    createMeshTriggers: function createMeshTriggers(state, actions, entityID, triggers) {
-	        var mesh = state.getIn(["meshes", entityID, "mesh"]);
+	        var mesh = state.getIn(["entities", entityID, "entity"]);
 
 	        if (!mesh.actionManager) {
 	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
@@ -2284,7 +2285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MaterialActions = {
 		createMaterial: function createMaterial(state, actions, meshID, entityID) {
-			var mesh = state.getIn(["meshes", meshID, "mesh"]);
+			var mesh = state.getIn(["entities", meshID, "entity"]);
 			var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
 			var material = new _babylonjs2["default"].StandardMaterial(entityID, scene);
@@ -2422,7 +2423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var entityID = nextContext.entityID;
 	            var appState = nextContext.appState;
 
-	            var mesh = appState.getIn(["meshes", entityID, "mesh"]);
+	            var mesh = appState.getIn(["entities", entityID, "entity"]);
 
 	            var options = _classes.Helpers.convertShapeProps(nextProps);
 
@@ -2568,7 +2569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var entityID = nextContext.entityID;
 	            var appState = nextContext.appState;
 
-	            var mesh = appState.getIn(["meshes", entityID, "mesh"]);
+	            var mesh = appState.getIn(["entities", entityID, "entity"]);
 
 	            var options = _classes.Helpers.convertShapeProps(nextProps);
 	            var axis = options.axis;
@@ -2849,7 +2850,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var props = _immutable2["default"].Map(nextProps);
 
 	            if (appState && appState.has("scene") && appState.hasIn(["meshes", entityID])) {
-	                var mesh = appState.getIn(["meshes", entityID, "mesh"]);
+	                var mesh = appState.getIn(["entities", entityID, "entity"]);
 	                var scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
 	                if (appState.hasIn(["meshes", entityID, "triggers"])) {

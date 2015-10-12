@@ -3,7 +3,7 @@ import Immutable from "immutable";
 
 const MaterialActions = {
 	createMaterial(state, actions, meshID, entityID) {
-		const mesh = state.getIn(["meshes", meshID, "mesh"]);
+		const mesh = state.getIn(["entities", meshID, "entity"]);
 		const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
 		const material = new Babylon.StandardMaterial(entityID, scene);

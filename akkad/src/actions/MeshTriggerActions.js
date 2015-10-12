@@ -2,7 +2,7 @@ import Babylon, {ActionManager, ExecuteCodeAction} from "babylonjs";
 
 const MeshTriggerActions = {
     createMeshTriggers(state, actions, entityID, triggers) {
-        const mesh = state.getIn(["meshes", entityID, "mesh"]);
+        const mesh = state.getIn(["entities", entityID, "entity"]);
 
         if (!mesh.actionManager) {
             const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);

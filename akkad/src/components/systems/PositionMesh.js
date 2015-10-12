@@ -24,7 +24,7 @@ class PositionMesh extends AkkadAbstractComponent {
     componentWillUpdate(nextProps, nextState, nextContext) {
         const {entityID, appState} = nextContext;
 
-        const mesh = appState.getIn(["meshes", entityID, "mesh"]);
+        const mesh = appState.getIn(["entities", entityID, "entity"]);
 
         const options = Helpers.convertShapeProps(nextProps);
 

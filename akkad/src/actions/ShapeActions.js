@@ -35,10 +35,11 @@ const ShapeActions = {
 
             const meshObj = Immutable.Map({
                 id: entityID,
-                mesh: shape
+                entity: shape,
+                type: "mesh"
             });
 
-            state = state.setIn(["meshes", entityID], meshObj);
+            state = state.setIn(["entities", entityID], meshObj);
         }
         return state;
     }
