@@ -7,11 +7,19 @@ import {
     shapes,
     systems
 } from "akkad";
+import pretend from "./img/pretend.jpg";
 
 const {FreeCamera, ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Sphere, Box, Ground} = shapes;
-const {PositionMesh, RotateMesh, MeshTrigger} = systems;
+const {
+    PositionMesh, 
+    RotateMesh, 
+    MeshTrigger, 
+    Wireframe, 
+    Texture,
+    MaterialAlpha
+} = systems;
 
 class App extends Component {
     clickMe = () => {
@@ -38,6 +46,12 @@ class App extends Component {
                         z={0}
                     />
                     <Material>
+                        <Texture 
+                            image={pretend}
+                        />
+                        <MaterialAlpha 
+                            alpha={0.2}
+                        />
                     </Material>
                 </Sphere>
                 <Box>
@@ -54,6 +68,9 @@ class App extends Component {
                     <MeshTrigger
                         onClick={this.clickMe}
                     />
+                    <Material>
+                        <Wireframe />
+                    </Material>
                 </Box>
                 <Ground 
                     height={10}

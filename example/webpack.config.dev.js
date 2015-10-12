@@ -24,6 +24,10 @@ module.exports = {
             query: {
                 stage: 0
             }
+        }, {
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            loader: "file?hash=sha512&digest=hex&name=[hash].[ext]",
+            include: path.join(__dirname, 'src/img')
         }]
     },
     resolve: {

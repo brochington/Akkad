@@ -30,10 +30,7 @@ class Material extends React.Component {
         const {entityID, appState} = this.context;
         const {children} = this.props;
 
-        console.log("Material Render", entityID);
-        // const meshHasMaterial = appState.hasIn(["meshes", entityID, "material"]);
         const material = appState.getIn(["meshes", entityID, "material"]);
-        console.log("mesh", material);
 
         return (
             <Entity>
