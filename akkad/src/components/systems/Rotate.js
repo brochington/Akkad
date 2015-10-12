@@ -44,30 +44,10 @@ class Rotate extends AkkadAbstractComponent {
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         this.updateRotation(nextProps, nextContext);
-        // const {entityID, appState} = nextContext;
-
-        // const entity = appState.getIn(["entities", entityID, "entity"]);
-
-        // const options = Helpers.convertShapeProps(nextProps);
-        // const {axis, amount, space} = options;
-
-        // if (
-        //     axis !== this.props.axis ||
-        //     amount !== this.props.amount ||
-        //     space !== this.props.space
-        // ) {
-        //     entity.rotate(axis, amount, space);
-        // }
     }
 
     componentWillMount() {
         this.updateRotation(this.props, this.context);
-        // const {entityID, appState} = this.context;
-
-        // const options = Helpers.convertShapeProps(nextProps);
-        // const {axis, amount, space} = options;
-
-        // entity.rotate(axis, amount, space);
     }
 }
 

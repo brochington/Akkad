@@ -9,6 +9,9 @@ import Wireframe from "./Wireframe";
 import Texture from "./Texture";
 import MaterialAlpha from "./MaterialAlpha";
 import Gravity from "./Gravity";
+import ApplyGravity from "./ApplyGravity";
+import CheckCollisions from "./CheckCollisions";
+import CollisionsEnabled from "./CollisionsEnabled";
 
 export default {
 	MeshTrigger,
@@ -21,5 +24,8 @@ export default {
 	Wireframe,
 	Texture,
 	MaterialAlpha,
-	Gravity
+	Gravity,
+	ApplyGravity,
+	CheckCollisions,
+	CollisionsEnabled
 };

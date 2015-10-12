@@ -1,14 +1,11 @@
 import Babylon from "babylonjs";
+import Immutable from "immutable";
 
 const cameraCreators = {
     free(entityID, config, scene) {
         const initialPosition = new Babylon.Vector3(...config.initialPosition);
 
         const camera = new Babylon.FreeCamera(entityID, initialPosition, scene);
-
-        camera.applyGravity = true;
-
-        camera.checkCollisions = true;
 
         if(config.target) {
             const target = new Babylon.Vector3(...config.target);
@@ -40,6 +37,12 @@ export default {
 
         camera.attachControl(canvas, false);
 
-        return state.set("camera", camera);
+        const cameraObj = Immutable.Map({
+            id: entityID,
+            entity: camera,
+            type: "camera"
+        });
+
+        return state.setIn(["entities", entityID], cameraObj);
     }
 };

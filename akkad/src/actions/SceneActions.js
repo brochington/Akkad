@@ -15,9 +15,6 @@ export default {
         state = state.setIn(["entities", sceneID], sceneObj);
         state = state.set("sceneID", sceneID);
 
-        // scene.gravity = new Babylon.Vector3(0, -0.9, 0);
-        // scene.collisionsEnabled = true;
-
         return state;
     },
 

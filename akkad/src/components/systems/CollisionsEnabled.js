@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
-class ApplyGravity extends AkkadAbstractComponent {
+class CollisionsEnabled extends AkkadAbstractComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
@@ -17,15 +17,15 @@ class ApplyGravity extends AkkadAbstractComponent {
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
         
-        entity.applyGravity = true;
+        entity.collisionsEnabled = true;
     }
 
     componentWillUnmount() {
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
         
-        entity.applyGravity = false;   
+        entity.collisionsEnabled = false;   
     }
 }
 
-export default ApplyGravity;
+export default CollisionsEnabled;

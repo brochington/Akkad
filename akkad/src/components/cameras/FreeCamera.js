@@ -3,6 +3,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 import {RenderCamera} from "../systems";
 import Entity from "../Entity";
+import EntityLoaded from "../EntityLoaded";
 
 class FreeCamera extends AkkadAbstractComponent {
     static propTypes = {
@@ -16,7 +17,9 @@ class FreeCamera extends AkkadAbstractComponent {
     }
 
     render() {
-        const {target, initialPosition} = this.props;
+        const {target, initialPosition, children} = this.props;
+
+        console.log("EntityLoaded", EntityLoaded, children);
 
         return (
             <Entity>
@@ -25,6 +28,9 @@ class FreeCamera extends AkkadAbstractComponent {
                     target={target}
                     initialPosition={initialPosition}
                 />
+                <EntityLoaded>
+                    {children}
+                </EntityLoaded>
             </Entity>
         );
     }

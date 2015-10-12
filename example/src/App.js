@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Scene,
-    Material,
-    cameras,
-    lights,
-    shapes,
-    systems
-} from "akkad";
+import {Scene, Material, cameras, lights, shapes, systems} from "akkad";
 import pretend from "./img/pretend.jpg";
 
 const {FreeCamera, ArcRotateCamera} = cameras;
@@ -19,7 +12,10 @@ const {
     Wireframe, 
     Texture,
     MaterialAlpha,
-    Gravity
+    Gravity,
+    ApplyGravity,
+    CheckCollisions,
+    CollisionsEnabled
 } = systems;
 
 class App extends Component {
@@ -43,7 +39,12 @@ class App extends Component {
                         onClick={this.clickMe}
                     />
                     <Material>
-                        <Wireframe />
+                        <Texture 
+                            image={pretend}
+                        />
+                        <MaterialAlpha 
+                            alpha={0.2}
+                        />
                     </Material>
                 </Box>
             );
@@ -51,13 +52,15 @@ class App extends Component {
 
         return (
             <Scene>
+                <CollisionsEnabled />
                 <Gravity vector={[0, -0.9, 0]}/>
                 <FreeCamera
                     initialPosition={[0, 5, -10]}
                     target={[0, 1, 0]}
                 >
-
-                </FreeCamera>
+                    <CheckCollisions />
+                    <ApplyGravity />
+                </FreeCamera>   
                 <HemisphericLight />
                 <Sphere
                     segments={24}
@@ -69,12 +72,7 @@ class App extends Component {
                         vector={[0,2,0]}
                     />
                     <Material>
-                        <Texture 
-                            image={pretend}
-                        />
-                        <MaterialAlpha 
-                            alpha={0.2}
-                        />
+                        <Wireframe />
                     </Material>
                 </Sphere>
                 {boxes}
