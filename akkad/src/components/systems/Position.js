@@ -26,7 +26,6 @@ class Position extends AkkadAbstractComponent {
             }
 
         return false;
-
     }
 
     componentWillMount() {

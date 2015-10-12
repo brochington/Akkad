@@ -2747,7 +2747,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(RenderCamera, [{
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
-	            console.log("componentWillMount RenderCamera");
 	            var _context = this.context;
 	            var actions = _context.actions;
 	            var appState = _context.appState;
@@ -4367,6 +4366,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classCallCheck = __webpack_require__(41)["default"];
 
+	var _toConsumableArray = __webpack_require__(54)["default"];
+
+	var _bind = __webpack_require__(79)["default"];
+
 	var _interopRequireDefault = __webpack_require__(18)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -4376,6 +4379,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(45);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _babylonjs = __webpack_require__(50);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
 	var _AkkadAbstractComponent2 = __webpack_require__(98);
 
@@ -4390,32 +4397,63 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _classCallCheck(this, Rotate);
 
 	        _get(Object.getPrototypeOf(Rotate.prototype), "constructor", this).apply(this, arguments);
+
+	        this.updateRotation = function (props, context) {
+	            var entityID = context.entityID;
+	            var appState = context.appState;
+	            var amount = props.amount;
+
+	            var axis = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(props.axis))))();
+	            var space = _babylonjs2["default"].Space[props.space];
+
+	            var entity = appState.getIn(["entities", entityID, "entity"]);
+
+	            entity.rotate(axis, amount, space);
+	        };
 	    }
 
 	    _createClass(Rotate, [{
 	        key: "shouldComponentUpdate",
 	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-	            var entityID = nextContext.entityID;
-	            var appState = nextContext.appState;
+	            var axis = nextProps.axis;
+	            var amount = nextProps.amount;
+	            var space = nextProps.space;
 
-	            return appState.hasIn(["meshes", entityID]);
+	            if (axis !== this.props.axis || amount !== this.props.amount || space !== this.props.space) {
+	                return true;
+	            }
+
+	            return false;
 	        }
 	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
-	            var entityID = nextContext.entityID;
-	            var appState = nextContext.appState;
+	            this.updateRotation(nextProps, nextContext);
+	            // const {entityID, appState} = nextContext;
 
-	            var mesh = appState.getIn(["entities", entityID, "entity"]);
+	            // const entity = appState.getIn(["entities", entityID, "entity"]);
 
-	            var options = _classes.Helpers.convertShapeProps(nextProps);
-	            var axis = options.axis;
-	            var amount = options.amount;
-	            var space = options.space;
+	            // const options = Helpers.convertShapeProps(nextProps);
+	            // const {axis, amount, space} = options;
 
-	            if (axis !== this.props.axis || amount !== this.props.amount || space !== this.props.space) {
-	                mesh.rotate(axis, amount, space);
-	            }
+	            // if (
+	            //     axis !== this.props.axis ||
+	            //     amount !== this.props.amount ||
+	            //     space !== this.props.space
+	            // ) {
+	            //     entity.rotate(axis, amount, space);
+	            // }
+	        }
+	    }, {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            this.updateRotation(this.props, this.context);
+	            // const {entityID, appState} = this.context;
+
+	            // const options = Helpers.convertShapeProps(nextProps);
+	            // const {axis, amount, space} = options;
+
+	            // entity.rotate(axis, amount, space);
 	        }
 	    }], [{
 	        key: "propTypes",
