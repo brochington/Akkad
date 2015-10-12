@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
-class PositionMesh extends AkkadAbstractComponent {
+class Position extends AkkadAbstractComponent {
     static propTypes = {
         vector: PropTypes.arrayOf(PropTypes.number)
     }
@@ -37,4 +37,4 @@ class PositionMesh extends AkkadAbstractComponent {
     }
 }
 
-export default PositionMesh;
+export default Position;

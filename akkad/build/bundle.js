@@ -2307,13 +2307,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 
-	var _PositionMesh = __webpack_require__(97);
+	var _Position = __webpack_require__(128);
 
-	var _PositionMesh2 = _interopRequireDefault(_PositionMesh);
+	var _Position2 = _interopRequireDefault(_Position);
 
-	var _RotateMesh = __webpack_require__(99);
+	var _Rotate = __webpack_require__(129);
 
-	var _RotateMesh2 = _interopRequireDefault(_RotateMesh);
+	var _Rotate2 = _interopRequireDefault(_Rotate);
 
 	var _RenderShape = __webpack_require__(100);
 
@@ -2353,8 +2353,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports["default"] = {
 		MeshTrigger: _MeshTrigger2["default"],
-		PositionMesh: _PositionMesh2["default"],
-		RotateMesh: _RotateMesh2["default"],
+		Position: _Position2["default"],
+		Rotate: _Rotate2["default"],
 		RenderShape: _RenderShape2["default"],
 		RenderLight: _RenderLight2["default"],
 		RenderCamera: _RenderCamera2["default"],
@@ -2367,102 +2367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _toConsumableArray = __webpack_require__(54)["default"];
-
-	var _bind = __webpack_require__(79)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _AkkadAbstractComponent2 = __webpack_require__(98);
-
-	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
-
-	var _babylonjs = __webpack_require__(50);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var PositionMesh = (function (_AkkadAbstractComponent) {
-	    _inherits(PositionMesh, _AkkadAbstractComponent);
-
-	    function PositionMesh() {
-	        _classCallCheck(this, PositionMesh);
-
-	        _get(Object.getPrototypeOf(PositionMesh.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(PositionMesh, [{
-	        key: "shouldComponentUpdate",
-	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-	            var entityID = nextContext.entityID;
-	            var appState = nextContext.appState;
-
-	            var newVector = nextProps.vector;
-	            var oldVector = this.props.vector;
-
-	            for (var axis in newVector) {
-	                if (newVector[axis] !== oldVector[axis]) {
-	                    return true;
-	                }
-	            }
-
-	            return false;
-	        }
-	    }, {
-	        key: "componentWillMount",
-	        value: function componentWillMount() {
-	            var _context = this.context;
-	            var appState = _context.appState;
-	            var entityID = _context.entityID;
-
-	            var entity = appState.getIn(["entities", entityID, "entity"]);
-	            var vector = this.props.vector;
-
-	            entity.position = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(vector))))();
-	        }
-	    }], [{
-	        key: "propTypes",
-	        value: {
-	            vector: _react.PropTypes.arrayOf(_react.PropTypes.number)
-	        },
-	        enumerable: true
-	    }, {
-	        key: "contextTypes",
-	        value: {
-	            entityID: _react.PropTypes.string,
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return PositionMesh;
-	})(_AkkadAbstractComponent3["default"]);
-
-	exports["default"] = PositionMesh;
-	module.exports = exports["default"];
-
-/***/ },
+/* 97 */,
 /* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2522,94 +2427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _AkkadAbstractComponent2 = __webpack_require__(98);
-
-	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
-
-	var _classes = __webpack_require__(81);
-
-	var RotateMesh = (function (_AkkadAbstractComponent) {
-	    _inherits(RotateMesh, _AkkadAbstractComponent);
-
-	    function RotateMesh() {
-	        _classCallCheck(this, RotateMesh);
-
-	        _get(Object.getPrototypeOf(RotateMesh.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(RotateMesh, [{
-	        key: "shouldComponentUpdate",
-	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-	            var entityID = nextContext.entityID;
-	            var appState = nextContext.appState;
-
-	            return appState.hasIn(["meshes", entityID]);
-	        }
-	    }, {
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
-	            var entityID = nextContext.entityID;
-	            var appState = nextContext.appState;
-
-	            var mesh = appState.getIn(["entities", entityID, "entity"]);
-
-	            var options = _classes.Helpers.convertShapeProps(nextProps);
-	            var axis = options.axis;
-	            var amount = options.amount;
-	            var space = options.space;
-
-	            if (axis !== this.props.axis || amount !== this.props.amount || space !== this.props.space) {
-	                mesh.rotate(axis, amount, space);
-	            }
-	        }
-	    }], [{
-	        key: "propTypes",
-	        value: {
-	            axis: _react.PropTypes.array.isRequired,
-	            amount: _react.PropTypes.number.isRequired,
-	            space: _react.PropTypes.string.isRequired
-	        },
-	        enumerable: true
-	    }, {
-	        key: "contextTypes",
-	        value: {
-	            entityID: _react.PropTypes.string,
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return RotateMesh;
-	})(_AkkadAbstractComponent3["default"]);
-
-	exports["default"] = RotateMesh;
-	module.exports = exports["default"];
-
-/***/ },
+/* 99 */,
 /* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4437,6 +4255,190 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = EntityLoaded;
+	module.exports = exports["default"];
+
+/***/ },
+/* 128 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _toConsumableArray = __webpack_require__(54)["default"];
+
+	var _bind = __webpack_require__(79)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _AkkadAbstractComponent2 = __webpack_require__(98);
+
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
+
+	var _babylonjs = __webpack_require__(50);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var Position = (function (_AkkadAbstractComponent) {
+	    _inherits(Position, _AkkadAbstractComponent);
+
+	    function Position() {
+	        _classCallCheck(this, Position);
+
+	        _get(Object.getPrototypeOf(Position.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Position, [{
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+	            var entityID = nextContext.entityID;
+	            var appState = nextContext.appState;
+
+	            var newVector = nextProps.vector;
+	            var oldVector = this.props.vector;
+
+	            for (var axis in newVector) {
+	                if (newVector[axis] !== oldVector[axis]) {
+	                    return true;
+	                }
+	            }
+
+	            return false;
+	        }
+	    }, {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            var _context = this.context;
+	            var appState = _context.appState;
+	            var entityID = _context.entityID;
+
+	            var entity = appState.getIn(["entities", entityID, "entity"]);
+	            var vector = this.props.vector;
+
+	            entity.position = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(vector))))();
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            vector: _react.PropTypes.arrayOf(_react.PropTypes.number)
+	        },
+	        enumerable: true
+	    }, {
+	        key: "contextTypes",
+	        value: {
+	            entityID: _react.PropTypes.string,
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Position;
+	})(_AkkadAbstractComponent3["default"]);
+
+	exports["default"] = Position;
+	module.exports = exports["default"];
+
+/***/ },
+/* 129 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _AkkadAbstractComponent2 = __webpack_require__(98);
+
+	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
+
+	var _classes = __webpack_require__(81);
+
+	var Rotate = (function (_AkkadAbstractComponent) {
+	    _inherits(Rotate, _AkkadAbstractComponent);
+
+	    function Rotate() {
+	        _classCallCheck(this, Rotate);
+
+	        _get(Object.getPrototypeOf(Rotate.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Rotate, [{
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+	            var entityID = nextContext.entityID;
+	            var appState = nextContext.appState;
+
+	            return appState.hasIn(["meshes", entityID]);
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            var entityID = nextContext.entityID;
+	            var appState = nextContext.appState;
+
+	            var mesh = appState.getIn(["entities", entityID, "entity"]);
+
+	            var options = _classes.Helpers.convertShapeProps(nextProps);
+	            var axis = options.axis;
+	            var amount = options.amount;
+	            var space = options.space;
+
+	            if (axis !== this.props.axis || amount !== this.props.amount || space !== this.props.space) {
+	                mesh.rotate(axis, amount, space);
+	            }
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            axis: _react.PropTypes.array.isRequired,
+	            amount: _react.PropTypes.number.isRequired,
+	            space: _react.PropTypes.string.isRequired
+	        },
+	        enumerable: true
+	    }, {
+	        key: "contextTypes",
+	        value: {
+	            entityID: _react.PropTypes.string,
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Rotate;
+	})(_AkkadAbstractComponent3["default"]);
+
+	exports["default"] = Rotate;
 	module.exports = exports["default"];
 
 /***/ }

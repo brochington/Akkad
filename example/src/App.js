@@ -13,8 +13,8 @@ const {FreeCamera, ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Sphere, Box, Ground} = shapes;
 const {
-    PositionMesh, 
-    RotateMesh, 
+    Position, 
+    Rotate, 
     MeshTrigger, 
     Wireframe, 
     Texture,
@@ -31,10 +31,10 @@ class App extends Component {
         const boxes = [1, 2, 3, 4, 5].map(val => {
             return (
                 <Box key={`box-${val}`}>
-                    <PositionMesh
+                    <Position
                         vector={[val,val,val]}
                     />
-                    <RotateMesh
+                    <Rotate
                         axis={[0, 1, 0]}
                         amount={35}
                         space="LOCAL"
@@ -65,7 +65,7 @@ class App extends Component {
                     diameterY={2}
                     diameterZ={2}
                 >
-                    <PositionMesh
+                    <Position
                         vector={[0,2,0]}
                     />
                     <Material>

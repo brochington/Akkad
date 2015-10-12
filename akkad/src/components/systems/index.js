@@ -1,5 +1,5 @@
-import PositionMesh from "./PositionMesh";
-import RotateMesh from "./RotateMesh";
+import Position from "./Position";
+import Rotate from "./Rotate";
 import RenderShape from "./RenderShape";
 import RenderLight from "./RenderLight";
 import MeshTrigger from "./MeshTrigger";
@@ -12,8 +12,8 @@ import Gravity from "./Gravity";
 
 export default {
 	MeshTrigger,
-	PositionMesh,
-	RotateMesh,
+	Position,
+	Rotate,
 	RenderShape,
 	RenderLight,
 	RenderCamera,

@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import {Helpers} from "../../classes";
 
-class RotateMesh extends AkkadAbstractComponent {
+class Rotate extends AkkadAbstractComponent {
     static propTypes = {
         axis: PropTypes.array.isRequired,
         amount: PropTypes.number.isRequired,
@@ -39,4 +39,4 @@ class RotateMesh extends AkkadAbstractComponent {
     }
 }
 
-export default RotateMesh;
+export default Rotate;
