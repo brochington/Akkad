@@ -2290,7 +2290,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MaterialActions = {
 	    createMaterial: function createMaterial(state, actions, entityID) {
-	        console.log("createMaterial", entityID);
 	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
 	        var material = new _babylonjs2["default"].StandardMaterial(entityID, scene);
@@ -2356,10 +2355,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Texture2 = _interopRequireDefault(_Texture);
 
-	var _MaterialAlpha = __webpack_require__(106);
-
-	var _MaterialAlpha2 = _interopRequireDefault(_MaterialAlpha);
-
 	var _Gravity = __webpack_require__(107);
 
 	var _Gravity2 = _interopRequireDefault(_Gravity);
@@ -2394,7 +2389,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		RenderMaterial: _RenderMaterial2["default"],
 		Wireframe: _Wireframe2["default"],
 		Texture: _Texture2["default"],
-		MaterialAlpha: _MaterialAlpha2["default"],
 		Gravity: _Gravity2["default"],
 		ApplyGravity: _ApplyGravity2["default"],
 		CheckCollisions: _CheckCollisions2["default"],
@@ -3254,99 +3248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 106 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _babylonjs = __webpack_require__(50);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _AkkadAbstractComponent2 = __webpack_require__(97);
-
-	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
-
-	var MaterialAlpha = (function (_AkkadAbstractComponent) {
-		_inherits(MaterialAlpha, _AkkadAbstractComponent);
-
-		function MaterialAlpha() {
-			_classCallCheck(this, MaterialAlpha);
-
-			_get(Object.getPrototypeOf(MaterialAlpha.prototype), "constructor", this).apply(this, arguments);
-
-			this.updateMaterialAlpha = function (alpha, context) {
-				var appState = context.appState;
-				var meshID = context.meshID;
-
-				var material = appState.getIn(["meshes", meshID, "material"]);
-
-				material.alpha = alpha;
-			};
-		}
-
-		_createClass(MaterialAlpha, [{
-			key: "shouldComponentUpdate",
-			value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
-				return nextProps.alpha !== this.props.alpha;
-			}
-		}, {
-			key: "componentWillMount",
-			value: function componentWillMount() {
-				this.updateMaterialAlpha(this.props.alpha, this.context);
-			}
-		}, {
-			key: "componentWillUpdate",
-			value: function componentWillUpdate(nextProps, nextState, nextContext) {
-				this.updateMaterialAlpha(nextProps.alpha, nextContext);
-			}
-		}, {
-			key: "componentWillUnmount",
-			value: function componentWillUnmount() {
-				this.updateMaterialAlpha(null, nextContext);
-			}
-		}], [{
-			key: "contextTypes",
-			value: {
-				meshID: _react.PropTypes.string,
-				entityID: _react.PropTypes.string,
-				appState: _react.PropTypes.object,
-				actions: _react.PropTypes.object
-			},
-			enumerable: true
-		}, {
-			key: "propTypes",
-			value: {
-				alpha: _react.PropTypes.number.isRequired
-			},
-			enumerable: true
-		}]);
-
-		return MaterialAlpha;
-	})(_AkkadAbstractComponent3["default"]);
-
-	exports["default"] = MaterialAlpha;
-	module.exports = exports["default"];
-
-/***/ },
+/* 106 */,
 /* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4777,11 +4679,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _inherits(GenericProperty, _AkkadAbstractComponent);
 
 	    function GenericProperty() {
+	        var _this = this;
+
 	        _classCallCheck(this, GenericProperty);
 
 	        _get(Object.getPrototypeOf(GenericProperty.prototype), "constructor", this).apply(this, arguments);
 
-	        this.updatePropertyValue = function (appState, entityID, propertyName, val) {
+	        this.updatePropertyValue = function (val) {
+	            var _context = _this.context;
+	            var appState = _context.appState;
+	            var entityID = _context.entityID;
+	            var propertyName = _this.props.propertyName;
+
 	            var entity = appState.getIn(["entities", entityID, "entity"]);
 
 	            entity[propertyName] = val;
@@ -4790,33 +4699,33 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(GenericProperty, [{
 	        key: "shouldComponentUpdate",
-	        value: function shouldComponentUpdate() {
+	        value: function shouldComponentUpdate(nextProps) {
+	            if (nextProps.onVal !== this.props.onVal || nextProps.offVal !== this.props.offVal) {
+	                return true;
+	            }
+
 	            return false;
 	        }
 	    }, {
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
-	            var _context = this.context;
-	            var appState = _context.appState;
-	            var entityID = _context.entityID;
-	            var _props = this.props;
-	            var propertyName = _props.propertyName;
-	            var onVal = _props.onVal;
+	            var onVal = this.props.onVal;
 
-	            console.log(entityID);
-	            this.updatePropertyValue(appState, entityID, propertyName, onVal);
+	            this.updatePropertyValue(onVal);
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate() {
+	            var onVal = this.props.onVal;
+
+	            this.updatePropertyValue(onVal);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            var _context2 = this.context;
-	            var appState = _context2.appState;
-	            var entityID = _context2.entityID;
-	            var _props2 = this.props;
-	            var propertyName = _props2.propertyName;
-	            var offVal = _props2.offVal;
+	            var offVal = this.props.offVal;
 
-	            this.updatePropertyValue(appState, entityID, propertyName, offVal);
+	            this.updatePropertyValue(offVal);
 	        }
 	    }], [{
 	        key: "contextTypes",

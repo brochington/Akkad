@@ -15,28 +15,42 @@ class GenericProperty extends AkkadAbstractComponent {
         offVal: PropTypes.any
     }
 
-    shouldComponentUpdate() {
+    shouldComponentUpdate(nextProps) {
+        if (
+            nextProps.onVal !== this.props.onVal ||
+            nextProps.offVal !== this.props.offVal
+        ) {
+            return true;
+        }
+
         return false;
     }
 
-    updatePropertyValue = (appState, entityID, propertyName, val) => {
+    updatePropertyValue = (val) => {
+        const {appState, entityID} = this.context;
+        const {propertyName} = this.props;
+
         const entity = appState.getIn(["entities", entityID, "entity"]);
         
         entity[propertyName] = val;
     }
 
     componentWillMount() {
-        const {appState, entityID} = this.context;
-        const {propertyName, onVal} = this.props;
-        console.log(entityID);
-        this.updatePropertyValue(appState, entityID, propertyName, onVal);
+        const {onVal} = this.props;
+
+        this.updatePropertyValue(onVal);
+    }
+
+    componentWillUpdate() {
+        const {onVal} = this.props;
+
+        this.updatePropertyValue(onVal);
     }
 
     componentWillUnmount() {
-        const {appState, entityID} = this.context;
-        const {propertyName, offVal} = this.props;
+        const {offVal} = this.props;
 
-        this.updatePropertyValue(appState, entityID, propertyName, offVal);
+        this.updatePropertyValue(offVal);
     }
 }
 

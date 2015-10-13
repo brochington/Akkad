@@ -3,7 +3,6 @@ import Immutable from "immutable";
 
 const MaterialActions = {
     createMaterial(state, actions, entityID) {
-        console.log("createMaterial", entityID);
         const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
         const material = new Babylon.StandardMaterial(entityID, scene);

@@ -29,6 +29,7 @@ class App extends Component {
         const boxes = [1, 2, 3, 4, 5].map(val => {
             return (
                 <Box key={`box-${val}`}>
+                    <CheckCollisions />
                     <Position
                         vector={[val,val,val]}
                     />
@@ -75,6 +76,23 @@ class App extends Component {
                         <Wireframe />
                     </Material>
                 </Sphere>
+                <Sphere
+                    segments={24}
+                    diameterX={2}
+                    diameterY={2}
+                    diameterZ={2}
+                >
+                    <Position
+                        vector={[-3,2,0]}
+                    />
+                    <CheckCollisions />
+                    <Material>
+                        <GenericProperty 
+                            propertyName="diffuseColor"
+                            onVal={new Babylon.Color3(1.0, 0.2, 0.7)}
+                        />
+                    </Material>
+                </Sphere>
                 {boxes}
                 <Ground 
                     height={300}
@@ -86,7 +104,3 @@ class App extends Component {
 }
 
 export default App;
-                        // <GenericProperty 
-                        //     propertyName="Wireframe"
-                        //     onVal={true}
-                        // />

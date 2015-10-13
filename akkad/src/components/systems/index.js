@@ -7,7 +7,6 @@ import RenderCamera from "./RenderCamera";
 import RenderMaterial from "./RenderMaterial";
 import Wireframe from "./Wireframe";
 import Texture from "./Texture";
-import MaterialAlpha from "./MaterialAlpha";
 import Gravity from "./Gravity";
 import ApplyGravity from "./ApplyGravity";
 import CheckCollisions from "./CheckCollisions";
@@ -25,7 +24,6 @@ export default {
 	RenderMaterial,
 	Wireframe,
 	Texture,
-	MaterialAlpha,
 	Gravity,
 	ApplyGravity,
 	CheckCollisions,
