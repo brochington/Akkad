@@ -1,7 +1,12 @@
 import React, {PropTypes} from "react";
 import Entity from "./Entity";
 import Babylon from "babylonjs";
-import {RenderMaterial} from "./systems";
+import {
+    RenderMaterial, 
+    GenericProperty,
+    SetEntityAsProperty
+} from "./systems";
+import EntityLoaded from "./EntityLoaded";
 
 class Material extends React.Component {
     static contextTypes = {
@@ -10,32 +15,26 @@ class Material extends React.Component {
         actions: PropTypes.object
     }
 
-    static childContextTypes = {
-        meshID: PropTypes.string
-    }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     const {entityID, appState} = nextContext;
 
-    getChildContext() {
-        return {
-            meshID: this.context.entityID
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        const {entityID, appState} = nextContext;
-
-        return appState.hasIn(["meshes", entityID]);
-    }
+    //     return appState.hasIn(["entities", entityID]);
+    // }
 
     render() {
         const {entityID, appState} = this.context;
         const {children} = this.props;
 
-        const material = appState.getIn(["meshes", entityID, "material"]);
-
         return (
             <Entity>
                 <RenderMaterial />
-                {material && children}
+                <EntityLoaded>
+                    <SetEntityAsProperty
+                        targetEntityID={entityID}
+                        propertyName="material"
+                    />
+                    {children}
+                </EntityLoaded>
             </Entity>
         );
     }

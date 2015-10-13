@@ -2,16 +2,20 @@ import Babylon from "babylonjs";
 import Immutable from "immutable";
 
 const MaterialActions = {
-	createMaterial(state, actions, meshID, entityID) {
-		const mesh = state.getIn(["entities", meshID, "entity"]);
-		const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+    createMaterial(state, actions, entityID) {
+        console.log("createMaterial", entityID);
+        const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
-		const material = new Babylon.StandardMaterial(entityID, scene);
+        const material = new Babylon.StandardMaterial(entityID, scene);
 
-		mesh.material = material;
+        const materialObj = Immutable.Map({
+            id: entityID,
+            entity: material,
+            type: "material"
+        });
 
-		return state.setIn(["meshes", meshID, "material"], material);
-	}
+        return state.setIn(["entities", entityID], materialObj);
+    }
 }
 
 export default MaterialActions;

@@ -12,6 +12,8 @@ import Gravity from "./Gravity";
 import ApplyGravity from "./ApplyGravity";
 import CheckCollisions from "./CheckCollisions";
 import CollisionsEnabled from "./CollisionsEnabled";
+import GenericProperty from "./GenericProperty";
+import SetEntityAsProperty from "./SetEntityAsProperty";
 
 export default {
 	MeshTrigger,
@@ -27,5 +29,7 @@ export default {
 	Gravity,
 	ApplyGravity,
 	CheckCollisions,
-	CollisionsEnabled
+	CollisionsEnabled,
+	GenericProperty,
+	SetEntityAsProperty
 };

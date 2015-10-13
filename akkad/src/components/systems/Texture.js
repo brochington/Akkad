@@ -4,7 +4,6 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class Texture extends AkkadAbstractComponent {
 	static contextTypes = {
-		meshID: PropTypes.string,
 		entityID: PropTypes.string,
 		appState: PropTypes.object, 
 		actions: PropTypes.object,
@@ -18,20 +17,20 @@ class Texture extends AkkadAbstractComponent {
 		return nextProps.image !== this.props.image;
 	}
 
-	componentWillMount() {
-		const {appState, meshID} = this.context;
+	componentDidMount() {
+		const {appState, entityID} = this.context;
 		const {image} = this.props;
 		const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
-        const material = appState.getIn(["meshes", meshID, "material"]);
+        const material = appState.getIn(["entities", entityID, "entity"]);
 
         material.diffuseTexture = new Babylon.Texture(image, scene);
     }
 
     componentWillUnmount() {
-    	const {appState, meshID} = this.context;
+    	const {appState, entityID} = this.context;
 
-        const material = appState.getIn(["meshes", meshID, "material"]);
+        const material = appState.getIn(["entities", entityID, "entity"]);
         material.diffuseTexture = null;
     }
 }

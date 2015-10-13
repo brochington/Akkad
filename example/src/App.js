@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Babylon from "babylonjs";
 import {Scene, Material, cameras, lights, shapes, systems} from "akkad";
 import pretend from "./img/pretend.jpg";
 
@@ -15,7 +16,8 @@ const {
     Gravity,
     ApplyGravity,
     CheckCollisions,
-    CollisionsEnabled
+    CollisionsEnabled,
+    GenericProperty
 } = systems;
 
 class App extends Component {
@@ -41,9 +43,6 @@ class App extends Component {
                     <Material>
                         <Texture 
                             image={pretend}
-                        />
-                        <MaterialAlpha 
-                            alpha={0.2}
                         />
                     </Material>
                 </Box>
@@ -71,6 +70,7 @@ class App extends Component {
                     <Position
                         vector={[0,2,0]}
                     />
+                    <CheckCollisions />
                     <Material>
                         <Wireframe />
                     </Material>
@@ -86,3 +86,7 @@ class App extends Component {
 }
 
 export default App;
+                        // <GenericProperty 
+                        //     propertyName="Wireframe"
+                        //     onVal={true}
+                        // />

@@ -14,7 +14,6 @@ class CheckCollisions extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
-        console.log("CheckCollisions will mount");
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
         

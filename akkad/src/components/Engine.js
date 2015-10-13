@@ -68,8 +68,11 @@ class Engine extends React.Component {
     }
 
     componentDidMount() {
+
         const {actions, appState} = this.props;
         const {setEngine} = actions._internal;
+
+        window.state = appState;
 
         setEngine();
 

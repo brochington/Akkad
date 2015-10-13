@@ -3,7 +3,6 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class Wireframe extends AkkadAbstractComponent {
     static contextTypes = {
-        meshID: PropTypes.string,
         entityID: PropTypes.string,
         appState: PropTypes.object, 
         actions: PropTypes.object,
@@ -13,18 +12,19 @@ class Wireframe extends AkkadAbstractComponent {
         return false
     }
 
-    componentWillMount() {
-        const {appState, meshID} = this.context;
+    entityHasWireframe = (val) => {
+        const {appState, entityID} = this.context;
 
-        const material = appState.getIn(["meshes", meshID, "material"]);
-        material.wireframe = true;
+        const material = appState.getIn(["entities", entityID, "entity"]);
+        material.wireframe = val;
+    }
+
+    componentWillMount() {
+        this.entityHasWireframe(true);
     }
 
     componentWillUnmount() {
-        const {appState, meshID} = this.context;
-
-        const material = appState.getIn(["meshes", meshID, "material"]);
-        material.wireframe = false;
+        this.entityHasWireframe(false);
     }
 }
 

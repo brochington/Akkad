@@ -19,8 +19,6 @@ class FreeCamera extends AkkadAbstractComponent {
     render() {
         const {target, initialPosition, children} = this.props;
 
-        console.log("EntityLoaded", EntityLoaded, children);
-
         return (
             <Entity>
                 <RenderCamera 
