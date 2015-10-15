@@ -14,7 +14,6 @@ const initState = {
 
 class Akkad extends React.Component {
     static propTypes = {
-        canvasStyles: PropTypes.object,
         canvasNode: PropTypes.object,
         actions: PropTypes.object
     }
@@ -35,7 +34,7 @@ class Akkad extends React.Component {
     }
 
     render() {
-        const {canvasStyles, children} = this.props;
+        const {children} = this.props;
         const canvas = stateManager.appState.get("canvas");
         
         const engine = canvas && (

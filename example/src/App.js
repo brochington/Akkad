@@ -9,7 +9,6 @@ const {Sphere, Box, Ground} = shapes;
 const {
     Position, 
     Rotate, 
-    MeshTrigger, 
     Wireframe, 
     Texture,
     MaterialAlpha,
@@ -17,7 +16,8 @@ const {
     ApplyGravity,
     CheckCollisions,
     CollisionsEnabled,
-    GenericProperty
+    GenericProperty,
+    Trigger
 } = systems;
 
 const testKeyFrames = [{
@@ -32,10 +32,10 @@ const testKeyFrames = [{
 }]
 
 class App extends Component {
-    clickMe = () => {
-        console.log("clicked me!!");
+    clickMe = (evt, meshID, triggerID) => {
+        console.log("clicked me!!", evt, meshID, triggerID);
     }
-
+    
     render() {
         const boxes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(val => {
             return (
@@ -43,10 +43,6 @@ class App extends Component {
                     <CheckCollisions />
                     <Position
                         vector={[2,val,val]}
-                    />
-
-                    <MeshTrigger
-                        onClick={this.clickMe}
                     />
                     <Material>
                         <Texture 
@@ -90,7 +86,6 @@ class App extends Component {
                     <Position
                         vector={[0,2,0]}
                     />
-                    <CheckCollisions />
                     <Material>
                         <Wireframe />
                     </Material>
@@ -101,6 +96,9 @@ class App extends Component {
                     diameterY={2}
                     diameterZ={2}
                 >
+                    <Trigger 
+                        onClick={this.clickMe}
+                    />
                     <Position
                         vector={[-3,2,0]}
                     />
@@ -123,3 +121,4 @@ class App extends Component {
 }
 
 export default App;
+                    
