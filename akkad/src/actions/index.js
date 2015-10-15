@@ -6,7 +6,8 @@ import shapeActions from "./ShapeActions";
 import meshTriggerActions from "./MeshTriggerActions";
 import materialActions from "./MaterialActions";
 import animationActions from "./AnimationActions";
-import triggerActions from "./triggerActions";
+import triggerActions from "./TriggerActions";
+import meshActions from "./MeshActions";
 
 export default {
     ...appActions,
@@ -17,5 +18,6 @@ export default {
     ...meshTriggerActions,
     ...materialActions,
     ...animationActions,
-    ...triggerActions
+    ...triggerActions,
+    ...meshActions
 };

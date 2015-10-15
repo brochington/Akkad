@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import Babylon from "babylonjs";
 import {Scene, Material, BasicAnimation, cameras, lights, shapes, systems} from "akkad";
 import pretend from "./img/pretend.jpg";
+import skullMesh from "./meshes/skull.babylon";
+
+console.log("skullMesh!", skullMesh);
 
 const {FreeCamera, ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
@@ -17,7 +20,8 @@ const {
     CheckCollisions,
     CollisionsEnabled,
     GenericProperty,
-    Trigger
+    Trigger,
+    Mesh
 } = systems;
 
 const testKeyFrames = [{
@@ -111,6 +115,9 @@ class App extends Component {
                     </Material>
                 </Sphere>
                 {boxes}
+                <Mesh 
+                    meshLocation={skullMesh}
+                />
                 <Ground 
                     height={300}
                     width={300}

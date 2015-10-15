@@ -1,10 +1,17 @@
-import Position from "./Position";
-import Rotate from "./Rotate";
 import RenderShape from "./RenderShape";
 import RenderLight from "./RenderLight";
 import RenderCamera from "./RenderCamera";
 import RenderMaterial from "./RenderMaterial";
 import RenderAnimation from "./RenderAnimation";
+import RenderMesh from "./RenderMesh";
+
+
+import Trigger from "./Trigger";
+import Mesh from "./Mesh";
+
+import AnimateMesh from "./AnimateMesh";
+import Position from "./Position";
+import Rotate from "./Rotate";
 import Wireframe from "./Wireframe";
 import Texture from "./Texture";
 import Gravity from "./Gravity";
@@ -13,8 +20,9 @@ import CheckCollisions from "./CheckCollisions";
 import CollisionsEnabled from "./CollisionsEnabled";
 import GenericProperty from "./GenericProperty";
 import SetEntityAsProperty from "./SetEntityAsProperty";
-import AnimateMesh from "./AnimateMesh";
-import Trigger from "./Trigger";
+
+
+
 
 export default {
 	Position,
@@ -33,5 +41,6 @@ export default {
 	GenericProperty,
 	SetEntityAsProperty,
 	AnimateMesh,
-	Trigger
+	Trigger,
+	Mesh
 };
