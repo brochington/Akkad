@@ -13,7 +13,6 @@ const initState = {
 }
 
 class Akkad extends React.Component {
-
     static propTypes = {
         canvasStyles: PropTypes.object,
         canvasNode: PropTypes.object,

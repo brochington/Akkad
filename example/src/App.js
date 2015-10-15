@@ -123,8 +123,3 @@ class App extends Component {
 }
 
 export default App;
-                    // <Rotate
-                    //     axis={[val * -1, val - 15, val]}
-                    //     amount={35}
-                    //     space="LOCAL"
-                    // />

@@ -14,9 +14,7 @@ const shapeCreators = {
         return new Babylon.Mesh.CreateSphere(entityID, options, scene);
     },
     ground(scene, entityID, props) {
-        const options = Helpers.convertShapeProps(props);
-        
-        
+        const options = Helpers.convertShapeProps(props); 
         const ground = new Babylon.Mesh.CreateGround(entityID, options, scene);
         
         ground.checkCollisions = true;
