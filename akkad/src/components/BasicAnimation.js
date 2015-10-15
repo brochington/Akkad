@@ -19,7 +19,9 @@ class BasicAnimation extends React.Component {
         meshProperty: PropTypes.string.isRequired,
         valueType: PropTypes.string.isRequired,
         loopMode: PropTypes.string.isRequired,
-        keyFrames: PropTypes.array
+        keyFrames: PropTypes.array,
+        startFrame: PropTypes.number,
+        endFrame: PropTypes.number
     }
 
     render() {
@@ -29,8 +31,11 @@ class BasicAnimation extends React.Component {
             valueType, 
             loopMode, 
             keyFrames,
-            children
+            children,
+            startFrame = 0,
+            endFrame = 100
         } = this.props;
+
         const animationTargetEntity = appState.getIn(["entites", entityID, "entity"]);
 
         return (
@@ -40,6 +45,8 @@ class BasicAnimation extends React.Component {
                     <AnimateMesh 
                         targetEntityID={entityID}
                         keyFrames={keyFrames}
+                        startFrame={startFrame}
+                        endFrame={endFrame}
                     />
                     {children}
                 </EntityLoaded>

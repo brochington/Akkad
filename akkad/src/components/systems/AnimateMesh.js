@@ -2,7 +2,6 @@ import React, {PropTypes} from "react";
 import Babylon from "babylonjs";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
-/* Pushes a value to a property on a specific entity */
 class AnimateMesh extends AkkadAbstractComponent {
 	static contextTypes = {
 		entityID: PropTypes.string.isRequired,
@@ -13,12 +12,25 @@ class AnimateMesh extends AkkadAbstractComponent {
 	static propTypes = {
 		targetEntityID: PropTypes.string,
 		propertyName: PropTypes.string,
-		keyFrames: PropTypes.array
+		keyFrames: PropTypes.array,
+		startFrame: PropTypes.number,
+		endFrame: PropTypes.number
+	}
+
+	static defaultProps = {
+		startFrame: 0,
+		endFrame: 100
 	}
 
 	componentDidMount() {
 		const {entityID, appState} = this.context;
-		const {targetEntityID, propertyName, keyFrames} = this.props;
+		const {
+			targetEntityID, 
+			propertyName, 
+			keyFrames,
+			startFrame,
+			endFrame
+		} = this.props;
 
 		const targetMesh = appState.getIn(["entities", targetEntityID, "entity"]);
 		const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
@@ -28,7 +40,7 @@ class AnimateMesh extends AkkadAbstractComponent {
 
 		targetMesh.animations.push(animation);
 
-		scene.beginAnimation(targetMesh, 0, 100, true);
+		scene.beginAnimation(targetMesh, startFrame, endFrame, true);
 	}
 
 	componentWillUnmount() {

@@ -8,11 +8,16 @@ class RenderAnimation extends AkkadAbstractComponent {
         actions: PropTypes.object,
     }
 
+    static propTypes = {
+        meshProperty: PropTypes.string.isRequired,
+        valueType: PropTypes.string.isRequired,
+        loopMode: PropTypes.string.isRequired,
+        keyFrames: PropTypes.array
+    }
+
     componentWillMount() {
         const {actions, entityID} = this.context;
         const {createAnimation} = actions._internal;
-
-        console.log("entityID", entityID);
 
         const config = {
             ...this.props,

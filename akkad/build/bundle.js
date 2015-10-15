@@ -3206,8 +3206,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var entityID = _context.entityID;
 	            var createAnimation = actions._internal.createAnimation;
 
-	            console.log("entityID", entityID);
-
 	            var config = _extends({}, this.props, {
 	                entityID: entityID
 	            });
@@ -3220,6 +3218,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }, {
+	        key: "propTypes",
+	        value: {
+	            meshProperty: _react.PropTypes.string.isRequired,
+	            valueType: _react.PropTypes.string.isRequired,
+	            loopMode: _react.PropTypes.string.isRequired,
+	            keyFrames: _react.PropTypes.array
 	        },
 	        enumerable: true
 	    }]);
@@ -3983,8 +3990,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _AkkadAbstractComponent3 = _interopRequireDefault(_AkkadAbstractComponent2);
 
-	/* Pushes a value to a property on a specific entity */
-
 	var AnimateMesh = (function (_AkkadAbstractComponent) {
 		_inherits(AnimateMesh, _AkkadAbstractComponent);
 
@@ -4004,6 +4009,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				var targetEntityID = _props.targetEntityID;
 				var propertyName = _props.propertyName;
 				var keyFrames = _props.keyFrames;
+				var startFrame = _props.startFrame;
+				var endFrame = _props.endFrame;
 
 				var targetMesh = appState.getIn(["entities", targetEntityID, "entity"]);
 				var scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
@@ -4013,7 +4020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				targetMesh.animations.push(animation);
 
-				scene.beginAnimation(targetMesh, 0, 100, true);
+				scene.beginAnimation(targetMesh, startFrame, endFrame, true);
 			}
 		}, {
 			key: "componentWillUnmount",
@@ -4033,7 +4040,16 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: {
 				targetEntityID: _react.PropTypes.string,
 				propertyName: _react.PropTypes.string,
-				keyFrames: _react.PropTypes.array
+				keyFrames: _react.PropTypes.array,
+				startFrame: _react.PropTypes.number,
+				endFrame: _react.PropTypes.number
+			},
+			enumerable: true
+		}, {
+			key: "defaultProps",
+			value: {
+				startFrame: 0,
+				endFrame: 100
 			},
 			enumerable: true
 		}]);
@@ -4550,6 +4566,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var loopMode = _props.loopMode;
 	            var keyFrames = _props.keyFrames;
 	            var children = _props.children;
+	            var _props$startFrame = _props.startFrame;
+	            var startFrame = _props$startFrame === undefined ? 0 : _props$startFrame;
+	            var _props$endFrame = _props.endFrame;
+	            var endFrame = _props$endFrame === undefined ? 100 : _props$endFrame;
 
 	            var animationTargetEntity = appState.getIn(["entites", entityID, "entity"]);
 
@@ -4562,7 +4582,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    null,
 	                    _react2["default"].createElement(_systems.AnimateMesh, {
 	                        targetEntityID: entityID,
-	                        keyFrames: keyFrames
+	                        keyFrames: keyFrames,
+	                        startFrame: startFrame,
+	                        endFrame: endFrame
 	                    }),
 	                    children
 	                )
@@ -4582,7 +4604,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            meshProperty: _react.PropTypes.string.isRequired,
 	            valueType: _react.PropTypes.string.isRequired,
 	            loopMode: _react.PropTypes.string.isRequired,
-	            keyFrames: _react.PropTypes.array
+	            keyFrames: _react.PropTypes.array,
+	            startFrame: _react.PropTypes.number,
+	            endFrame: _react.PropTypes.number
 	        },
 	        enumerable: true
 	    }]);
