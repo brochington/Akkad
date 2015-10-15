@@ -1,12 +1,9 @@
 import React, {PropTypes} from "react";
-import Entity from "./Entity";
 import Babylon from "babylonjs";
-import {
-    RenderMaterial, 
-    GenericProperty,
-    SetEntityAsProperty
-} from "./systems";
+import Entity from "./Entity";
 import EntityLoaded from "./EntityLoaded";
+import {RenderMaterial, SetEntityAsProperty} from "./systems";
+
 
 class Material extends React.Component {
     static contextTypes = {
@@ -14,13 +11,7 @@ class Material extends React.Component {
         appState: PropTypes.object,
         actions: PropTypes.object
     }
-
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     const {entityID, appState} = nextContext;
-
-    //     return appState.hasIn(["entities", entityID]);
-    // }
-
+    
     render() {
         const {entityID, appState} = this.context;
         const {children} = this.props;

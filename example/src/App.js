@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Babylon from "babylonjs";
-import {Scene, Material, cameras, lights, shapes, systems} from "akkad";
+import {Scene, Material, BasicAnimation, cameras, lights, shapes, systems} from "akkad";
 import pretend from "./img/pretend.jpg";
 
 const {FreeCamera, ArcRotateCamera} = cameras;
@@ -20,24 +20,31 @@ const {
     GenericProperty
 } = systems;
 
+const testKeyFrames = [{
+    frame: 0,
+    value: 1
+}, {
+    frame: 20,
+    value: 0.2
+}, {
+    frame: 100,
+    value: 1
+}]
+
 class App extends Component {
     clickMe = () => {
         console.log("clicked me!!");
     }
 
     render() {
-        const boxes = [1, 2, 3, 4, 5].map(val => {
+        const boxes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(val => {
             return (
                 <Box key={`box-${val}`}>
                     <CheckCollisions />
                     <Position
-                        vector={[val,val,val]}
+                        vector={[2,val,val]}
                     />
-                    <Rotate
-                        axis={[0, 1, 0]}
-                        amount={35}
-                        space="LOCAL"
-                    />
+
                     <MeshTrigger
                         onClick={this.clickMe}
                     />
@@ -46,6 +53,18 @@ class App extends Component {
                             image={pretend}
                         />
                     </Material>
+                    <BasicAnimation 
+                        meshProperty="rotation.y"
+                        valueType="float"
+                        loopMode="cycle"
+                        keyFrames={testKeyFrames}
+                    />
+                    <BasicAnimation 
+                        meshProperty="rotation.x"
+                        valueType="float"
+                        loopMode="cycle"
+                        keyFrames={testKeyFrames}
+                    />
                 </Box>
             );
         });
@@ -104,3 +123,8 @@ class App extends Component {
 }
 
 export default App;
+                    // <Rotate
+                    //     axis={[val * -1, val - 15, val]}
+                    //     amount={35}
+                    //     space="LOCAL"
+                    // />

@@ -5,6 +5,7 @@ import RenderLight from "./RenderLight";
 import MeshTrigger from "./MeshTrigger";
 import RenderCamera from "./RenderCamera";
 import RenderMaterial from "./RenderMaterial";
+import RenderAnimation from "./RenderAnimation";
 import Wireframe from "./Wireframe";
 import Texture from "./Texture";
 import Gravity from "./Gravity";
@@ -13,6 +14,7 @@ import CheckCollisions from "./CheckCollisions";
 import CollisionsEnabled from "./CollisionsEnabled";
 import GenericProperty from "./GenericProperty";
 import SetEntityAsProperty from "./SetEntityAsProperty";
+import AnimateMesh from "./AnimateMesh";
 
 export default {
 	MeshTrigger,
@@ -22,6 +24,7 @@ export default {
 	RenderLight,
 	RenderCamera,
 	RenderMaterial,
+	RenderAnimation,
 	Wireframe,
 	Texture,
 	Gravity,
@@ -29,5 +32,6 @@ export default {
 	CheckCollisions,
 	CollisionsEnabled,
 	GenericProperty,
-	SetEntityAsProperty
+	SetEntityAsProperty,
+	AnimateMesh
 };

@@ -60,19 +60,16 @@ class Engine extends React.Component {
 
     _updateAppChildren(...args) {
         this.updateChildren(...args);
-
     }
 
     componentWillUpdate(nextProps) {
+        window.state = nextProps.appState;
         this.updateAppChildren(nextProps);
     }
 
     componentDidMount() {
-
         const {actions, appState} = this.props;
         const {setEngine} = actions._internal;
-
-        window.state = appState;
 
         setEngine();
 

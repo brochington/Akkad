@@ -9,7 +9,6 @@ import Engine from "./Engine";
 const stateManager = new StateManager();
 
 const initState = {
-    meshes: {},
     lights: {}
 }
 
