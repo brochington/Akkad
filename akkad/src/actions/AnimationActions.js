@@ -18,7 +18,6 @@ const loopModeMap = {
 
 const AnimationActions = {
     createAnimation(state, actions, config) {
-        const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
         const {entityID, meshProperty, valueType, loopMode, fps = 30} = config;
 
         const animation = new Babylon.Animation(
@@ -37,6 +36,6 @@ const AnimationActions = {
 
         return state.setIn(["entities", entityID], animationObj);
     }
-}
+};
 
 export default AnimationActions;

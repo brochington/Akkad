@@ -1,4 +1,4 @@
-import Babylon, {ActionManager, ExecuteCodeAction} from "babylonjs";
+import {ActionManager, ExecuteCodeAction} from "babylonjs";
 import Immutable from "immutable";
 
 const triggerHandlers = {
@@ -9,7 +9,7 @@ const triggerHandlers = {
     onMouseOut: () => ActionManager.OnPointerOutTrigger,
     onKeyDown: () => ActionManager.OnKeyDown,
     onKeyUp: () => ActionManager.OnKeyUp
-}
+};
 
 const TriggerActions = {
     createTriggers(state, actions, targetEntityID, entityID, triggers) {
@@ -32,16 +32,16 @@ const TriggerActions = {
                             targetEntityID,
                             triggerName,
                             id: entityID,
-                            entity: new Babylon.ExecuteCodeAction(trigger, injectedFunc),
+                            entity: new ExecuteCodeAction(trigger, injectedFunc),
                             type: "trigger"
                         });
                     })
-                    .forEach((triggerObj, triggerName) => {
+                    .forEach((triggerObj) => {
                         mesh.actionManager.registerAction(triggerObj.get("entity"));
                     });
 
         return state;
     }
-}
+};
 
 export default TriggerActions;

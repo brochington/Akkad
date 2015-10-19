@@ -7,10 +7,10 @@ export default {
         const scene = new Babylon.Scene(engine);
 
         const sceneObj = Immutable.Map({
-                id: sceneID,
-                entity: scene,
-                type: "scene"
-            });
+            id: sceneID,
+            entity: scene,
+            type: "scene"
+        });
 
         state = state.setIn(["entities", sceneID], sceneObj);
         state = state.set("sceneID", sceneID);

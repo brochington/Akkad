@@ -16,7 +16,6 @@ const cameraCreators = {
     },
     arcRotate(entityID, config, scene) {
         const {
-            type,
             alpha = 1,
             beta = 1,
             radius = 10
@@ -26,14 +25,14 @@ const cameraCreators = {
 
         return new Babylon.ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
     }
-}
+};
 
 export default {
     setCamera(state, actions, entityID, config) {
         const canvas = state.get("canvas");
         const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 
-        const camera = cameraCreators[config.type](entityID, config, scene)
+        const camera = cameraCreators[config.type](entityID, config, scene);
 
         camera.attachControl(canvas, false);
 

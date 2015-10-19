@@ -1,8 +1,7 @@
 import Babylon from "babylonjs";
-import {Helpers} from "../classes";
 
 const lightCreators = {
-    hemispheric(scene, entityID, props) {
+    hemispheric(scene, entityID) {
         return new Babylon.HemisphericLight(entityID, new Babylon.Vector3(0, 1, 0), scene);
     }
 };
@@ -26,6 +25,6 @@ export default {
     },
 
     updateLight(state, actions, lightObj) {
-        return state.updateIn(["lights", lightObj.id], light => lightObj);
+        return state.updateIn(["lights", lightObj.id], () => lightObj);
     }
 };

@@ -1,6 +1,5 @@
-import React, {PropTypes} from "react";
+import React, {PropTypes}from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
-import Babylon from "babylonjs";
 import {RenderCamera} from "../systems";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";

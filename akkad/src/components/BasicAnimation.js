@@ -1,10 +1,8 @@
 import React, {PropTypes} from "react";
-import Babylon from "babylonjs";
 import Entity from "./Entity";
 import EntityLoaded from "./EntityLoaded";
 import {
-    RenderAnimation, 
-    GenericProperty,
+    RenderAnimation,
     AnimateMesh
 } from "./systems";
 
@@ -12,7 +10,7 @@ class BasicAnimation extends React.Component {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object, 
-        actions: PropTypes.object,
+        actions: PropTypes.object
     }
 
     static propTypes = {
@@ -25,18 +23,13 @@ class BasicAnimation extends React.Component {
     }
 
     render() {
-        const {appState, entityID} = this.context;
+        const {entityID} = this.context;
         const {
-            meshProperty, 
-            valueType, 
-            loopMode, 
             keyFrames,
             children,
             startFrame = 0,
             endFrame = 100
         } = this.props;
-
-        const animationTargetEntity = appState.getIn(["entites", entityID, "entity"]);
 
         return (
             <Entity>

@@ -1,6 +1,6 @@
 import Babylon from "babylonjs";
 import Immutable from "immutable";
-import {MeshManager, Helpers} from "../classes";
+import {Helpers} from "../classes";
 
 const shapeCreators = {
     box(scene, entityID, props) {
@@ -21,7 +21,7 @@ const shapeCreators = {
 
         return ground;
     }
-}
+};
 
 const ShapeActions = {
     createShape(state, actions, entityID, props) {
@@ -41,6 +41,6 @@ const ShapeActions = {
         }
         return state;
     }
-}
+};
 
 export default ShapeActions;

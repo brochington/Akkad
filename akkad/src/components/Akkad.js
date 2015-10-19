@@ -1,8 +1,6 @@
 import React, {PropTypes} from "react";
 import Immutable from "immutable";
-import Babylon from "babylonjs";
 import _actions from "../actions";
-import systems from "./systems";
 import {StateManager} from "../classes";
 import Engine from "./Engine";
 
@@ -10,7 +8,7 @@ const stateManager = new StateManager();
 
 const initState = {
     lights: {}
-}
+};
 
 class Akkad extends React.Component {
     static propTypes = {
@@ -22,11 +20,11 @@ class Akkad extends React.Component {
         const actions = {
             ...this.props.actions,
             _internal: _actions
-        }
+        };
 
         stateManager.init(
             actions, // actions object
-            actions => Immutable.fromJS(initState), // init function
+            () => Immutable.fromJS(initState), // init function
             (appState, actions) => this.setState({appState, actions}) // called after action is returned.
         );
         
@@ -50,8 +48,7 @@ class Akkad extends React.Component {
             <div>
                 {engine}
             </div>
-        )
-        
+        );
     }
 }
 

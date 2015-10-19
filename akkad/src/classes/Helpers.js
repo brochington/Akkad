@@ -5,7 +5,7 @@ const shapePropTransforms = {
     faceUV: (vector4Array) => new Babylon.Vector4(...vector4Array),
     axis: (vector3Array) => new Babylon.Vector3(...vector3Array),
     space: (spaceType) => Babylon.Space[spaceType]
-}
+};
 
 /* converts prop values to Babylon accepted values */
 const convertShapeProps = (props) => {
@@ -17,8 +17,8 @@ const convertShapeProps = (props) => {
     }
 
     return newProps;
-}
+};
 
 export default {
-	convertShapeProps
-}
+    convertShapeProps
+};

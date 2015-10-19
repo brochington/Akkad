@@ -1,12 +1,12 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
 class Gravity extends AkkadAbstractComponent {
     static contextTypes = {
         entityID: PropTypes.string,
-        appState: PropTypes.object, 
-        actions: PropTypes.object,
+        appState: PropTypes.object,
+        actions: PropTypes.object
     }
 
     static propTypes = {
@@ -35,6 +35,7 @@ class Gravity extends AkkadAbstractComponent {
     }
 
     componentWillUnmount() {
+        const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
 
         entity.gravity = null;

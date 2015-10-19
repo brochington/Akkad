@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderCamera extends AkkadAbstractComponent {
@@ -14,7 +14,7 @@ class RenderCamera extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
-        const {actions, appState, entityID} = this.context;
+        const {actions, entityID} = this.context;
         const {setCamera} = actions._internal;
 
         setCamera(entityID, this.props);

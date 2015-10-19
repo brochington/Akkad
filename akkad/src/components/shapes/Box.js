@@ -1,8 +1,7 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
-import {RenderShape, MeshTrigger} from "../systems";
-import Babylon from "babylonjs";
+import {RenderShape} from "../systems";
 
 class Box extends React.Component {
     static contextTypes = {

@@ -1,6 +1,4 @@
 import React, {PropTypes} from "react";
-import Babylon from "babylonjs";
-import Entity from "./Entity";
 
 class Scene extends React.Component {
     constructor() {
@@ -26,7 +24,7 @@ class Scene extends React.Component {
     getChildContext() {
         return {
             entityID: this.id
-        }
+        };
     }
 
     componentDidMount() {

@@ -1,6 +1,5 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
-import Babylon from "babylonjs";
 
 class CheckCollisions extends AkkadAbstractComponent {
     static contextTypes = {
@@ -9,7 +8,7 @@ class CheckCollisions extends AkkadAbstractComponent {
         actions: PropTypes.object
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
+    shouldComponentUpdate() {
         return false;
     }
 

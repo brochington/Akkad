@@ -1,15 +1,15 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class Wireframe extends AkkadAbstractComponent {
     static contextTypes = {
         entityID: PropTypes.string,
-        appState: PropTypes.object, 
-        actions: PropTypes.object,
+        appState: PropTypes.object,
+        actions: PropTypes.object
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return false
+    shouldComponentUpdate() {
+        return false;
     }
 
     entityHasWireframe = (val) => {

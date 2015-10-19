@@ -5,7 +5,7 @@ export default {
         return state.set("canvas", canvas);
     },
 
-    setEngine(state, actions) {
+    setEngine(state) {
         const canvas = state.get("canvas");
 
         return state.set("engine", new Babylon.Engine(canvas, true));

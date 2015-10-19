@@ -1,11 +1,11 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderMesh extends AkkadAbstractComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object, 
-        actions: PropTypes.object,
+        actions: PropTypes.object
     }
 
     static propTypes = {
@@ -15,7 +15,7 @@ class RenderMesh extends AkkadAbstractComponent {
     }
 
     componentDidMount() {
-        const {targetEntityID, path, fileName} = this.props;
+        const {path, fileName} = this.props;
         const {actions, entityID} = this.context;
         const {importMesh} = actions._internal;
 

@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderLight extends AkkadAbstractComponent {
@@ -6,13 +6,13 @@ class RenderLight extends AkkadAbstractComponent {
         type: PropTypes.string
     }
 
-	static contextTypes = {
-		entityID: PropTypes.string,
-		actions: PropTypes.object.isRequired,
-		appState: PropTypes.object.isRequired
-	}
+    static contextTypes = {
+        entityID: PropTypes.string,
+        actions: PropTypes.object.isRequired,
+        appState: PropTypes.object.isRequired
+    }
 
-	componentWillUpdate(nextState, nextProps, nextContext) {
+    componentWillUpdate(nextState, nextProps) {
         const {entityID, appState, actions} = this.context;
         const {createLight} = actions._internal;
         const props = {

@@ -15,6 +15,6 @@ const MaterialActions = {
 
         return state.setIn(["entities", entityID], materialObj);
     }
-}
+};
 
 export default MaterialActions;

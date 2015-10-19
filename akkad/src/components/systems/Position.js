@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import Babylon from "babylonjs";
 
@@ -13,17 +13,15 @@ class Position extends AkkadAbstractComponent {
         actions: PropTypes.object
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        const {entityID, appState} = nextContext;
-
+    shouldComponentUpdate(nextProps) {
         const newVector = nextProps.vector;
         const oldVector = this.props.vector;
             
-            for (let axis in newVector) {
-                if (newVector[axis] !== oldVector[axis]) {
-                    return true;
-                }
+        for (let axis in newVector) {
+            if (newVector[axis] !== oldVector[axis]) {
+                return true;
             }
+        }
 
         return false;
     }

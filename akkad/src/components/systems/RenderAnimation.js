@@ -1,11 +1,11 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderAnimation extends AkkadAbstractComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object, 
-        actions: PropTypes.object,
+        actions: PropTypes.object
     }
 
     static propTypes = {

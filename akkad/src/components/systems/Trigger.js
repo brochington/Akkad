@@ -1,5 +1,4 @@
 import React, {PropTypes} from "react";
-import Babylon from "babylonjs";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import RenderTrigger from "./RenderTrigger";
@@ -9,7 +8,7 @@ class Trigger extends React.Component {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object, 
-        actions: PropTypes.object,
+        actions: PropTypes.object
     }
 
     static propTypes = {

@@ -1,4 +1,4 @@
-import Babylon, {ActionManager, ExecuteCodeAction} from "babylonjs";
+import {ActionManager} from "babylonjs";
 
 const MeshTriggerActions = {
     createMeshTriggers(state, actions, entityID, triggers) {
@@ -16,6 +16,6 @@ const MeshTriggerActions = {
     updateMeshTriggers(state, actions, entityID, updatedTriggers) {
         return state.setIn(["meshes", entityID, "triggers"], updatedTriggers);
     }
-}
+};
 
 export default MeshTriggerActions;

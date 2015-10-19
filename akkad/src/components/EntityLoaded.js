@@ -1,5 +1,4 @@
 import React, {PropTypes} from "react";
-import Babylon from "babylonjs";
 
 class EntityLoaded extends React.Component {
     static contextTypes = {

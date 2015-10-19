@@ -29,9 +29,13 @@ module.exports = {
             loader: 'babel',
             include: path.join(__dirname, 'src'),
             query: {
-                optional: ["runtime"],
+                optional: ["runtime", "es7.classProperties", "es7.decorators"],
                 stage: 0
             }
+        }, {
+            test: /\.js$/,
+            loader: "eslint-loader",
+            exclude: /node_modules/
         }]
     },
     resolve: {

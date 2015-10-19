@@ -1,5 +1,4 @@
 import React, {PropTypes} from "react";
-import Babylon from "babylonjs";
 import Entity from "./Entity";
 import EntityLoaded from "./EntityLoaded";
 import {RenderMaterial, SetEntityAsProperty} from "./systems";
@@ -13,7 +12,7 @@ class Material extends React.Component {
     }
     
     render() {
-        const {entityID, appState} = this.context;
+        const {entityID} = this.context;
         const {children} = this.props;
 
         return (

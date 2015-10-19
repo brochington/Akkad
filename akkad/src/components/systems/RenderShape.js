@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderShape extends AkkadAbstractComponent {
@@ -11,7 +11,7 @@ class RenderShape extends AkkadAbstractComponent {
     shouldComponentUpdate(nextProps) {
         for (let prop in nextProps) {
             if (nextProps[prop] !== this.props[prop]) {
-                return true
+                return true;
             }
         }
 
@@ -19,10 +19,10 @@ class RenderShape extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
-        const {entityID, appState, actions} = this.context;
+        const {entityID, actions} = this.context;
         const {createShape} = actions._internal;
 
-        createShape(entityID, this.props)
+        createShape(entityID, this.props);
     }
 }
 

@@ -1,6 +1,5 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
-import Babylon from "babylonjs";
 
 class CollisionsEnabled extends AkkadAbstractComponent {
     static contextTypes = {

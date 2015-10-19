@@ -1,7 +1,6 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
 import {RenderShape} from "../systems";
-import Babylon from "babylonjs";
 
 class Sphere extends React.Component {
     static propTypes = {

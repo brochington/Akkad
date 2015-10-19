@@ -1,7 +1,6 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import Babylon from "babylonjs";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
-import {Helpers} from "../../classes";
 
 class Rotate extends AkkadAbstractComponent {
     static propTypes = {
@@ -28,7 +27,7 @@ class Rotate extends AkkadAbstractComponent {
         entity.rotate(axis, amount, space);
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
+    shouldComponentUpdate(nextProps) {
         const {axis, amount, space} = nextProps;
 
         if (

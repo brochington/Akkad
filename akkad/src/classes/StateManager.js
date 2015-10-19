@@ -20,7 +20,7 @@ class StateManager {
                 this[_wrappedActions] = {
                     ...wrappedActions,
                     _internal: wrappedInternalActions
-                }
+                };
 
                 this[_actions] = actions;
 
@@ -61,7 +61,7 @@ class StateManager {
         if (newState instanceof Promise) {
             newState.then(::this.callSetStateCallback);
         } else {
-            this.callSetStateCallback(newState)
+            this.callSetStateCallback(newState);
         }
 
         return this[_state];
@@ -79,7 +79,7 @@ class StateManager {
         } else {
             console.error("recieved state that was not an immutable map.");
             console.log(newState);
-        }        
+        }
     }
 }
 

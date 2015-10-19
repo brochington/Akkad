@@ -7,10 +7,10 @@ import meshes from "./components/meshes";
 import shapes from "./components/shapes";
 
 export default {
-	...components,
-	systems,
-	lights,
-	cameras,
-	meshes,
-	shapes
-}
+    ...components,
+    systems,
+    lights,
+    cameras,
+    meshes,
+    shapes
+};

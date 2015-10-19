@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AkkadAbstractComponent from "./AkkadAbstractComponent";
 
 class Entity extends AkkadAbstractComponent {
@@ -9,7 +9,7 @@ class Entity extends AkkadAbstractComponent {
     getChildContext() {
         return {
             entityID: this.id
-        }
+        };
     }
 }
 

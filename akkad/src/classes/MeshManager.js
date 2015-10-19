@@ -11,7 +11,7 @@ const propHandlers = {
     },
 
     rotationQuaternion(mesh, quaternion) {
-        mesh.rotationQuaternion = newBabylon.Quaternion(...quaternion)
+        mesh.rotationQuaternion = new Babylon.Quaternion(...quaternion);
     },
 
     scaling(mesh, vector) {
@@ -23,7 +23,7 @@ const propHandlers = {
     },
 
     isVisible(mesh, isVisible) {
-        mesh.isVisible = isVisible
+        mesh.isVisible = isVisible;
     },
 
     outlineColor(mesh, color) {

@@ -1,10 +1,6 @@
 import React, {PropTypes} from "react";
 import ReactMultiChild from "react/lib/ReactMultiChild";
 import {ReactReconcileTransaction} from "react/lib/ReactUpdates";
-import ReactDOM from "react-dom";
-import Immutable from "immutable";
-import Babylon from "babylonjs";
-import _actions from "../actions";
 import systems from "./systems";
 
 class Engine extends React.Component {
@@ -46,7 +42,7 @@ class Engine extends React.Component {
     }
 
     _mountAppChildren(...args) {
-        const mountedImages = this.mountChildren(...args);
+        this.mountChildren(...args);
     }
 
     updateAppChildren(context = {}) {
