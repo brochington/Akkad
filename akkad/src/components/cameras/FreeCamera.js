@@ -1,8 +1,10 @@
-import React, {PropTypes}from "react";
+import React from "react";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 import {RenderCamera} from "../systems";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
+
+const {PropTypes} = React;
 
 class FreeCamera extends AkkadAbstractComponent {
     static propTypes = {

@@ -6375,6 +6375,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
 
+	var PropTypes = _react2["default"].PropTypes;
+
 	var FreeCamera = (function (_AkkadAbstractComponent) {
 	    _inherits(FreeCamera, _AkkadAbstractComponent);
 
@@ -6410,15 +6412,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "propTypes",
 	        value: {
-	            initialPosition: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired,
-	            target: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired
+	            initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
+	            target: PropTypes.arrayOf(PropTypes.number).isRequired
 	        },
 	        enumerable: true
 	    }, {
 	        key: "contextTypes",
 	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
+	            appState: PropTypes.object,
+	            actions: PropTypes.object
 	        },
 	        enumerable: true
 	    }]);
