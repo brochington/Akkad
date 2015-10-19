@@ -4,7 +4,8 @@ import {Scene, Material, BasicAnimation, cameras, lights, shapes, systems} from 
 import pretend from "./img/pretend.jpg";
 import skullMesh from "./meshes/skull.babylon";
 
-console.log("skullMesh!", skullMesh);
+console.log(skullMesh.split("/")[1]);
+
 
 const {FreeCamera, ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
@@ -39,7 +40,7 @@ class App extends Component {
     clickMe = (evt, meshID, triggerID) => {
         console.log("clicked me!!", evt, meshID, triggerID);
     }
-    
+
     render() {
         const boxes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(val => {
             return (
@@ -72,15 +73,19 @@ class App extends Component {
         return (
             <Scene>
                 <CollisionsEnabled />
-                <Gravity vector={[0, -0.9, 0]}/>
+                <Gravity vector={[0, -0.9, 0]} />
                 <FreeCamera
                     initialPosition={[0, 5, -10]}
                     target={[0, 1, 0]}
                 >
                     <CheckCollisions />
                     <ApplyGravity />
-                </FreeCamera>   
-                <HemisphericLight />
+                </FreeCamera>
+                <HemisphericLight /> 
+                <Mesh 
+                    path={skullMesh.split("/")[1] + "/"}
+                    fileName={skullMesh.split("/")[2]}
+                />
                 <Sphere
                     segments={24}
                     diameterX={2}
@@ -115,9 +120,6 @@ class App extends Component {
                     </Material>
                 </Sphere>
                 {boxes}
-                <Mesh 
-                    meshLocation={skullMesh}
-                />
                 <Ground 
                     height={300}
                     width={300}
@@ -128,4 +130,3 @@ class App extends Component {
 }
 
 export default App;
-                    

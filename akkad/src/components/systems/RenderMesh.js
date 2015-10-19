@@ -10,15 +10,16 @@ class RenderMesh extends AkkadAbstractComponent {
 
     static propTypes = {
         targetEntityID: PropTypes.string.isRequired,
-        meshLocation: PropTypes.string.isRequired
+        path: PropTypes.string.isRequired,
+        fileName: PropTypes.string.isRequired
     }
 
     componentDidMount() {
-        const {targetEntityID, meshLocation} = this.props;
+        const {targetEntityID, path, fileName} = this.props;
         const {actions, entityID} = this.context;
         const {importMesh} = actions._internal;
 
-        importMesh(meshLocation, entityID);
+        importMesh(path, fileName, entityID);
     }
 
 }

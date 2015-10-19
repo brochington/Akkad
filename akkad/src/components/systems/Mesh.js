@@ -12,19 +12,22 @@ class Mesh extends React.Component {
     }
 
     static propTypes = {
-        meshLocation: PropTypes.string
+        path: PropTypes.string,
+        fileName: PropTypes.string
     }
 
     render() {
         const {entityID} = this.context;
-        const {meshLocation} = this.props;
+        const {path, fileName, children} = this.props;
         return (
             <Entity>
                 <RenderMesh 
                     targetEntityID={entityID}
-                    meshLocation={meshLocation}
+                    path={path}
+                    fileName={fileName}
                 />
                 <EntityLoaded>
+                    {children}
                 </EntityLoaded>
             </Entity>
         );

@@ -58,15 +58,28 @@ class StateManager {
         // call the action function with correct args.
         const newState = func(this[_state], this[_wrappedActions], ...args);
 
-        if (newState) {
+        if (newState instanceof Promise) {
+            newState.then(::this.callSetStateCallback);
+        } else {
+            this.callSetStateCallback(newState)
+        }
+
+        return this[_state];
+    }
+
+    /* Checks to make sure object is an immutable map, then calls the setState callback */
+    callSetStateCallback(newState) {
+        if (Immutable.Map.isMap(newState)) {
             if(newState !== this[_state]) {
                 this[_state] = newState;
             }
             // call the callback specified in the init method.
             this[_stateSetCallback](this[_state], this[_wrappedActions]);
-        }
 
-        return this[_state];
+        } else {
+            console.error("recieved state that was not an immutable map.");
+            console.log(newState);
+        }        
     }
 }
 
