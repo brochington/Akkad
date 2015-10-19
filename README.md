@@ -14,6 +14,8 @@ Akkad is React Webgl target the uses the Babylon.js library. Its aim is to allow
 - Materials with Textures
 - Muliple forms of camera and light sources
 - Basic Animations
+- Gravity
+- Collisions
 - Basic triggers like onClick
 - Lot's more to come!
 
