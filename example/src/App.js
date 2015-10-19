@@ -4,9 +4,6 @@ import {Scene, Material, BasicAnimation, cameras, lights, shapes, systems} from 
 import pretend from "./img/pretend.jpg";
 import skullMesh from "./meshes/skull.babylon";
 
-console.log(skullMesh.split("/")[1]);
-
-
 const {FreeCamera, ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Sphere, Box, Ground} = shapes;
@@ -81,7 +78,7 @@ class App extends Component {
                     <CheckCollisions />
                     <ApplyGravity />
                 </FreeCamera>
-                <HemisphericLight /> 
+                <HemisphericLight />
                 <Mesh 
                     path={skullMesh.split("/")[1] + "/"}
                     fileName={skullMesh.split("/")[2]}
@@ -92,9 +89,7 @@ class App extends Component {
                     diameterY={2}
                     diameterZ={2}
                 >
-                    <Position
-                        vector={[0,2,0]}
-                    />
+                    <Position vector={[0,2,0]} />
                     <Material>
                         <Wireframe />
                     </Material>

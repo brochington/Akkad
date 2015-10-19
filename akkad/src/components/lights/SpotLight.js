@@ -4,9 +4,12 @@ import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import {RenderLight, GenericProperty} from "../systems";
 
-class DirectionalLight extends React.Component {
+class SpotLight extends React.Component {
     static propTypes = {
-        source: PropTypes.arrayOf(PropTypes.number),
+        position: PropTypes.arrayOf(PropTypes.number),
+        direction: PropTypes.arrayOf(PropTypes.number),
+        angle: PropTypes.arrayOf(PropTypes.number),
+        exponent: PropTypes.number,
         diffuse: PropTypes.arrayOf(PropTypes.number),
         specular: PropTypes.arrayOf(PropTypes.number)
     }
@@ -31,7 +34,7 @@ class DirectionalLight extends React.Component {
         return (
             <Entity>
                 <RenderLight 
-                    type="hemispheric"
+                    type="spot"
                     {...this.props}
                 />
                 <EntityLoaded>
@@ -44,4 +47,4 @@ class DirectionalLight extends React.Component {
     }
 }
 
-export default DirectionalLight;
+export default SpotLight;

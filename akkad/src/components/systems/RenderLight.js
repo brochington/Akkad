@@ -12,17 +12,11 @@ class RenderLight extends AkkadAbstractComponent {
         appState: PropTypes.object.isRequired
     }
 
-    componentWillUpdate(nextState, nextProps) {
-        const {entityID, appState, actions} = this.context;
+    componentWillMount() {
+        const {actions, entityID} = this.context;
         const {createLight} = actions._internal;
-        const props = {
-            ...this.props,
-            ...nextProps
-        };
-        
-        if (!appState.hasIn(["lights", entityID])) {
-            createLight(entityID, props);
-        }
+
+        createLight(entityID, this.props);
     }
 }
 

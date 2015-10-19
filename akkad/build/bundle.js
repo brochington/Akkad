@@ -83,15 +83,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _componentsLights2 = _interopRequireDefault(_componentsLights);
 
-	var _componentsCameras = __webpack_require__(150);
+	var _componentsCameras = __webpack_require__(151);
 
 	var _componentsCameras2 = _interopRequireDefault(_componentsCameras);
 
-	var _componentsMeshes = __webpack_require__(153);
+	var _componentsMeshes = __webpack_require__(154);
 
 	var _componentsMeshes2 = _interopRequireDefault(_componentsMeshes);
 
-	var _componentsShapes = __webpack_require__(154);
+	var _componentsShapes = __webpack_require__(155);
 
 	var _componentsShapes2 = _interopRequireDefault(_componentsShapes);
 
@@ -1157,8 +1157,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classCallCheck = __webpack_require__(41)["default"];
 
-	var _extends = __webpack_require__(2)["default"];
-
 	var _interopRequireDefault = __webpack_require__(18)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1181,19 +1179,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(RenderLight, [{
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate(nextState, nextProps) {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
 	            var _context = this.context;
-	            var entityID = _context.entityID;
-	            var appState = _context.appState;
 	            var actions = _context.actions;
+	            var entityID = _context.entityID;
 	            var createLight = actions._internal.createLight;
 
-	            var props = _extends({}, this.props, nextProps);
-
-	            if (!appState.hasIn(["lights", entityID])) {
-	                createLight(entityID, props);
-	            }
+	            createLight(entityID, this.props);
 	        }
 	    }], [{
 	        key: "propTypes",
@@ -3715,6 +3708,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	var _toConsumableArray = __webpack_require__(63)["default"];
+
+	var _bind = __webpack_require__(88)["default"];
+
 	var _interopRequireDefault = __webpack_require__(18)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -3725,9 +3722,45 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
+	var _immutable = __webpack_require__(102);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
 	var lightCreators = {
-	    hemispheric: function hemispheric(scene, entityID) {
-	        return new _babylonjs2["default"].HemisphericLight(entityID, new _babylonjs2["default"].Vector3(0, 1, 0), scene);
+	    hemispheric: function hemispheric(scene, entityID, props) {
+	        var _props$direction = props.direction;
+	        var direction = _props$direction === undefined ? [0, 1, 0] : _props$direction;
+
+	        return new _babylonjs2["default"].HemisphericLight(entityID, new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(direction))))(), scene);
+	    },
+
+	    point: function point(scene, entityID, props) {
+	        var _props$source = props.source;
+	        var source = _props$source === undefined ? [1, 10, 1] : _props$source;
+
+	        return new _babylonjs2["default"].PointLight(entityID, new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(source))))(), scene);
+	    },
+
+	    spot: function spot(scene, entityID, props) {
+	        var _props$position = props.position;
+	        var position = _props$position === undefined ? [0, 30, -10] : _props$position;
+	        var _props$direction2 = props.direction;
+	        var direction = _props$direction2 === undefined ? [0, -1, 0] : _props$direction2;
+	        var _props$angle = props.angle;
+	        var angle = _props$angle === undefined ? 0.8 : _props$angle;
+	        var _props$exponent = props.exponent;
+	        var exponent = _props$exponent === undefined ? 2 : _props$exponent;
+
+	        var spotLight = new _babylonjs2["default"].SpotLight(entityID, new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(position))))(), new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(direction))))(), angle, exponent, scene);
+
+	        return spotLight;
+	    },
+
+	    directional: function directional(scene, entityID, props) {
+	        var _props$direction3 = props.direction;
+	        var direction = _props$direction3 === undefined ? [0, -1, 0] : _props$direction3;
+
+	        return new _babylonjs2["default"].DirectionalLight(entityID, new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(direction))))(), scene);
 	    }
 	};
 
@@ -3735,24 +3768,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    createLight: function createLight(state, actions, entityID, props) {
 	        var type = props.type;
 
-	        if (type && lightCreators[type] && !state.hasIn(["lights", entityID])) {
-	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
-	            var light = lightCreators[type](scene, entityID, props);
-	            var updateLight = actions._internal.updateLight;
+	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	        var light = lightCreators[type](scene, entityID, props);
 
-	            state = updateLight({
-	                id: entityID,
-	                light: light
-	            });
-	        }
-
-	        return state;
-	    },
-
-	    updateLight: function updateLight(state, actions, lightObj) {
-	        return state.updateIn(["lights", lightObj.id], function () {
-	            return lightObj;
+	        var lightObj = _immutable2["default"].Map({
+	            id: entityID,
+	            entity: light,
+	            type: "light"
 	        });
+
+	        return state.setIn(["entities", entityID], lightObj);
 	    }
 	};
 	module.exports = exports["default"];
@@ -6247,8 +6272,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _HemisphericLight2 = _interopRequireDefault(_HemisphericLight);
 
+	var _PointLight = __webpack_require__(150);
+
+	var _PointLight2 = _interopRequireDefault(_PointLight);
+
+	var _SpotLight = __webpack_require__(159);
+
+	var _SpotLight2 = _interopRequireDefault(_SpotLight);
+
+	var _DirectionalLight = __webpack_require__(160);
+
+	var _DirectionalLight2 = _interopRequireDefault(_DirectionalLight);
+
 	exports["default"] = {
-	    HemisphericLight: _HemisphericLight2["default"]
+	    HemisphericLight: _HemisphericLight2["default"],
+	    PointLight: _PointLight2["default"],
+	    SpotLight: _SpotLight2["default"],
+	    DirectionalLight: _DirectionalLight2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -6266,6 +6306,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classCallCheck = __webpack_require__(41)["default"];
 
+	var _toConsumableArray = __webpack_require__(63)["default"];
+
+	var _bind = __webpack_require__(88)["default"];
+
+	var _extends = __webpack_require__(2)["default"];
+
 	var _interopRequireDefault = __webpack_require__(18)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -6276,43 +6322,179 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _babylonjs = __webpack_require__(89);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
 	var _Entity = __webpack_require__(57);
 
 	var _Entity2 = _interopRequireDefault(_Entity);
 
+	var _EntityLoaded = __webpack_require__(58);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
 	var _systems = __webpack_require__(48);
 
-	var HemisphericLight = (function (_React$Component) {
-	    _inherits(HemisphericLight, _React$Component);
+	var DirectionalLight = (function (_React$Component) {
+	    _inherits(DirectionalLight, _React$Component);
 
-	    function HemisphericLight() {
-	        _classCallCheck(this, HemisphericLight);
+	    function DirectionalLight() {
+	        _classCallCheck(this, DirectionalLight);
 
-	        _get(Object.getPrototypeOf(HemisphericLight.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(DirectionalLight.prototype), "constructor", this).apply(this, arguments);
 	    }
 
-	    _createClass(HemisphericLight, [{
+	    _createClass(DirectionalLight, [{
 	        key: "render",
 	        value: function render() {
+	            var _props = this.props;
+	            var diffuse = _props.diffuse;
+	            var specular = _props.specular;
+	            var children = _props.children;
+
+	            var renderDiffuse = diffuse && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "diffuse",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(diffuse))))()
+	            });
+
+	            var renderSpecular = specular && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "specular",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(specular))))()
+	            });
+
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
 	                null,
-	                _react2["default"].createElement(_systems.RenderLight, {
+	                _react2["default"].createElement(_systems.RenderLight, _extends({
 	                    type: "hemispheric"
-	                }),
-	                this.props.children
+	                }, this.props)),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    renderDiffuse,
+	                    renderSpecular,
+	                    children
+	                )
 	            );
 	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            source: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            diffuse: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            specular: _react.PropTypes.arrayOf(_react.PropTypes.number)
+	        },
+	        enumerable: true
 	    }]);
 
-	    return HemisphericLight;
+	    return DirectionalLight;
 	})(_react2["default"].Component);
 
-	exports["default"] = HemisphericLight;
+	exports["default"] = DirectionalLight;
 	module.exports = exports["default"];
 
 /***/ },
 /* 150 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _toConsumableArray = __webpack_require__(63)["default"];
+
+	var _bind = __webpack_require__(88)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _babylonjs = __webpack_require__(89);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _Entity = __webpack_require__(57);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(58);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var PointLight = (function (_React$Component) {
+	    _inherits(PointLight, _React$Component);
+
+	    function PointLight() {
+	        _classCallCheck(this, PointLight);
+
+	        _get(Object.getPrototypeOf(PointLight.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(PointLight, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var diffuse = _props.diffuse;
+	            var specular = _props.specular;
+	            var children = _props.children;
+
+	            var renderDiffuse = diffuse && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "diffuse",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(diffuse))))()
+	            });
+
+	            var renderSpecular = specular && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "specular",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(specular))))()
+	            });
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderLight, {
+	                    type: "point"
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    renderDiffuse,
+	                    renderSpecular,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            diffuse: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            specular: _react.PropTypes.arrayOf(_react.PropTypes.number)
+	        },
+	        enumerable: true
+	    }]);
+
+	    return PointLight;
+	})(_react2["default"].Component);
+
+	exports["default"] = PointLight;
+	module.exports = exports["default"];
+
+/***/ },
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6323,11 +6505,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _FreeCamera = __webpack_require__(151);
+	var _FreeCamera = __webpack_require__(152);
 
 	var _FreeCamera2 = _interopRequireDefault(_FreeCamera);
 
-	var _ArcRotateCamera = __webpack_require__(152);
+	var _ArcRotateCamera = __webpack_require__(153);
 
 	var _ArcRotateCamera2 = _interopRequireDefault(_ArcRotateCamera);
 
@@ -6338,7 +6520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 151 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6432,7 +6614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 152 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6506,13 +6688,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 153 */
+/* 154 */
 /***/ function(module, exports) {
 
 	"use strict";
 
 /***/ },
-/* 154 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6523,15 +6705,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _Sphere = __webpack_require__(155);
+	var _Sphere = __webpack_require__(156);
 
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 
-	var _Box = __webpack_require__(156);
+	var _Box = __webpack_require__(157);
 
 	var _Box2 = _interopRequireDefault(_Box);
 
-	var _Ground = __webpack_require__(157);
+	var _Ground = __webpack_require__(158);
 
 	var _Ground2 = _interopRequireDefault(_Ground);
 
@@ -6543,7 +6725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 155 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6630,7 +6812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6721,7 +6903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6791,6 +6973,213 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Sphere;
+	module.exports = exports["default"];
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _toConsumableArray = __webpack_require__(63)["default"];
+
+	var _bind = __webpack_require__(88)["default"];
+
+	var _extends = __webpack_require__(2)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _babylonjs = __webpack_require__(89);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _Entity = __webpack_require__(57);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(58);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var SpotLight = (function (_React$Component) {
+	    _inherits(SpotLight, _React$Component);
+
+	    function SpotLight() {
+	        _classCallCheck(this, SpotLight);
+
+	        _get(Object.getPrototypeOf(SpotLight.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(SpotLight, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var diffuse = _props.diffuse;
+	            var specular = _props.specular;
+	            var children = _props.children;
+
+	            var renderDiffuse = diffuse && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "diffuse",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(diffuse))))()
+	            });
+
+	            var renderSpecular = specular && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "specular",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(specular))))()
+	            });
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderLight, _extends({
+	                    type: "spot"
+	                }, this.props)),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    renderDiffuse,
+	                    renderSpecular,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            position: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            direction: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            angle: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            exponent: _react.PropTypes.number,
+	            diffuse: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            specular: _react.PropTypes.arrayOf(_react.PropTypes.number)
+	        },
+	        enumerable: true
+	    }]);
+
+	    return SpotLight;
+	})(_react2["default"].Component);
+
+	exports["default"] = SpotLight;
+	module.exports = exports["default"];
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _toConsumableArray = __webpack_require__(63)["default"];
+
+	var _bind = __webpack_require__(88)["default"];
+
+	var _extends = __webpack_require__(2)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _babylonjs = __webpack_require__(89);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _Entity = __webpack_require__(57);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(58);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var DirectionalLight = (function (_React$Component) {
+	    _inherits(DirectionalLight, _React$Component);
+
+	    function DirectionalLight() {
+	        _classCallCheck(this, DirectionalLight);
+
+	        _get(Object.getPrototypeOf(DirectionalLight.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(DirectionalLight, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var diffuse = _props.diffuse;
+	            var specular = _props.specular;
+	            var children = _props.children;
+
+	            var renderDiffuse = diffuse && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "diffuse",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(diffuse))))()
+	            });
+
+	            var renderSpecular = specular && _react2["default"].createElement(_systems.GenericProperty, {
+	                propertyName: "specular",
+	                onVal: new (_bind.apply(_babylonjs2["default"].Color3, [null].concat(_toConsumableArray(specular))))()
+	            });
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderLight, _extends({
+	                    type: "directional"
+	                }, this.props)),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    renderDiffuse,
+	                    renderSpecular,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            direction: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            diffuse: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	            specular: _react.PropTypes.arrayOf(_react.PropTypes.number)
+	        },
+	        enumerable: true
+	    }]);
+
+	    return DirectionalLight;
+	})(_react2["default"].Component);
+
+	exports["default"] = DirectionalLight;
 	module.exports = exports["default"];
 
 /***/ }

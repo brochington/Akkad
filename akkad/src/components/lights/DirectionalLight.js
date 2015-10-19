@@ -6,7 +6,7 @@ import {RenderLight, GenericProperty} from "../systems";
 
 class DirectionalLight extends React.Component {
     static propTypes = {
-        source: PropTypes.arrayOf(PropTypes.number),
+        direction: PropTypes.arrayOf(PropTypes.number),
         diffuse: PropTypes.arrayOf(PropTypes.number),
         specular: PropTypes.arrayOf(PropTypes.number)
     }
@@ -31,7 +31,7 @@ class DirectionalLight extends React.Component {
         return (
             <Entity>
                 <RenderLight 
-                    type="hemispheric"
+                    type="directional"
                     {...this.props}
                 />
                 <EntityLoaded>

@@ -4,9 +4,8 @@ import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import {RenderLight, GenericProperty} from "../systems";
 
-class DirectionalLight extends React.Component {
+class PointLight extends React.Component {
     static propTypes = {
-        source: PropTypes.arrayOf(PropTypes.number),
         diffuse: PropTypes.arrayOf(PropTypes.number),
         specular: PropTypes.arrayOf(PropTypes.number)
     }
@@ -31,8 +30,7 @@ class DirectionalLight extends React.Component {
         return (
             <Entity>
                 <RenderLight 
-                    type="hemispheric"
-                    {...this.props}
+                    type="point"
                 />
                 <EntityLoaded>
                     {renderDiffuse}
@@ -44,4 +42,4 @@ class DirectionalLight extends React.Component {
     }
 }
 
-export default DirectionalLight;
+export default PointLight;
