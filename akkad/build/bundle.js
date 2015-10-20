@@ -6890,8 +6890,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "propTypes",
 	        value: {
 	            height: _react.PropTypes.number,
-	            width: _react.PropTypes.number,
-	            onClick: _react.PropTypes.func
+	            width: _react.PropTypes.number
 	        },
 	        enumerable: true
 	    }]);

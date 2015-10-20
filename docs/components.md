@@ -10,7 +10,7 @@ Every Akkad application requires both an <Akkad /> and <Scene /> component.
 Top level component in an Akkad application.
 
 Props:
-- `canvasNode<Element>`: element that will Babylon will target
+- `canvasNode<Element>`: Element that Babylon will target
 
 example:
 ```
@@ -36,8 +36,9 @@ A Directional light is defined by a direction. Light is from everywhere and focu
 - `specular<[r, g, b]>`: The color of the specular reflection of the light
 
 ## `<HemisphericLight />`
+
 #### Props:
-- `source<[x, y, z]>`: the direction to the "sky"
+- `source<[x, y, z]>`: The direction to the "sky"
 - `diffuse<[r, g, b]>`: The color of the diffuse reflection of the light
 - `specular<[r, g, b]>`: The color of the specular reflection of the light
 
@@ -47,22 +48,39 @@ A Cone of light that starts from a position and emits towards a direction
 #### Props:
 - `position<[x, y, z]>`: Position of light
 - `direction<[x, y, z]>`: Direction light is pointed
-- `angle<Number>`: Angle of light
-- `exponent<[x, y, z]>`:
+- `angle<Number>`: Size of the spotlight's conical beam (in radians)
+- `exponent<[x, y, z]>`: Defines the speed of the decay of the light with distance 
 - `diffuse<[r, g, b]>`: The color of the diffuse reflection of the light
 - `specular<[r, g, b]>`: The color of the specular reflection of the light
 
 ## `<PointLight />`
+
+#### Props:
+- `diffuse<[r, g, b]>`: The color of the diffuse reflection of the light
+- `specular<[r, g, b]>`: The color of the specular reflection of the light
 
 # Cameras
 
 Every Akkad scene will require a camera See the [Babylon Camera tutorial](http://doc.babylonjs.com/tutorials/05._Cameras) for more information.
 
 ## `<FreeCamera />`
+
+#### Props:
+- `target<[x, y, z]>`: Required, Target of camera
+- `initialPosition<[x, y, z]>`: Required, initial position of camera
+
 ## `<ArcRotateCamera />`
+
+#### Props:
+- `target<[x, y, z]>`: Required, Target of camera
 
 # Shapes
 
 ## `<Box />`
+
+### Props:
+- `height<Number>`: Height of box
+- `width<Number>`: Width of box
+
 ## `<Sphere />`
 ## `<Ground />`

@@ -11,8 +11,7 @@ class Box extends React.Component {
 
     static propTypes = {
         height: PropTypes.number,
-        width: PropTypes.number,
-        onClick: PropTypes.func
+        width: PropTypes.number
     }
 
     render() {
