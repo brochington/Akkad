@@ -59,6 +59,7 @@ class Engine extends React.Component {
     }
 
     componentWillUpdate(nextProps) {
+        // strictly for debugging purposes
         window.state = nextProps.appState;
         this.updateAppChildren(nextProps);
     }

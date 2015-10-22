@@ -11,6 +11,7 @@ Top level component in an Akkad application.
 
 Props:
 - `canvasNode<Element>`: Element that Babylon will target
+- `actions<Object>`: Object of methods that are internal actions
 
 example:
 ```

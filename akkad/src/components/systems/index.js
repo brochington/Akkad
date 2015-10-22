@@ -4,6 +4,7 @@ import RenderCamera from "./RenderCamera";
 import RenderMaterial from "./RenderMaterial";
 import RenderAnimation from "./RenderAnimation";
 import RenderMesh from "./RenderMesh";
+import RenderParticles from "./RenderParticles";
 
 import Trigger from "./Trigger";
 import Mesh from "./Mesh";
@@ -17,11 +18,11 @@ import Gravity from "./Gravity";
 import ApplyGravity from "./ApplyGravity";
 import CheckCollisions from "./CheckCollisions";
 import CollisionsEnabled from "./CollisionsEnabled";
+
+// Components mostly used internally
 import GenericProperty from "./GenericProperty";
 import SetEntityAsProperty from "./SetEntityAsProperty";
-
-
-
+import CallMethodOnEntity from "./CallMethodOnEntity";
 
 export default {
     RenderShape,
@@ -30,6 +31,7 @@ export default {
     RenderMaterial,
     RenderAnimation,
     RenderMesh,
+    RenderParticles,
     Trigger,
     Mesh,
     AnimateMesh,
@@ -42,5 +44,6 @@ export default {
     CheckCollisions,
     CollisionsEnabled,
     GenericProperty,
-    SetEntityAsProperty
+    SetEntityAsProperty,
+    CallMethodOnEntity
 };

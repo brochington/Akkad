@@ -2,9 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {Akkad} from "akkad";
 import App from "./App";
+import triggerActions from "./actions/triggerActions";
 
 const AkkadApp = (
-    <Akkad canvasNode={document.getElementById("akkad-canvas")} >
+    <Akkad 
+        actions={triggerActions}
+        canvasNode={document.getElementById("akkad-canvas")} 
+    >
         <App />
     </Akkad>
 );

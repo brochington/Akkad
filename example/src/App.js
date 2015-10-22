@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Babylon from "babylonjs";
-import {Scene, Material, BasicAnimation, cameras, lights, shapes, systems} from "akkad";
+import {Scene, Particles, Material, BasicAnimation, cameras, lights, shapes, systems} from "akkad";
 import pretend from "./img/pretend.jpg";
+import flare from "./img/flare.png";
 import skullMesh from "./meshes/skull.babylon";
 
 const {FreeCamera, ArcRotateCamera} = cameras;
@@ -34,11 +35,16 @@ const testKeyFrames = [{
 }]
 
 class App extends Component {
+    static contextTypes = {
+        actions: PropTypes.object
+    }
+
     clickMe = (evt, meshID, triggerID) => {
         console.log("clicked me!!", evt, meshID, triggerID);
     }
 
     render() {
+        const {setRandomDiffuseColor} = this.context.actions;
         const boxes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(val => {
             return (
                 <Box key={`box-${val}`}>
@@ -47,9 +53,7 @@ class App extends Component {
                         vector={[2,val,val]}
                     />
                     <Material>
-                        <Texture 
-                            image={pretend}
-                        />
+                        <Texture image={pretend}/>
                     </Material>
                     <BasicAnimation 
                         meshProperty="rotation.y"
@@ -63,6 +67,7 @@ class App extends Component {
                         loopMode="cycle"
                         keyFrames={testKeyFrames}
                     />
+                    <Trigger onClick={setRandomDiffuseColor} />
                 </Box>
             );
         });
@@ -100,12 +105,8 @@ class App extends Component {
                     diameterY={2}
                     diameterZ={2}
                 >
-                    <Trigger 
-                        onClick={this.clickMe}
-                    />
-                    <Position
-                        vector={[-3,2,0]}
-                    />
+                    <Particles img={flare} />
+                    <Position vector={[-3,2,0]} />
                     <CheckCollisions />
                     <Material>
                         <GenericProperty 

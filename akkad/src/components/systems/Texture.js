@@ -22,16 +22,24 @@ class Texture extends AkkadAbstractComponent {
         const {image} = this.props;
         const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
 
-        const material = appState.getIn(["entities", entityID, "entity"]);
+        const entityObj = appState.getIn(["entities", entityID]);
+        const type = entityObj.get("type");
+        const entity = entityObj.get("entity");
 
-        material.diffuseTexture = new Babylon.Texture(image, scene);
+        const texture = new Babylon.Texture(image, scene);
+
+        if (type === "material") {
+            entity.diffuseTexture = texture;
+        } else if (type === "particles") {
+            entity.particleTexture = texture;
+        }
     }
 
     componentWillUnmount() {
         const {appState, entityID} = this.context;
 
-        const material = appState.getIn(["entities", entityID, "entity"]);
-        material.diffuseTexture = null;
+        const entity = appState.getIn(["entities", entityID, "entity"]);
+        entity.diffuseTexture = null;
     }
 }
 

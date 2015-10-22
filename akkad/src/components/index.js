@@ -5,6 +5,7 @@ import Entity from "./Entity";
 import EntityLoaded from "./EntityLoaded";
 import Akkad from "./Akkad";
 import BasicAnimation from "./BasicAnimation";
+import Particles from "./Particles";
 
 export default {
     Engine,
@@ -13,5 +14,6 @@ export default {
     Entity,
     EntityLoaded,
     Akkad,
-    BasicAnimation
+    BasicAnimation,
+    Particles
 };

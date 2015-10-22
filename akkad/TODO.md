@@ -1,7 +1,7 @@
 Todo List
 ============
 
-- Shape to create
+- Shapes to create
 	- Plane
 	- Cylinder
 	- Torus
@@ -10,6 +10,8 @@ Todo List
 
 - Action delegation
 - Live reload working
-- shaders...
-- prevent camera from going through ground
-- add materials.
+- "holding an object"
+- shooting things
+- mesh collisions
+- working within a react app tree (node_id issues)
+- particles!!
