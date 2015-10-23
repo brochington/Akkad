@@ -1,8 +1,7 @@
 import React, {PropTypes} from "react";
 import Entity from "./Entity";
 import EntityLoaded from "./EntityLoaded";
-import {RenderParticles, SetEntityAsProperty, CallMethodOnEntity} from "./systems";
-import Babylon from "babylonjs";
+import {RenderParticles, CallMethodOnEntity} from "./systems";
 
 class Particles extends React.Component {
     static contextTypes = {

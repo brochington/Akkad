@@ -1,6 +1,4 @@
 import React, {PropTypes} from "react";
-import Babylon from "babylonjs";
-
 
 /* Sets an Entity as the property on another entity */
 class SetEntityAsProperty extends React.Component {
