@@ -35,7 +35,9 @@
   "dependencies": {
     "akkad": "^0.0.1",
     "babylonjs": "^2.2.0",
-    "immutable": "^3.7.5"
+    "history": "^1.12.5",
+    "immutable": "^3.7.5",
+    "react-router": "^1.0.0-rc3"
   },
   "peerDependencies": {
     "react": "^0.14.0-rc1",
