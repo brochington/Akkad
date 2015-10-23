@@ -105,7 +105,12 @@ class App extends Component {
                     diameterY={2}
                     diameterZ={2}
                 >
-                    <Particles img={flare} />
+                    <Particles img={flare}>
+                        <GenericProperty 
+                            propertyName="textureMask"
+                            onVal={new Babylon.Color3(0.1, 0.8, 1.0)}
+                        />
+                    </Particles>
                     <Position vector={[-3,2,0]} />
                     <CheckCollisions />
                     <Material>

@@ -75,6 +75,13 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 #### Props:
 - `target<[x, y, z]>`: Required, Target of camera
 
+# Particles:
+
+## <Particles />
+
+#### Props:
+- `img<Url>`: Required, location of particle image. 
+
 # Shapes
 
 ## `<Box />`
