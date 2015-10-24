@@ -1,21 +1,23 @@
 Akkad
 ========
 
-Akkad is React Webgl target the uses the Babylon.js library. Its aim is to allow any developer familiar with React the ability to create 3D scenes and games.
+Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to allow any developer familiar with React the ability to create 3D scenes and games.
 
 ### Features
 
 - Full power of React meets WebGL and Babylon
+- Embedded interactive "Scene" directly in your React based site.
 - Uses a redux-like state cycle
 - Defined method of extention via Entities and Systems.
 
 ### Supports
-- imported Meshes
+- Imported Meshes
 - Materials with Textures
 - Muliple forms of camera and light sources
 - Basic Animations
 - Gravity
 - Collisions
+- Particles
 - Basic triggers like onClick
 - Lot's more to come!
 
@@ -23,18 +25,39 @@ Akkad is React Webgl target the uses the Babylon.js library. Its aim is to allow
 
 A basic example of Akkad can be created in two files:
 
-App.js
+Page.js
 
 ```
-import React, {Component} from 'react';
-import {Scene, Material, cameras, lights, shapes, systems} from "akkad";
+import React, {Component, PropTypes} from 'react';
+import {Akkad} from "akkad";
+import Scene1 from "./Scene1";
+
+class Page extends Component {
+    render() {
+        return (
+            <div>
+                <Akkad style={{width: "100%", height: "100%"}} >
+                    <Scene1 />
+                </Akkad>
+            </div>
+        );
+    }
+}
+
+export default Page;
+```
+
+Scene1.js
+```
+import React, {Component, PropTypes} from 'react';
+import {Akkad} from "akkad";
+import {Scene, cameras, lights, shapes, systems} from "akkad";
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
-const {Sphere} = shapes;
-const {Wireframe} = systems;
+const {Box} = shapes;
 
-class App extends Component {
+class Scene1 extends Component {
     render() {
         return (
             <Scene>
@@ -43,39 +66,13 @@ class App extends Component {
                     target={[0, 1, 0]}
                 />
                 <HemisphericLight />
-                <Sphere
-                    segments={24}
-                    diameterX={2}
-                    diameterY={2}
-                    diameterZ={2}
-                >
-                    <Material>
-                        <Wireframe />
-                    </Material>
-                </Sphere>
+                <Box />
             </Scene>
         );
     }
 }
 
-export default App;
-```
-
-index.js
-```
-import React from "react";
-import ReactDOM from "react-dom";
-import {Akkad} from "akkad";
-import App from "./App";
-
-const AkkadApp = (
-    <Akkad canvasNode={document.getElementById("akkad-canvas")} >
-        <App />
-    </Akkad>
-);
-
-ReactDOM.render(AkkadApp, document.getElementById("root"));
-
+export default Scene1;
 ```
 
 Please check out the example project included for more.
