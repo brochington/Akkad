@@ -1,3 +1,4 @@
+import RenderAkkadCanvas from "./RenderAkkadCanvas";
 import RenderShape from "./RenderShape";
 import RenderLight from "./RenderLight";
 import RenderCamera from "./RenderCamera";
@@ -25,6 +26,7 @@ import SetEntityAsProperty from "./SetEntityAsProperty";
 import CallMethodOnEntity from "./CallMethodOnEntity";
 
 export default {
+    RenderAkkadCanvas,
     RenderShape,
     RenderLight,
     RenderCamera,

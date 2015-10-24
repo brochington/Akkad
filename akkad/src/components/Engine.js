@@ -4,8 +4,14 @@ import {ReactReconcileTransaction} from "react/lib/ReactUpdates";
 import systems from "./systems";
 
 class Engine extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        const {reactid} = props;
+
+        this._rootNodeID = reactid;
+
+        this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
 
         /* Poor man's way to do a mixin with a class */
         Object.keys(ReactMultiChild.Mixin)
@@ -14,11 +20,9 @@ class Engine extends React.Component {
 
     static propTypes = {
         actions: PropTypes.object,
-        appState: PropTypes.object
+        appState: PropTypes.object,
+        reactid: PropTypes.string
     }
-
-    /* Need to define the root node so that you don't get undefined.0 */
-    _rootNodeID = ""
     
     _performTransaction(func, scope, children, context) {
         const transaction = ReactReconcileTransaction.getPooled();
@@ -29,6 +33,7 @@ class Engine extends React.Component {
             transaction, 
             context
         );
+        
         ReactReconcileTransaction.release(transaction);
     }
 
@@ -58,17 +63,16 @@ class Engine extends React.Component {
         this.updateChildren(...args);
     }
 
-    componentWillUpdate(nextProps) {
-        // strictly for debugging purposes
-        window.state = nextProps.appState;
-        this.updateAppChildren(nextProps);
+    componentWillUpdate(nextProps, nextState) {
+        this.updateAppChildren(nextState);
     }
 
     componentDidMount() {
         const {actions, appState} = this.props;
         const {setEngine} = actions._internal;
+        const canvasID = appState.get("canvasID");
 
-        setEngine();
+        setEngine(canvasID, this.id, ::this.setState);
 
         this.mountAppChildren({
             actions,

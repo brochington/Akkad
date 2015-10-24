@@ -1,5 +1,4 @@
 import {PropTypes} from "react";
-import Babylon from "babylonjs";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class CallMethodOnEntity extends AkkadAbstractComponent {
@@ -16,11 +15,10 @@ class CallMethodOnEntity extends AkkadAbstractComponent {
     }
 
     componentDidMount() {
-        console.log("CallMethodOnEntity");
         const {entityID, appState} = this.context;
         const {targetEntityID, methodName, args} = this.props;
         
-        const entity = appState.getIn(["entities", entityID, "entity"]);
+        const entity = appState.getIn(["entities", (targetEntityID || entityID), "entity"]);
 
         if (args) {
             entity[methodName](...args);

@@ -3,7 +3,7 @@ import React, {PropTypes} from "react";
 class Scene extends React.Component {
     constructor() {
         super();
-        
+       
         this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
     }
 
@@ -14,11 +14,6 @@ class Scene extends React.Component {
 
     static childContextTypes = {
         entityID: PropTypes.string
-    }
-
-    static propTypes = {
-        beforeRender: PropTypes.func,
-        backgroundColor: PropTypes.array
     }
 
     getChildContext() {

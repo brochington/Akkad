@@ -6,17 +6,25 @@ class EntityLoaded extends React.Component {
         appState: PropTypes.object
     }
 
+    static propTypes = {
+        entityID: PropTypes.string,
+        appState: PropTypes.object
+    }
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        const {entityID, appState} = nextContext;
+        const entityID = nextContext.entityID || nextProps.entityID;
+        const appState = nextContext.appState || nextProps.appState;
 
         return appState.hasIn(["entities", entityID]);
     }
 
     render() {
-        const {entityID, appState} = this.context;
-        const {children} = this.props;
+        const {context, props} = this;
+        const {children} = props;
+        const entityID = context.entityID || props.entityID;
+        const appState = context.appState || props.appState;
 
-        return appState.hasIn(["entities", entityID]) && (
+        return appState && appState.hasIn(["entities", entityID]) && (
             <div>
                 {children}
             </div>

@@ -14,7 +14,6 @@ class ArcRotateCamera extends React.Component {
 
     render() {
         const {target} = this.props;
-        
         return (
             <Entity>
                 <RenderCamera 

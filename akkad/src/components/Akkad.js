@@ -2,18 +2,25 @@ import React, {PropTypes} from "react";
 import Immutable from "immutable";
 import _actions from "../actions";
 import {StateManager} from "../classes";
-import Engine from "./Engine";
-
-const stateManager = new StateManager();
+import Entity from "./Entity";
+import EntityLoaded from "./EntityLoaded";
+import DOMInjector from "./DOMInjector";
+import {RenderAkkadCanvas} from "./systems";
 
 const initState = {
     lights: {}
 };
 
 class Akkad extends React.Component {
+    constructor() {
+        super();
+
+        this.stateManager = new StateManager();
+    }
     static propTypes = {
         canvasNode: PropTypes.object,
-        actions: PropTypes.object
+        actions: PropTypes.object,
+        style: PropTypes.object
     }
 
     componentWillMount() {
@@ -22,31 +29,33 @@ class Akkad extends React.Component {
             _internal: _actions
         };
 
-        stateManager.init(
+        this.stateManager.init(
             actions, // actions object
             () => Immutable.fromJS(initState), // init function
             (appState, actions) => this.setState({appState, actions}) // called after action is returned.
         );
-        
-        stateManager.actions._internal.setCanvas(this.props.canvasNode);
     }
 
     render() {
-        const {children} = this.props;
-        const canvas = stateManager.appState.get("canvas");
-        
-        const engine = canvas && (
-            <Engine 
-                appState={stateManager.appState}
-                actions={stateManager.actions}
-            >
-                {children}
-            </Engine>
-        );
+        const {stateManager} = this;
+        const {children, style} = this.props;
 
         return stateManager.actions && stateManager.appState && (
-            <div>
-                {engine}
+            <div style={style}>
+                <Entity>
+                    <RenderAkkadCanvas
+                        appState={stateManager.appState}
+                        actions={stateManager.actions}
+                    />
+                    <EntityLoaded appState={stateManager.appState}>
+                        <DOMInjector
+                            appState={stateManager.appState}
+                            actions={stateManager.actions}
+                        >
+                            {children}
+                        </DOMInjector>
+                    </EntityLoaded>
+                </Entity>
             </div>
         );
     }

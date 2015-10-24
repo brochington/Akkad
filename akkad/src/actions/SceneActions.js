@@ -3,7 +3,7 @@ import Immutable from "immutable";
 
 export default {
     setScene(state, actions, sceneID) {
-        const engine = state.get("engine");
+        const engine = state.getIn(["entities", state.get("engineID"), "entity"]);
         const scene = new Babylon.Scene(engine);
 
         const sceneObj = Immutable.Map({
@@ -19,7 +19,7 @@ export default {
     },
 
     startRenderLoop(state, actions, sceneID) {
-        const engine = state.get("engine");
+        const engine = state.getIn(["entities", state.get("engineID"), "entity"]);
         const scene = state.getIn(["entities", sceneID, "entity"]);
 
         engine.runRenderLoop(function(){
