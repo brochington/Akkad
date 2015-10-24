@@ -50,7 +50,6 @@ export default Page;
 Scene1.js
 ```
 import React, {Component, PropTypes} from 'react';
-import {Akkad} from "akkad";
 import {Scene, cameras, lights, shapes, systems} from "akkad";
 
 const {ArcRotateCamera} = cameras;
