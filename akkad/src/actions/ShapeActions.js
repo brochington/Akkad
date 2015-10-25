@@ -1,25 +1,66 @@
-import Babylon from "babylonjs";
+import {Mesh} from "babylonjs";
 import Immutable from "immutable";
 import {Helpers} from "../classes";
 
 const shapeCreators = {
-    box(scene, entityID, props) {
-        const options = Helpers.convertShapeProps(props);
-
-        return new Babylon.Mesh.CreateBox(entityID, options, scene);
+    box(scene, entityID, options) {
+        return new Mesh.CreateBox(entityID, options, scene);
     },
-    sphere(scene, entityID, props) {
-        const options = Helpers.convertShapeProps(props);
 
-        return new Babylon.Mesh.CreateSphere(entityID, options, scene);
+    sphere(scene, entityID, options) {
+        return new Mesh.CreateSphere(entityID, options, scene);
     },
-    ground(scene, entityID, props) {
-        const options = Helpers.convertShapeProps(props); 
-        const ground = new Babylon.Mesh.CreateGround(entityID, options, scene);
-        
-        ground.checkCollisions = true;
 
-        return ground;
+    ground(scene, entityID, options) {
+        return new Mesh.CreateGround(entityID, options, scene);
+    },
+
+    disc(scene, entityID, options) {
+        const {
+            radius, 
+            tessellation,
+            updatable = true,
+            sideOrientation = null
+        } = options;
+
+        const disc = new Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
+        console.log(disc);
+        return disc;
+
+    },
+
+    cylinder(scene, entityID, options) {
+        const {
+            height = 1,
+            diameterTop = 1,
+            diameterBottom = 1,
+            tessellation = 30,
+            subdivisions = 6,
+            updatable = true
+        } = options;
+
+        return new Mesh.CreateCylinder(
+            entityID,
+            height,
+            diameterTop,
+            diameterBottom, 
+            tessellation,
+            subdivisions,
+            scene,
+            updatable
+        );
+    },
+
+    torus(scene, entityID, options) {
+        const {
+            diameter = 1,
+            thickness = 1,
+            tessellation = 10,
+            updatable = true,
+            sideOrientation = 0
+        } = options;
+
+        return new Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
     }
 };
 
@@ -29,7 +70,8 @@ const ShapeActions = {
 
         if (type && shapeCreators[type]) {
             const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
-            const shape = shapeCreators[type](scene, entityID, props);
+            const options = Helpers.convertShapeProps(props);
+            const shape = shapeCreators[type](scene, entityID, options);
 
             const meshObj = Immutable.Map({
                 id: entityID,

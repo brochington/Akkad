@@ -1,5 +1,6 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
+import EntityLoaded from "../EntityLoaded";
 import {RenderShape} from "../systems";
 
 class Sphere extends React.Component {
@@ -9,7 +10,7 @@ class Sphere extends React.Component {
     }
 
     render() {
-        const {height, width} = this.props;
+        const {height, width, children} = this.props;
         return (
             <Entity>
                 <RenderShape 
@@ -18,7 +19,9 @@ class Sphere extends React.Component {
                     height={height}
 
                 />
-                {this.props.children}
+                <EntityLoaded>
+                    {children}
+                </EntityLoaded>
             </Entity>
         );
     }

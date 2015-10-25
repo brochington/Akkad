@@ -4279,8 +4279,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs = __webpack_require__(91);
 
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
 	var _immutable = __webpack_require__(105);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
@@ -4288,23 +4286,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _classes = __webpack_require__(112);
 
 	var shapeCreators = {
-	    box: function box(scene, entityID, props) {
-	        var options = _classes.Helpers.convertShapeProps(props);
-
-	        return new _babylonjs2["default"].Mesh.CreateBox(entityID, options, scene);
+	    box: function box(scene, entityID, options) {
+	        return new _babylonjs.Mesh.CreateBox(entityID, options, scene);
 	    },
-	    sphere: function sphere(scene, entityID, props) {
-	        var options = _classes.Helpers.convertShapeProps(props);
 
-	        return new _babylonjs2["default"].Mesh.CreateSphere(entityID, options, scene);
+	    sphere: function sphere(scene, entityID, options) {
+	        return new _babylonjs.Mesh.CreateSphere(entityID, options, scene);
 	    },
-	    ground: function ground(scene, entityID, props) {
-	        var options = _classes.Helpers.convertShapeProps(props);
-	        var ground = new _babylonjs2["default"].Mesh.CreateGround(entityID, options, scene);
 
-	        ground.checkCollisions = true;
+	    ground: function ground(scene, entityID, options) {
+	        return new _babylonjs.Mesh.CreateGround(entityID, options, scene);
+	    },
 
-	        return ground;
+	    disc: function disc(scene, entityID, options) {
+	        var radius = options.radius;
+	        var tessellation = options.tessellation;
+	        var _options$updatable = options.updatable;
+	        var updatable = _options$updatable === undefined ? true : _options$updatable;
+	        var _options$sideOrientation = options.sideOrientation;
+	        var sideOrientation = _options$sideOrientation === undefined ? null : _options$sideOrientation;
+
+	        var disc = new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
+	        console.log(disc);
+	        return disc;
+	    },
+
+	    cylinder: function cylinder(scene, entityID, options) {
+	        var _options$height = options.height;
+	        var height = _options$height === undefined ? 1 : _options$height;
+	        var _options$diameterTop = options.diameterTop;
+	        var diameterTop = _options$diameterTop === undefined ? 1 : _options$diameterTop;
+	        var _options$diameterBottom = options.diameterBottom;
+	        var diameterBottom = _options$diameterBottom === undefined ? 1 : _options$diameterBottom;
+	        var _options$tessellation = options.tessellation;
+	        var tessellation = _options$tessellation === undefined ? 30 : _options$tessellation;
+	        var _options$subdivisions = options.subdivisions;
+	        var subdivisions = _options$subdivisions === undefined ? 6 : _options$subdivisions;
+	        var _options$updatable2 = options.updatable;
+	        var updatable = _options$updatable2 === undefined ? true : _options$updatable2;
+
+	        return new _babylonjs.Mesh.CreateCylinder(entityID, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable);
+	    },
+
+	    torus: function torus(scene, entityID, options) {
+	        var _options$diameter = options.diameter;
+	        var diameter = _options$diameter === undefined ? 1 : _options$diameter;
+	        var _options$thickness = options.thickness;
+	        var thickness = _options$thickness === undefined ? 1 : _options$thickness;
+	        var _options$tessellation2 = options.tessellation;
+	        var tessellation = _options$tessellation2 === undefined ? 10 : _options$tessellation2;
+	        var _options$updatable3 = options.updatable;
+	        var updatable = _options$updatable3 === undefined ? true : _options$updatable3;
+	        var _options$sideOrientation2 = options.sideOrientation;
+	        var sideOrientation = _options$sideOrientation2 === undefined ? 0 : _options$sideOrientation2;
+
+	        return new _babylonjs.Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
 	    }
 	};
 
@@ -4314,7 +4350,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (type && shapeCreators[type]) {
 	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
-	            var shape = shapeCreators[type](scene, entityID, props);
+	            var options = _classes.Helpers.convertShapeProps(props);
+	            var shape = shapeCreators[type](scene, entityID, options);
 
 	            var meshObj = _immutable2["default"].Map({
 	                id: entityID,
@@ -7656,14 +7693,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Box2 = _interopRequireDefault(_Box);
 
-	var _Ground = __webpack_require__(167);
+	var _Disc = __webpack_require__(167);
+
+	var _Disc2 = _interopRequireDefault(_Disc);
+
+	var _Ground = __webpack_require__(168);
 
 	var _Ground2 = _interopRequireDefault(_Ground);
+
+	var _Cylinder = __webpack_require__(169);
+
+	var _Cylinder2 = _interopRequireDefault(_Cylinder);
+
+	var _Torus = __webpack_require__(170);
+
+	var _Torus2 = _interopRequireDefault(_Torus);
 
 	exports["default"] = {
 	    Sphere: _Sphere2["default"],
 	    Box: _Box2["default"],
-	    Ground: _Ground2["default"]
+	    Disc: _Disc2["default"],
+	    Ground: _Ground2["default"],
+	    Cylinder: _Cylinder2["default"],
+	    Torus: _Torus2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -7872,6 +7924,104 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Entity2 = _interopRequireDefault(_Entity);
 
+	var _EntityLoaded = __webpack_require__(60);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var Disc = (function (_React$Component) {
+	    _inherits(Disc, _React$Component);
+
+	    function Disc() {
+	        _classCallCheck(this, Disc);
+
+	        _get(Object.getPrototypeOf(Disc.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Disc, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var _props$radius = _props.radius;
+	            var radius = _props$radius === undefined ? 10 : _props$radius;
+	            var _props$tessellation = _props.tessellation;
+	            var tessellation = _props$tessellation === undefined ? 0 : _props$tessellation;
+	            var _props$sideOrientation = _props.sideOrientation;
+	            var sideOrientation = _props$sideOrientation === undefined ? null : _props$sideOrientation;
+	            var children = _props.children;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "disc",
+	                    radius: radius,
+	                    tessellation: tessellation,
+	                    sideOrientation: sideOrientation
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "contextTypes",
+	        value: {
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }, {
+	        key: "propTypes",
+	        value: {
+	            radius: _react.PropTypes.number,
+	            tessellation: _react.PropTypes.number,
+	            sideOrientation: _react.PropTypes.number
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Disc;
+	})(_react2["default"].Component);
+
+	exports["default"] = Disc;
+	module.exports = exports["default"];
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(59);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(60);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
 	var _systems = __webpack_require__(48);
 
 	var Sphere = (function (_React$Component) {
@@ -7889,6 +8039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _props = this.props;
 	            var height = _props.height;
 	            var width = _props.width;
+	            var children = _props.children;
 
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
@@ -7899,7 +8050,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    height: height
 
 	                }),
-	                this.props.children
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
 	            );
 	        }
 	    }], [{
@@ -7915,6 +8070,200 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Sphere;
+	module.exports = exports["default"];
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(59);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(60);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var Cylinder = (function (_React$Component) {
+	    _inherits(Cylinder, _React$Component);
+
+	    function Cylinder() {
+	        _classCallCheck(this, Cylinder);
+
+	        _get(Object.getPrototypeOf(Cylinder.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Cylinder, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var height = _props.height;
+	            var diameterTop = _props.diameterTop;
+	            var diameterBottom = _props.diameterBottom;
+	            var tessellation = _props.tessellation;
+	            var subdivisions = _props.subdivisions;
+	            var children = _props.children;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "cylinder",
+	                    heigh: height,
+	                    diameterTop: diameterTop,
+	                    diameterBottom: diameterBottom,
+	                    tessellation: tessellation,
+	                    subdivisions: subdivisions
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "contextTypes",
+	        value: {
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }, {
+	        key: "propTypes",
+	        value: {
+	            height: _react.PropTypes.number,
+	            diameterTop: _react.PropTypes.number,
+	            diameterBottom: _react.PropTypes.number,
+	            tessellation: _react.PropTypes.number,
+	            subdivisions: _react.PropTypes.any
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Cylinder;
+	})(_react2["default"].Component);
+
+	exports["default"] = Cylinder;
+	module.exports = exports["default"];
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(59);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(60);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var Torus = (function (_React$Component) {
+	    _inherits(Torus, _React$Component);
+
+	    function Torus() {
+	        _classCallCheck(this, Torus);
+
+	        _get(Object.getPrototypeOf(Torus.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Torus, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var diameter = _props.diameter;
+	            var thickness = _props.thickness;
+	            var tessellation = _props.tessellation;
+	            var updatable = _props.updatable;
+	            var sideOrientation = _props.sideOrientation;
+	            var children = _props.children;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "torus",
+	                    diameter: diameter,
+	                    thickness: thickness,
+	                    tessellation: tessellation,
+	                    updatable: updatable,
+	                    sideOrientation: sideOrientation
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "contextTypes",
+	        value: {
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }, {
+	        key: "propTypes",
+	        value: {
+	            diameter: _react.PropTypes.number,
+	            thickness: _react.PropTypes.number,
+	            tessellation: _react.PropTypes.number,
+	            updatable: _react.PropTypes.bool,
+	            sideOrientation: _react.PropTypes.number
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Torus;
+	})(_react2["default"].Component);
+
+	exports["default"] = Torus;
 	module.exports = exports["default"];
 
 /***/ }

@@ -8,6 +8,9 @@ class Landing extends Component {
     render() {
         return (
             <div>
+                <h2>
+                    Hello Box
+                </h2>
                 <p>Try rotating and clicking on the box ;)</p>
                 <Akkad actions={triggerActions}>
                     <Scene1 />
