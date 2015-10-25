@@ -1186,6 +1186,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            createShape(entityID, this.props);
 	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            var _context2 = this.context;
+	            var actions = _context2.actions;
+	            var entityID = _context2.entityID;
+	            var disposeEntity = actions._internal.disposeEntity;
+
+	            disposeEntity(entityID);
+	        }
 	    }], [{
 	        key: "contextTypes",
 	        value: {
@@ -1305,6 +1315,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var createLight = actions._internal.createLight;
 
 	            createLight(entityID, this.props);
+	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            var _context2 = this.context;
+	            var actions = _context2.actions;
+	            var entityID = _context2.entityID;
+	            var disposeEntity = actions._internal.disposeEntity;
+
+	            disposeEntity(entityID);
 	        }
 	    }], [{
 	        key: "propTypes",
@@ -1510,6 +1530,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            createAnimation(config);
 	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            var _context2 = this.context;
+	            var actions = _context2.actions;
+	            var entityID = _context2.entityID;
+	            var disposeEntity = actions._internal.disposeEntity;
+
+	            disposeEntity(entityID);
+	        }
 	    }], [{
 	        key: "contextTypes",
 	        value: {
@@ -1582,6 +1612,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var importMesh = actions._internal.importMesh;
 
 	            importMesh(path, fileName, entityID);
+	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            var _context2 = this.context;
+	            var actions = _context2.actions;
+	            var entityID = _context2.entityID;
+	            var disposeEntity = actions._internal.disposeEntity;
+
+	            disposeEntity(entityID);
 	        }
 	    }], [{
 	        key: "contextTypes",
@@ -1727,6 +1767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "render",
 	        value: function render() {
 	            var entityID = this.context.entityID;
+	            var children = this.props.children;
 
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
@@ -1735,7 +1776,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    targetEntityID: entityID,
 	                    triggers: this.props
 	                }),
-	                _react2["default"].createElement(_EntityLoaded2["default"], null)
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
 	            );
 	        }
 	    }], [{
@@ -1943,6 +1988,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            createTriggers(targetEntityID, entityID, triggers);
 	        }
+
+	        //TODO: remove triggers that were added on componentWillUnmount()
+
 	    }], [{
 	        key: "contextTypes",
 	        value: {
@@ -2734,7 +2782,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "propTypes",
 	        value: {
-	            axis: _react.PropTypes.array.isRequired,
+	            axis: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired,
 	            amount: _react.PropTypes.number.isRequired,
 	            space: _react.PropTypes.string.isRequired
 	        },
@@ -3981,6 +4029,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        state = state.set("akkadTreeSetState", setState);
 
 	        return state;
+	    },
+
+	    disposeEntity: function disposeEntity(state, actions, entityID) {
+	        return state.deleteIn(["entities", entityID]);
 	    }
 	};
 	module.exports = exports["default"];
@@ -4022,6 +4074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return camera;
 	    },
+
 	    arcRotate: function arcRotate(entityID, config, scene) {
 	        var _config$alpha = config.alpha;
 	        var alpha = _config$alpha === undefined ? 0 : _config$alpha;
@@ -4202,7 +4255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return state;
 	    },
 
-	    stopRenderLoop: function stopRenderLoop(state, actions) {
+	    stopRenderLoop: function stopRenderLoop(state) {
 	        var engine = state.getIn(["entities", state.get("engineID"), "entity"]);
 
 	        engine.stopRenderLoop();
@@ -6604,7 +6657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _EngineWrapper = __webpack_require__(168);
+	var _EngineWrapper = __webpack_require__(152);
 
 	var _EngineWrapper2 = _interopRequireDefault(_EngineWrapper);
 
@@ -6658,7 +6711,95 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 152 */,
+/* 152 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Engine = __webpack_require__(20);
+
+	var _Engine2 = _interopRequireDefault(_Engine);
+
+	var EngineWrapper = (function (_React$Component) {
+	    _inherits(EngineWrapper, _React$Component);
+
+	    function EngineWrapper() {
+	        _classCallCheck(this, EngineWrapper);
+
+	        _get(Object.getPrototypeOf(EngineWrapper.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(EngineWrapper, [{
+	        key: "getinitialState",
+	        value: function getinitialState() {
+	            return {
+	                reactid: null
+	            };
+	        }
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var engineWrapper = this.refs.engineWrapper;
+	            var reactid = engineWrapper.dataset.reactid;
+
+	            this.setState({ reactid: reactid });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var children = _props.children;
+	            var appState = _props.appState;
+	            var actions = _props.actions;
+
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "engine-wrapper", ref: "engineWrapper" },
+	                this.state && this.state.reactid && _react2["default"].createElement(
+	                    _Engine2["default"],
+	                    {
+	                        appState: appState,
+	                        actions: actions,
+	                        reactid: this.state.reactid
+	                    },
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return EngineWrapper;
+	})(_react2["default"].Component);
+
+	exports["default"] = EngineWrapper;
+	module.exports = exports["default"];
+
+/***/ },
 /* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -7774,95 +7915,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Sphere;
-	module.exports = exports["default"];
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Engine = __webpack_require__(20);
-
-	var _Engine2 = _interopRequireDefault(_Engine);
-
-	var EngineWrapper = (function (_React$Component) {
-	    _inherits(EngineWrapper, _React$Component);
-
-	    function EngineWrapper() {
-	        _classCallCheck(this, EngineWrapper);
-
-	        _get(Object.getPrototypeOf(EngineWrapper.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(EngineWrapper, [{
-	        key: "getinitialState",
-	        value: function getinitialState() {
-	            return {
-	                reactid: null
-	            };
-	        }
-	    }, {
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var engineWrapper = this.refs.engineWrapper;
-	            var reactid = engineWrapper.dataset.reactid;
-
-	            this.setState({ reactid: reactid });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var children = _props.children;
-	            var appState = _props.appState;
-	            var actions = _props.actions;
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: "engine-wrapper", ref: "engineWrapper" },
-	                this.state && this.state.reactid && _react2["default"].createElement(
-	                    _Engine2["default"],
-	                    {
-	                        appState: appState,
-	                        actions: actions,
-	                        reactid: this.state.reactid
-	                    },
-	                    children
-	                )
-	            );
-	        }
-	    }], [{
-	        key: "propTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return EngineWrapper;
-	})(_react2["default"].Component);
-
-	exports["default"] = EngineWrapper;
 	module.exports = exports["default"];
 
 /***/ }

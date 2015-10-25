@@ -14,6 +14,7 @@ const cameraCreators = {
 
         return camera;
     },
+
     arcRotate(entityID, config, scene) {
         const {
             alpha = 0,
@@ -31,7 +32,6 @@ const cameraCreators = {
         }
 
         return camera;
-
     }
 };
 

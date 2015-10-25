@@ -17,6 +17,7 @@ class Trigger extends React.Component {
 
     render() {
         const {entityID} = this.context;
+        const {children} = this.props;
         return (
             <Entity>
                 <RenderTrigger 
@@ -24,6 +25,7 @@ class Trigger extends React.Component {
                     triggers={this.props}
                 />
                 <EntityLoaded>
+                    {children}
                 </EntityLoaded>
             </Entity>
         );

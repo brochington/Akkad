@@ -24,6 +24,13 @@ class RenderShape extends AkkadAbstractComponent {
 
         createShape(entityID, this.props);
     }
+
+    componentWillUnmount() {
+        const {actions, entityID} = this.context;
+        const {disposeEntity} = actions._internal;
+
+        disposeEntity(entityID);
+    }
 }
 
 export default RenderShape;

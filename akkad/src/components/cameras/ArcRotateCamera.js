@@ -5,7 +5,7 @@ import Entity from "../Entity";
 class ArcRotateCamera extends React.Component {
     static propTypes = {
         target: PropTypes.arrayOf(PropTypes.number).isRequired,
-        initialPosition: PropTypes.arrayOf(PropTypes.number),
+        initialPosition: PropTypes.arrayOf(PropTypes.number)
     }
 
     static contextTypes = {

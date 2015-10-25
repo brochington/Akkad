@@ -40,7 +40,7 @@ export default {
         return state;
     },
 
-    stopRenderLoop(state, actions) {
+    stopRenderLoop(state) {
         const engine = state.getIn(["entities", state.get("engineID"), "entity"]);
 
         engine.stopRenderLoop();

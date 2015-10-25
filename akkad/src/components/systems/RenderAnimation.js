@@ -26,6 +26,13 @@ class RenderAnimation extends AkkadAbstractComponent {
 
         createAnimation(config);
     }
+
+    componentWillUnmount() {
+        const {actions, entityID} = this.context;
+        const {disposeEntity} = actions._internal;
+
+        disposeEntity(entityID);
+    }
 }
 
 export default RenderAnimation;

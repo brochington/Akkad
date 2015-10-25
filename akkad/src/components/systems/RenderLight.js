@@ -18,6 +18,13 @@ class RenderLight extends AkkadAbstractComponent {
 
         createLight(entityID, this.props);
     }
+
+    componentWillUnmount() {
+        const {actions, entityID} = this.context;
+        const {disposeEntity} = actions._internal;
+
+        disposeEntity(entityID);
+    }
 }
 
 export default RenderLight;

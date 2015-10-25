@@ -36,5 +36,9 @@ export default {
         state = state.set("akkadTreeSetState", setState);
 
         return state;
+    },
+
+    disposeEntity(state, actions, entityID) {
+        return state.deleteIn(["entities", entityID]);
     }
 };

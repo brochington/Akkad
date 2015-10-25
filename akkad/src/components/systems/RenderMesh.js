@@ -22,6 +22,13 @@ class RenderMesh extends AkkadAbstractComponent {
         importMesh(path, fileName, entityID);
     }
 
+    componentWillUnmount() {
+        const {actions, entityID} = this.context;
+        const {disposeEntity} = actions._internal;
+
+        disposeEntity(entityID);
+    }
+
 }
 
 export default RenderMesh;

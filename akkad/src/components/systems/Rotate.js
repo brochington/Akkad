@@ -4,7 +4,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class Rotate extends AkkadAbstractComponent {
     static propTypes = {
-        axis: PropTypes.array.isRequired,
+        axis: PropTypes.arrayOf(PropTypes.number).isRequired,
         amount: PropTypes.number.isRequired,
         space: PropTypes.string.isRequired
     }
