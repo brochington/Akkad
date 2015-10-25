@@ -15,6 +15,13 @@ export default {
         return state;
     },
 
+    disposeCanvas(state, actions, canvasID) {
+        state = state.delete("canvasID", canvasID);
+        state = state.deleteIn(["entities", canvasID]);
+
+        return state;
+    },
+
     setEngine(state, actions, canvasID, engineID, setState) {
         const canvas = state.getIn(["entities", canvasID, "entity"]);
 

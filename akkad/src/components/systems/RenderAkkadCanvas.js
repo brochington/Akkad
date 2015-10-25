@@ -22,6 +22,14 @@ class RenderAkkadCanvas extends React.Component  {
         setCanvas(entityID, canvas);
     }
 
+    componentWillUnmount() {
+        const {entityID} = this.context;
+        const {actions} = this.props;
+        const {disposeCanvas} = actions._internal;
+
+        disposeCanvas(entityID);
+    }
+
     render() {
         const {entityID} = this.context;
         const {styles} = this.props;

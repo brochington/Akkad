@@ -1085,6 +1085,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            setCanvas(entityID, canvas);
 	        }
 	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            var entityID = this.context.entityID;
+	            var actions = this.props.actions;
+	            var disposeCanvas = actions._internal.disposeCanvas;
+
+	            disposeCanvas(entityID);
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            var entityID = this.context.entityID;
@@ -3602,9 +3611,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            var disposeScene = this.context.actions._internal.disposeScene;
+	            var _context$actions$_internal2 = this.context.actions._internal;
+	            var disposeScene = _context$actions$_internal2.disposeScene;
+	            var stopRenderLoop = _context$actions$_internal2.stopRenderLoop;
 
-	            disposeScene();
+	            stopRenderLoop();
+	            disposeScene(this.id);
 	        }
 	    }, {
 	        key: "render",
@@ -3948,6 +3960,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return state;
 	    },
 
+	    disposeCanvas: function disposeCanvas(state, actions, canvasID) {
+	        state = state["delete"]("canvasID", canvasID);
+	        state = state.deleteIn(["entities", canvasID]);
+
+	        return state;
+	    },
+
 	    setEngine: function setEngine(state, actions, canvasID, engineID, setState) {
 	        var canvas = state.getIn(["entities", canvasID, "entity"]);
 
@@ -4005,15 +4024,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    arcRotate: function arcRotate(entityID, config, scene) {
 	        var _config$alpha = config.alpha;
-	        var alpha = _config$alpha === undefined ? 1 : _config$alpha;
+	        var alpha = _config$alpha === undefined ? 0 : _config$alpha;
 	        var _config$beta = config.beta;
-	        var beta = _config$beta === undefined ? 1 : _config$beta;
+	        var beta = _config$beta === undefined ? 0 : _config$beta;
 	        var _config$radius = config.radius;
-	        var radius = _config$radius === undefined ? 10 : _config$radius;
+	        var radius = _config$radius === undefined ? 0 : _config$radius;
+	        var initialPosition = config.initialPosition;
 
 	        var target = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(config.target))))();
 
-	        return new _babylonjs2["default"].ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
+	        var camera = new _babylonjs2["default"].ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
+
+	        if (initialPosition) {
+	            camera.setPosition(new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(initialPosition))))());
+	        }
+
+	        return camera;
 	    }
 	};
 
@@ -4154,6 +4180,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return state;
 	    },
 
+	    disposeScene: function disposeScene(state, actions, sceneID) {
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
+
+	        scene.dispose();
+
+	        state["delete"]("sceneID");
+	        state.deleteIn(["entities", sceneID]);
+
+	        return state;
+	    },
+
 	    startRenderLoop: function startRenderLoop(state, actions, sceneID) {
 	        var engine = state.getIn(["entities", state.get("engineID"), "entity"]);
 	        var scene = state.getIn(["entities", sceneID, "entity"]);
@@ -4161,6 +4198,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        engine.runRenderLoop(function () {
 	            scene.render();
 	        });
+
+	        return state;
+	    },
+
+	    stopRenderLoop: function stopRenderLoop(state, actions) {
+	        var engine = state.getIn(["entities", state.get("engineID"), "entity"]);
+
+	        engine.stopRenderLoop();
 
 	        return state;
 	    }
@@ -7408,21 +7453,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(ArcRotateCamera, [{
 	        key: "render",
 	        value: function render() {
-	            var target = this.props.target;
+	            var _props = this.props;
+	            var target = _props.target;
+	            var initialPosition = _props.initialPosition;
 
 	            return _react2["default"].createElement(
 	                _Entity2["default"],
 	                null,
 	                _react2["default"].createElement(_systems.RenderCamera, {
 	                    type: "arcRotate",
-	                    target: target
+	                    target: target,
+	                    initialPosition: initialPosition
 	                })
 	            );
 	        }
 	    }], [{
 	        key: "propTypes",
 	        value: {
-	            target: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired
+	            target: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired,
+	            initialPosition: _react.PropTypes.arrayOf(_react.PropTypes.number)
 	        },
 	        enumerable: true
 	    }, {

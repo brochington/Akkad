@@ -16,14 +16,22 @@ const cameraCreators = {
     },
     arcRotate(entityID, config, scene) {
         const {
-            alpha = 1,
-            beta = 1,
-            radius = 10
+            alpha = 0,
+            beta = 0,
+            radius = 0,
+            initialPosition
         } = config;
 
         const target = new Babylon.Vector3(...config.target);
 
-        return new Babylon.ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
+        const camera = new Babylon.ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
+
+        if (initialPosition) {
+            camera.setPosition(new Babylon.Vector3(...initialPosition));
+        }
+
+        return camera;
+
     }
 };
 

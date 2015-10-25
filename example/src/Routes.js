@@ -1,11 +1,11 @@
 import React from "react";
 import {Router, Route} from "react-router";
-import {Landing} from "./pages";
+import {Landing, MeshPage} from "./pages";
 
 const Routes = (
     <Router>
-        <Route path="/" component={Landing}>
-        </Route>
+        <Route path="/" component={Landing} />
+        <Route path="mesh" component={MeshPage} />
     </Router>
 );
 

@@ -18,6 +18,17 @@ export default {
         return state;
     },
 
+    disposeScene(state, actions, sceneID) {
+        const scene = state.getIn(["entities", sceneID, "entity"]);
+
+        scene.dispose();
+
+        state.delete("sceneID");
+        state.deleteIn(["entities", sceneID]);
+
+        return state;
+    },
+
     startRenderLoop(state, actions, sceneID) {
         const engine = state.getIn(["entities", state.get("engineID"), "entity"]);
         const scene = state.getIn(["entities", sceneID, "entity"]);
@@ -25,6 +36,14 @@ export default {
         engine.runRenderLoop(function(){
             scene.render();
         });
+
+        return state;
+    },
+
+    stopRenderLoop(state, actions) {
+        const engine = state.getIn(["entities", state.get("engineID"), "entity"]);
+
+        engine.stopRenderLoop();
 
         return state;
     }

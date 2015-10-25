@@ -30,9 +30,10 @@ class Scene extends React.Component {
     }
 
     componentWillUnmount() {
-        const {disposeScene} = this.context.actions._internal;
+        const {disposeScene, stopRenderLoop} = this.context.actions._internal;
         
-        disposeScene();
+        stopRenderLoop();
+        disposeScene(this.id);
     }
 
     render() {
