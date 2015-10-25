@@ -25,13 +25,12 @@ class EngineWrapper extends React.Component {
         const {children, appState, actions} = this.props;
 
         return (
-            <div ref="engineWrapper">
+            <div className="engine-wrapper" ref="engineWrapper">
                 {this.state && this.state.reactid &&
                     <Engine 
                         appState={appState}
                         actions={actions}
                         reactid={this.state.reactid}
-
                     >
                     {children}
                     </Engine>

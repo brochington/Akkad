@@ -1080,13 +1080,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var actions = this.props.actions;
 	            var setCanvas = actions._internal.setCanvas;
 
-	            // creating a canvas DOM element outside of the react tree.
-	            var canvasWrapper = this.refs["akkadCanvasWrapper" + entityID];
-	            var canvas = document.createElement("canvas");
-	            canvas.id = entityID;
-	            canvas.className = "akkad-canvas";
-
-	            canvasWrapper.appendChild(canvas);
+	            var canvas = this.refs["akkadCanvas" + entityID];
 
 	            setCanvas(entityID, canvas);
 	        }
@@ -1094,8 +1088,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "render",
 	        value: function render() {
 	            var entityID = this.context.entityID;
+	            var styles = this.props.styles;
 
-	            return _react2["default"].createElement("div", { ref: "akkadCanvasWrapper" + entityID });
+	            return _react2["default"].createElement("canvas", {
+	                ref: "akkadCanvas" + entityID,
+	                className: "akkad-canvas",
+	                id: entityID,
+	                style: styles
+	            });
 	        }
 	    }], [{
 	        key: "contextTypes",
@@ -1109,7 +1109,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "propTypes",
 	        value: {
 	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
+	            actions: _react.PropTypes.object,
+	            styles: _react.PropTypes.object
 	        },
 	        enumerable: true
 	    }]);
@@ -3806,29 +3807,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var stateManager = this.stateManager;
 	            var _props = this.props;
 	            var children = _props.children;
-	            var style = _props.style;
+	            var styles = _props.styles;
 
 	            return stateManager.actions && stateManager.appState && _react2["default"].createElement(
-	                "div",
-	                { style: style },
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderAkkadCanvas, {
+	                    appState: stateManager.appState,
+	                    actions: stateManager.actions,
+	                    styles: styles
+	                }),
 	                _react2["default"].createElement(
-	                    _Entity2["default"],
-	                    null,
-	                    _react2["default"].createElement(_systems.RenderAkkadCanvas, {
-	                        appState: stateManager.appState,
-	                        actions: stateManager.actions
-	                    }),
+	                    _EntityLoaded2["default"],
+	                    { appState: stateManager.appState },
 	                    _react2["default"].createElement(
-	                        _EntityLoaded2["default"],
-	                        { appState: stateManager.appState },
-	                        _react2["default"].createElement(
-	                            _DOMInjector2["default"],
-	                            {
-	                                appState: stateManager.appState,
-	                                actions: stateManager.actions
-	                            },
-	                            children
-	                        )
+	                        _DOMInjector2["default"],
+	                        {
+	                            appState: stateManager.appState,
+	                            actions: stateManager.actions
+	                        },
+	                        children
 	                    )
 	                )
 	            );
@@ -3838,7 +3836,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: {
 	            canvasNode: _react.PropTypes.object,
 	            actions: _react.PropTypes.object,
-	            style: _react.PropTypes.object
+	            styles: _react.PropTypes.object
 	        },
 	        enumerable: true
 	    }]);
@@ -6599,14 +6597,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            return _react2["default"].createElement(
 	                "div",
-	                { ref: "engineWrapper" },
+	                { className: "engine-wrapper", ref: "engineWrapper" },
 	                this.state && this.state.reactid && _react2["default"].createElement(
 	                    _Engine2["default"],
 	                    {
 	                        appState: appState,
 	                        actions: actions,
 	                        reactid: this.state.reactid
-
 	                    },
 	                    children
 	                )

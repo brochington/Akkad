@@ -20,7 +20,7 @@ class Akkad extends React.Component {
     static propTypes = {
         canvasNode: PropTypes.object,
         actions: PropTypes.object,
-        style: PropTypes.object
+        styles: PropTypes.object
     }
 
     componentWillMount() {
@@ -38,14 +38,14 @@ class Akkad extends React.Component {
 
     render() {
         const {stateManager} = this;
-        const {children, style} = this.props;
+        const {children, styles} = this.props;
 
         return stateManager.actions && stateManager.appState && (
-            <div style={style}>
                 <Entity>
                     <RenderAkkadCanvas
                         appState={stateManager.appState}
                         actions={stateManager.actions}
+                        styles={styles}
                     />
                     <EntityLoaded appState={stateManager.appState}>
                         <DOMInjector
@@ -56,7 +56,6 @@ class Akkad extends React.Component {
                         </DOMInjector>
                     </EntityLoaded>
                 </Entity>
-            </div>
         );
     }
 }

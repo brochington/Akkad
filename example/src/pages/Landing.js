@@ -11,10 +11,7 @@ class Landing extends Component {
                     Welcome to the Akkad example App!!
                 </h2>
                 <p>Try rotating and clicking on the box ;)</p>
-                <Akkad 
-                    actions={triggerActions}
-                    style={{width: "100%", height: "100%"}}
-                >
+                <Akkad actions={triggerActions}>
                     <Scene1 />
                 </Akkad>
             </div>
