@@ -6559,70 +6559,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Engine = __webpack_require__(20);
+	var _EngineWrapper = __webpack_require__(168);
 
-	var _Engine2 = _interopRequireDefault(_Engine);
+	var _EngineWrapper2 = _interopRequireDefault(_EngineWrapper);
 
-	var EngineWrapper = (function (_React$Component) {
-	    _inherits(EngineWrapper, _React$Component);
-
-	    function EngineWrapper() {
-	        _classCallCheck(this, EngineWrapper);
-
-	        _get(Object.getPrototypeOf(EngineWrapper.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(EngineWrapper, [{
-	        key: "getinitialState",
-	        value: function getinitialState() {
-	            return {
-	                reactid: null
-	            };
-	        }
-	    }, {
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var engineWrapper = this.refs.engineWrapper;
-	            var reactid = engineWrapper.dataset.reactid;
-
-	            this.setState({ reactid: reactid });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var children = _props.children;
-	            var appState = _props.appState;
-	            var actions = _props.actions;
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: "engine-wrapper", ref: "engineWrapper" },
-	                this.state && this.state.reactid && _react2["default"].createElement(
-	                    _Engine2["default"],
-	                    {
-	                        appState: appState,
-	                        actions: actions,
-	                        reactid: this.state.reactid
-	                    },
-	                    children
-	                )
-	            );
-	        }
-	    }], [{
-	        key: "propTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return EngineWrapper;
-	})(_react2["default"].Component);
-
-	var DOMInjector = (function (_React$Component2) {
-	    _inherits(DOMInjector, _React$Component2);
+	var DOMInjector = (function (_React$Component) {
+	    _inherits(DOMInjector, _React$Component);
 
 	    function DOMInjector() {
 	        _classCallCheck(this, DOMInjector);
@@ -6641,13 +6583,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var _props2 = this.props;
-	            var children = _props2.children;
-	            var appState = _props2.appState;
-	            var actions = _props2.actions;
+	            var _props = this.props;
+	            var children = _props.children;
+	            var appState = _props.appState;
+	            var actions = _props.actions;
 
 	            return _react2["default"].createElement(
-	                EngineWrapper,
+	                _EngineWrapper2["default"],
 	                {
 	                    appState: appState,
 	                    actions: actions
@@ -7783,6 +7725,95 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Sphere;
+	module.exports = exports["default"];
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Engine = __webpack_require__(20);
+
+	var _Engine2 = _interopRequireDefault(_Engine);
+
+	var EngineWrapper = (function (_React$Component) {
+	    _inherits(EngineWrapper, _React$Component);
+
+	    function EngineWrapper() {
+	        _classCallCheck(this, EngineWrapper);
+
+	        _get(Object.getPrototypeOf(EngineWrapper.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(EngineWrapper, [{
+	        key: "getinitialState",
+	        value: function getinitialState() {
+	            return {
+	                reactid: null
+	            };
+	        }
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var engineWrapper = this.refs.engineWrapper;
+	            var reactid = engineWrapper.dataset.reactid;
+
+	            this.setState({ reactid: reactid });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var children = _props.children;
+	            var appState = _props.appState;
+	            var actions = _props.actions;
+
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "engine-wrapper", ref: "engineWrapper" },
+	                this.state && this.state.reactid && _react2["default"].createElement(
+	                    _Engine2["default"],
+	                    {
+	                        appState: appState,
+	                        actions: actions,
+	                        reactid: this.state.reactid
+	                    },
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            appState: _react.PropTypes.object,
+	            actions: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return EngineWrapper;
+	})(_react2["default"].Component);
+
+	exports["default"] = EngineWrapper;
 	module.exports = exports["default"];
 
 /***/ }
