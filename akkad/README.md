@@ -1,12 +1,14 @@
 Akkad
 ========
 
+`npm install --save akkad`
+
 Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to allow any developer familiar with React the ability to create 3D scenes and games.
 
 ### Features
 
 - Full power of React meets WebGL and Babylon
-- Embedded interactive "Scene" directly in your React based site.
+- Embedd multiple interactive "Scenes" directly in your React based site.
 - Uses a redux-like state cycle
 - Defined method of extention via Entities and Systems.
 
@@ -23,55 +25,34 @@ Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to al
 
 ## Example
 
-A basic example of Akkad can be created in two files:
-
-Page.js
+A basic example of Akkad can be created in one file:
 
 ```
-import React, {Component, PropTypes} from 'react';
-import {Akkad} from "akkad";
-import Scene1 from "./Scene1";
-
-class Page extends Component {
-    render() {
-        return (
-            <div>
-                <Akkad style={{width: "100%", height: "100%"}} >
-                    <Scene1 />
-                </Akkad>
-            </div>
-        );
-    }
-}
-
-export default Page;
-```
-
-Scene1.js
-```
-import React, {Component, PropTypes} from 'react';
-import {Scene, cameras, lights, shapes, systems} from "akkad";
+import React, {Component} from 'react';
+import {Akkad, Scene, cameras, lights, shapes} from "akkad";
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Box} = shapes;
 
-class Scene1 extends Component {
+class App extends Component {
     render() {
         return (
-            <Scene>
-                <ArcRotateCamera
-                    initialPosition={[0, 5, -10]}
-                    target={[0, 1, 0]}
-                />
-                <HemisphericLight />
-                <Box />
-            </Scene>
+            <Akkad>
+                <Scene>
+                    <ArcRotateCamera
+                        initialPosition={[3, 4, -5]}
+                        target={[0, 1, 0]}
+                    />
+                    <HemisphericLight />
+                    <Box />
+                </Scene>
+            </Akkad>
         );
     }
 }
 
-export default Scene1;
+export default App;
 ```
 
 Please check out the example project included for more.
