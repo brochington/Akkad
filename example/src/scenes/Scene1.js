@@ -5,7 +5,7 @@ import {Scene, Material, cameras, lights, shapes, systems} from "akkad";
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Box} = shapes;
-const {Trigger} = systems;
+const {Trigger, Color} = systems;
 
 class Scene1 extends Component {
     static contextTypes = {
@@ -22,7 +22,9 @@ class Scene1 extends Component {
                 />
                 <HemisphericLight />
                 <Box>
-                    <Material />
+                    <Material>
+                        <Color color={[0.2, 0.5, 0.7]} />
+                    </Material>
                     <Trigger onClick={setRandomDiffuseColor} />
                 </Box>
             </Scene>

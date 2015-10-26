@@ -91,4 +91,34 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 - `width<Number>`: Width of box
 
 ## `<Sphere />`
+
+### Props:
+- `segments<Number>`
+- `diameterX<Number>`
+- `diameterY<Number>`
+- `diameterZ<Number>`
+
+## `<Cylinder />`
+
+### Props:
+- `height<Number>`
+- `diameterTop<Number>`
+- `diameterBottom<Number>`
+- `tessellation<Number>`
+- `subdivisions<Any>`
+
+## `<Torus />`
+
+### Props:
+- `diameter<Number>`
+- `thickness<Number>`
+- `tessellation<Number>`
+- `updatable<Boolean>`
+- `sideOrientation<Number>`
+
 ## `<Ground />`
+
+### Props:
+- `height<Number>`
+- `width<Number>`
+- `subdivisions<Any>`

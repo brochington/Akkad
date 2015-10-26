@@ -1,7 +1,7 @@
 {
   "name": "akkad",
   "description": "A React webgl target",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./build/bundle.js",
   "homepage": "https://github.com/brochington/akkad",
   "bugs": {

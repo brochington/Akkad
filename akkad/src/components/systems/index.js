@@ -15,6 +15,7 @@ import Position from "./Position";
 import Rotate from "./Rotate";
 import Wireframe from "./Wireframe";
 import Texture from "./Texture";
+import Color from "./Color";
 import Gravity from "./Gravity";
 import ApplyGravity from "./ApplyGravity";
 import CheckCollisions from "./CheckCollisions";
@@ -35,6 +36,7 @@ export default {
     RenderMesh,
     RenderParticles,
     Trigger,
+    Color,
     Mesh,
     AnimateMesh,
     Position,
