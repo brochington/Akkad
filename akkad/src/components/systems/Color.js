@@ -14,9 +14,9 @@ class Color extends AkkadAbstractComponent {
         type: PropTypes.string
     }
 
-    componentDidMount() {
-        const {appState, entityID} = this.context;
-        const {color, type} = this.props;
+    updateColor = (props, context) => {
+        const {appState, entityID} = context;
+        const {color, type} = props;
 
         const entityObj = appState.getIn(["entities", entityID]);
         const entity = entityObj.get("entity");
@@ -34,6 +34,31 @@ class Color extends AkkadAbstractComponent {
             entity.diffuseColor = color3;
             break;
         }
+    }
+
+    shouldComponentUpdate(nextProps) {
+        console.log("shouldComponentUpdate", nextProps);
+        for (let i = 0, l = 2;i<l;i++) {
+            if (nextProps.color[i] !== this.props.color[i]) {
+                console.log("got a different number!");
+                return true;
+            }
+        }
+
+        if (nextProps.type !== this.prosp.type) {
+            console.log("different type.");
+            return true;
+        }
+        console.log("got through");
+        return false;
+    }
+
+    componentWillUpdate() {
+        console.log("componentWillUpdate in color!");
+    }
+
+    componentDidMount() {
+        this.updateColor(this.props, this.context);
     }
 
     componentWillUnmount() {

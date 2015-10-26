@@ -3024,17 +3024,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _classCallCheck(this, Color);
 
 	        _get(Object.getPrototypeOf(Color.prototype), "constructor", this).apply(this, arguments);
-	    }
 
-	    _createClass(Color, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var _context = this.context;
-	            var appState = _context.appState;
-	            var entityID = _context.entityID;
-	            var _props = this.props;
-	            var color = _props.color;
-	            var type = _props.type;
+	        this.updateColor = function (props, context) {
+	            var appState = context.appState;
+	            var entityID = context.entityID;
+	            var color = props.color;
+	            var type = props.type;
 
 	            var entityObj = appState.getIn(["entities", entityID]);
 	            var entity = entityObj.get("entity");
@@ -3053,13 +3048,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    entity.diffuseColor = color3;
 	                    break;
 	            }
+	        };
+	    }
+
+	    _createClass(Color, [{
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate(nextProps) {
+	            console.log("shouldComponentUpdate", nextProps);
+	            for (var i = 0, l = 2; i < l; i++) {
+	                if (nextProps.color[i] !== this.props.color[i]) {
+	                    console.log("got a different number!");
+	                    return true;
+	                }
+	            }
+
+	            if (nextProps.type !== this.prosp.type) {
+	                console.log("different type.");
+	                return true;
+	            }
+	            console.log("got through");
+	            return false;
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate() {
+	            console.log("componentWillUpdate in color!");
+	        }
+	    }, {
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            this.updateColor(this.props, this.context);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            var _context2 = this.context;
-	            var appState = _context2.appState;
-	            var entityID = _context2.entityID;
+	            var _context = this.context;
+	            var appState = _context.appState;
+	            var entityID = _context.entityID;
 
 	            var entity = appState.getIn(["entities", entityID, "entity"]);
 
