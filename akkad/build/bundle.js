@@ -2247,6 +2247,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _classCallCheck(this, Position);
 
 	        _get(Object.getPrototypeOf(Position.prototype), "constructor", this).apply(this, arguments);
+
+	        this.updatePosition = function (props, context) {
+	            var appState = context.appState;
+	            var entityID = context.entityID;
+	            var vector = props.vector;
+
+	            var entity = appState.getIn(["entities", entityID, "entity"]);
+
+	            entity.position = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(vector))))();
+	        };
 	    }
 
 	    _createClass(Position, [{
@@ -2264,16 +2274,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return false;
 	        }
 	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            this.updatePosition(nextProps, nextContext);
+	        }
+	    }, {
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
-	            var _context = this.context;
-	            var appState = _context.appState;
-	            var entityID = _context.entityID;
-
-	            var entity = appState.getIn(["entities", entityID, "entity"]);
-	            var vector = this.props.vector;
-
-	            entity.position = new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(vector))))();
+	            this.updatePosition(this.props, this.context);
 	        }
 	    }], [{
 	        key: "propTypes",
@@ -3054,25 +3062,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Color, [{
 	        key: "shouldComponentUpdate",
 	        value: function shouldComponentUpdate(nextProps) {
-	            console.log("shouldComponentUpdate", nextProps);
-	            for (var i = 0, l = 2; i < l; i++) {
+	            for (var i = 0, l = 2; i <= l; i++) {
 	                if (nextProps.color[i] !== this.props.color[i]) {
-	                    console.log("got a different number!");
 	                    return true;
 	                }
 	            }
 
-	            if (nextProps.type !== this.prosp.type) {
-	                console.log("different type.");
+	            if (nextProps.type !== this.props.type) {
 	                return true;
 	            }
-	            console.log("got through");
+
 	            return false;
 	        }
 	    }, {
 	        key: "componentWillUpdate",
-	        value: function componentWillUpdate() {
-	            console.log("componentWillUpdate in color!");
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            this.updateColor(nextProps, nextContext);
 	        }
 	    }, {
 	        key: "componentDidMount",

@@ -13,6 +13,14 @@ class Position extends AkkadAbstractComponent {
         actions: PropTypes.object
     }
 
+    updatePosition = (props, context) => {
+        const {appState, entityID} = context;
+        const {vector} = props;
+        const entity = appState.getIn(["entities", entityID, "entity"]);
+        
+        entity.position = new Babylon.Vector3(...vector);
+    }
+
     shouldComponentUpdate(nextProps) {
         const newVector = nextProps.vector;
         const oldVector = this.props.vector;
@@ -26,11 +34,12 @@ class Position extends AkkadAbstractComponent {
         return false;
     }
 
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        this.updatePosition(nextProps, nextContext);
+    }
+
     componentWillMount() {
-        const {appState, entityID} = this.context;
-        const entity = appState.getIn(["entities", entityID, "entity"]);
-        const {vector} = this.props;
-        entity.position = new Babylon.Vector3(...vector);
+        this.updatePosition(this.props, this.context);
     }
 }
 

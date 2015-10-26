@@ -15,7 +15,6 @@ class Color extends AkkadAbstractComponent {
     }
 
     updateColor = (props, context) => {
-        console.log("updateColor!!");
         const {appState, entityID} = context;
         const {color, type} = props;
 
@@ -38,25 +37,20 @@ class Color extends AkkadAbstractComponent {
     }
 
     shouldComponentUpdate(nextProps) {
-        console.log("shouldComponentUpdate", nextProps);
         for (let i = 0, l = 2; i<=l; i++) {
-            console.log(nextProps.color[i], this.props.color[i]);
             if (nextProps.color[i] !== this.props.color[i]) {
-                console.log("got a different number!");
                 return true;
             }
         }
 
         if (nextProps.type !== this.props.type) {
-            console.log("different type.");
             return true;
         }
-        console.log("got through");
+
         return false;
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        console.log("componentWillUpdate in color!");
         this.updateColor(nextProps, nextContext);
     }
 

@@ -21,7 +21,7 @@ const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
 const {Box} = shapes;
 
-export class App extends Component {
+class App extends Component {
     render() {
         return (
             <Akkad>
@@ -37,6 +37,8 @@ export class App extends Component {
         );
     }
 }
+
+export default App;
 ```
 
 Above is the Akkad version of Hello World, which will display a 3D rendered cube that can be spun around in every which way. There are a few important things to note about the components used: 
@@ -66,4 +68,36 @@ A explanation as to what systems are coming, but for know think of them as modif
 When we add the Material and Color system to our `Box`, our application looks like this:
 
 ```
+import React, {Component} from 'react';
+import {Akkad, Scene, Material, cameras, lights, shapes, systems} from "akkad";
+
+const {ArcRotateCamera} = cameras;
+const {HemisphericLight} = lights;
+const {Box} = shapes;
+const {Color} = systems;
+
+export class App extends Component {
+    render() {
+        return (
+            <Akkad>
+                <Scene>
+                    <ArcRotateCamera
+                        initialPosition={[3, 4, -5]}
+                        target={[0, 1, 0]}
+                    />
+                    <HemisphericLight />
+                    <Box>
+                        <Material>
+                            <Color color={[0, 0.8, 1]} />
+                        </Material>
+                    </Box>
+                </Scene>
+            </Akkad>
+        );
+    }
+}
+
+export default App;
 ```
+
+Systems are extremly powerful. They can be used to update Position, Rotation, Animation, Particles, and the list goes on!
