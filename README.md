@@ -1,6 +1,8 @@
 Akkad
 ========
 
+[![Join the chat at https://gitter.im/brochington/Akkad](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/brochington/Akkad?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 `npm install --save akkad`
 
 Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to allow any developer familiar with React the ability to create 3D scenes and games.
