@@ -22,6 +22,9 @@ class Landing extends Component {
                     <li>
                         <Link to="/shapes">Shapes</Link>
                     </li>
+                    <li>
+                        <Link to="/collisions">Collisions</Link>
+                    </li>
                 </ul>
                 {children}
             </div>

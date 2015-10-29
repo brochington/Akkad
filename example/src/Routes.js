@@ -4,7 +4,8 @@ import {
     Landing, 
     MeshPage, 
     SimpleBox,
-    ShapesPage
+    ShapesPage,
+    CollisionsPage
 } from "./pages";
 
 const Routes = (
@@ -13,6 +14,7 @@ const Routes = (
             <Route path="mesh" component={MeshPage} />
             <Route path="simple-box" component={SimpleBox} />
             <Route path="shapes" component={ShapesPage} />
+            <Route path="collisions" component={CollisionsPage} />
         </Route>
     </Router>
 );
