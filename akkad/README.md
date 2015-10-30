@@ -5,7 +5,8 @@ Akkad
 
 `npm install --save akkad`
 
-Docs:
+#### Docs:
+
 [Getting Started](https://github.com/brochington/Akkad/blob/master/docs/getting_started.md)
 
 [Component Guide](https://github.com/brochington/Akkad/blob/master/docs/components.md)
