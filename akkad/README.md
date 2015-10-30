@@ -1,11 +1,17 @@
 Akkad
 ========
 
+[![Join the chat at https://gitter.im/brochington/Akkad](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/brochington/Akkad?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 `npm install --save akkad`
 
-[Getting Started](https://github.com/brochington/Akkad/blob/master/docs/getting_started.md)\
+Docs:
+[Getting Started](https://github.com/brochington/Akkad/blob/master/docs/getting_started.md)
 
 [Component Guide](https://github.com/brochington/Akkad/blob/master/docs/components.md)
+
+[Systems tutorial](https://github.com/brochington/Akkad/blob/master/docs/tutorials/systems.md)
+
 
 Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to allow any developer familiar with React the ability to create 3D scenes and games.
 

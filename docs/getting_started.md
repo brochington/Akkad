@@ -63,7 +63,7 @@ const {Color} = systems;
 
 Materials allow us to place things onto 3D object. Think of it like painting or adding a sticker to our object, though they can be pretty darn powerful. The white opaque sides of the Box are the default for Babylon.
 
-A explanation as to what systems are coming, but for know think of them as modifiers to components like our `Box`.
+An explanation as to what systems are is coming soon, but for know think of them as modifiers to components like our `Box`.
 
 When we add the Material and Color system to our `Box`, our application looks like this:
 
