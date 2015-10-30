@@ -20,6 +20,13 @@ class RenderParticles extends AkkadAbstractComponent {
 
         createParticles(entityID, targetEntityID, img);
     }
+
+    componentWillUnmount() {
+        const {actions, entityID} = this.context;
+        const {disposeEntity} = actions._internal;
+
+        disposeEntity(entityID);
+    }
 }
 
 export default RenderParticles;
