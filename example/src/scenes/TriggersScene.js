@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Akkad, Scene, shapes, cameras, lights, systems} from "akkad";
+import {Akkad, Scene, Material, shapes, cameras, lights, systems} from "akkad";
 import skullMesh from "../meshes/skull.babylon";
 
 const {FreeCamera} = cameras;
@@ -7,7 +7,9 @@ const {HemisphericLight} = lights;
 const {
     Position,
     Rotate,
-    Gravity, 
+    Color,
+    Gravity,
+    Trigger,
     ApplyGravity, 
     CheckCollisions,
     CollisionsEnabled
@@ -22,15 +24,19 @@ const {
     Ground
 } = shapes;
 
-class CollisionsScene extends Component {
+class TriggersScene extends Component {
     static contextTypes = {
         actions: PropTypes.object
     }
 
     render() {
-        const {setRandomDiffuseColor} = this.context.actions;
+        const {testkeyUp, testKeyDown} = this.context.actions;
         return (
             <Scene>
+                <Trigger 
+                    onKeyUp={testkeyUp}
+                    onKeyDown={testKeyDown}
+                />
                 <CollisionsEnabled />
                 <Gravity vector={[0, -0.9, 0]} />
                 <FreeCamera 
@@ -71,16 +77,19 @@ class CollisionsScene extends Component {
                         space="LOCAL"
                     />
                 </Torus>
-                <Ground 
+                <Ground
                     height={300}
                     width={300}
                 >
-                    <Position vector={[0, -2, 0]} />
                     <CheckCollisions />
+                    <Position vector={[0, -2, 0]} />
+                    <Material>
+                        <Color color={[0, 1, 1]} />
+                    </Material>
                 </Ground>
             </Scene>
         );
     }
 }
 
-export default CollisionsScene;
+export default TriggersScene;

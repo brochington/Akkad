@@ -7,6 +7,17 @@ const triggerActions = {
         evt.source.material.diffuseColor = randomColor;
 
         return state;
+    },
+
+    testkeyUp(state, actions, evt, entityID, triggerID) {
+        return state;
+    },
+
+    testKeyDown(state, actions, evt, entityID, triggerID) {
+        const char = String.fromCharCode(evt.sourceEvent.keyCode);
+        console.log("testKeyDown", char);
+
+        return state;
     }
 }
 

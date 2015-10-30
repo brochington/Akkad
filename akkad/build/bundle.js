@@ -1700,6 +1700,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            createParticles(entityID, targetEntityID, img);
 	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            var _context2 = this.context;
+	            var actions = _context2.actions;
+	            var entityID = _context2.entityID;
+	            var disposeEntity = actions._internal.disposeEntity;
+
+	            disposeEntity(entityID);
+	        }
 	    }], [{
 	        key: "contextTypes",
 	        value: {
@@ -1799,7 +1809,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "propTypes",
 	        value: {
-	            onClick: _react.PropTypes.func
+	            onClick: _react.PropTypes.func,
+	            onKeyUp: _react.PropTypes.func,
+	            onKeyDown: _react.PropTypes.func,
+	            onEveryFrame: _react.PropTypes.func,
+	            onMouseOver: _react.PropTypes.func,
+	            onMouseOut: _react.PropTypes.func
 	        },
 	        enumerable: true
 	    }]);
@@ -2776,7 +2791,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var amount = nextProps.amount;
 	            var space = nextProps.space;
 
-	            if (axis !== this.props.axis || amount !== this.props.amount || space !== this.props.space) {
+	            for (var i in axis) {
+	                if (axis[i] !== this.props.axis[i]) {
+	                    return true;
+	                }
+	            }
+
+	            if (amount !== this.props.amount || space !== this.props.space) {
 	                return true;
 	            }
 
@@ -5879,10 +5900,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _babylonjs.ActionManager.OnPointerOutTrigger;
 	    },
 	    onKeyDown: function onKeyDown() {
-	        return _babylonjs.ActionManager.OnKeyDown;
+	        return _babylonjs.ActionManager.OnKeyDownTrigger;
 	    },
 	    onKeyUp: function onKeyUp() {
-	        return _babylonjs.ActionManager.OnKeyUp;
+	        return _babylonjs.ActionManager.OnKeyUpTrigger;
 	    }
 	};
 
@@ -5890,6 +5911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    createTriggers: function createTriggers(state, actions, targetEntityID, entityID, triggers) {
 	        var mesh = state.getIn(["entities", targetEntityID, "entity"]);
 
+	        /* Create an Action Manager on Mesh if it doesn't already exist */
 	        if (!mesh.actionManager) {
 	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
 	            mesh.actionManager = new _babylonjs.ActionManager(scene);

@@ -12,7 +12,12 @@ class Trigger extends React.Component {
     }
 
     static propTypes = {
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        onKeyUp: PropTypes.func,
+        onKeyDown: PropTypes.func,
+        onEveryFrame: PropTypes.func,
+        onMouseOver: PropTypes.func,
+        onMouseOut: PropTypes.func
     }
 
     render() {
