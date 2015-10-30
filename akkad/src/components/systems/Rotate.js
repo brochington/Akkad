@@ -30,11 +30,13 @@ class Rotate extends AkkadAbstractComponent {
     shouldComponentUpdate(nextProps) {
         const {axis, amount, space} = nextProps;
 
-        if (
-            axis !== this.props.axis ||
-            amount !== this.props.amount ||
-            space !== this.props.space
-        ) {
+        for (let i in axis) {
+            if (axis[i] !== this.props.axis[i]) {
+                return true;
+            }
+        }
+
+        if (amount !== this.props.amount || space !== this.props.space) {
             return true;
         }
 
