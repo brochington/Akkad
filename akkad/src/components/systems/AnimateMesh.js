@@ -3,6 +3,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class AnimateMesh extends AkkadAbstractComponent {
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string.isRequired,
         appState: PropTypes.object, 
         actions: PropTypes.object
@@ -22,7 +23,7 @@ class AnimateMesh extends AkkadAbstractComponent {
     }
 
     componentDidMount() {
-        const {entityID, appState} = this.context;
+        const {sceneID, entityID, appState} = this.context;
         const {
             targetEntityID,
             keyFrames,
@@ -31,7 +32,7 @@ class AnimateMesh extends AkkadAbstractComponent {
         } = this.props;
 
         const targetMesh = appState.getIn(["entities", targetEntityID, "entity"]);
-        const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
+        const scene = appState.getIn(["entities", sceneID, "entity"]);
         const animation = appState.getIn(["entities", entityID, "entity"]);
 
         animation.setKeys(keyFrames);

@@ -3,6 +3,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderMesh extends AkkadAbstractComponent {
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
         appState: PropTypes.object, 
         actions: PropTypes.object
@@ -16,10 +17,10 @@ class RenderMesh extends AkkadAbstractComponent {
 
     componentDidMount() {
         const {path, fileName} = this.props;
-        const {actions, entityID} = this.context;
+        const {actions, sceneID, entityID} = this.context;
         const {importMesh} = actions._internal;
 
-        importMesh(path, fileName, entityID);
+        importMesh(path, fileName, sceneID, entityID);
     }
 
     componentWillUnmount() {

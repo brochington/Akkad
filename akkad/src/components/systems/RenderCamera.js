@@ -8,16 +8,16 @@ class RenderCamera extends AkkadAbstractComponent {
     }
 
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
         appState: PropTypes.object,
         actions: PropTypes.object
     }
 
     componentWillMount() {
-        const {actions, entityID} = this.context;
+        const {actions, entityID, sceneID} = this.context;
         const {setCamera} = actions._internal;
-
-        setCamera(entityID, this.props);
+        setCamera(sceneID, entityID, this.props);
     }
     
     //TODO: Add a componentWillUnmount() to detach camera.

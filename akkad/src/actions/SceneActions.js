@@ -13,7 +13,6 @@ export default {
         });
 
         state = state.setIn(["entities", sceneID], sceneObj);
-        state = state.set("sceneID", sceneID);
 
         return state;
     },

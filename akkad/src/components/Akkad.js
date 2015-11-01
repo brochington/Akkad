@@ -7,9 +7,7 @@ import EntityLoaded from "./EntityLoaded";
 import DOMInjector from "./DOMInjector";
 import {RenderAkkadCanvas} from "./systems";
 
-const initState = {
-    lights: {}
-};
+const initState = {};
 
 class Akkad extends React.Component {
     constructor() {
@@ -41,21 +39,21 @@ class Akkad extends React.Component {
         const {children, styles} = this.props;
 
         return stateManager.actions && stateManager.appState && (
-                <Entity>
-                    <RenderAkkadCanvas
+            <Entity>
+                <RenderAkkadCanvas
+                    appState={stateManager.appState}
+                    actions={stateManager.actions}
+                    styles={styles}
+                />
+                <EntityLoaded appState={stateManager.appState}>
+                    <DOMInjector
                         appState={stateManager.appState}
                         actions={stateManager.actions}
-                        styles={styles}
-                    />
-                    <EntityLoaded appState={stateManager.appState}>
-                        <DOMInjector
-                            appState={stateManager.appState}
-                            actions={stateManager.actions}
-                        >
-                            {children}
-                        </DOMInjector>
-                    </EntityLoaded>
-                </Entity>
+                    >
+                        {children}
+                    </DOMInjector>
+                </EntityLoaded>
+            </Entity>
         );
     }
 }

@@ -1185,11 +1185,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
 	            var _context = this.context;
+	            var sceneID = _context.sceneID;
 	            var entityID = _context.entityID;
 	            var actions = _context.actions;
 	            var createShape = actions._internal.createShape;
 
-	            createShape(entityID, this.props);
+	            createShape(sceneID, entityID, this.props);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
@@ -1204,6 +1205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            actions: _react.PropTypes.object.isRequired,
 	            appState: _react.PropTypes.object.isRequired
@@ -1316,10 +1318,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentWillMount() {
 	            var _context = this.context;
 	            var actions = _context.actions;
+	            var sceneID = _context.sceneID;
 	            var entityID = _context.entityID;
 	            var createLight = actions._internal.createLight;
 
-	            createLight(entityID, this.props);
+	            createLight(sceneID, entityID, this.props);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
@@ -1340,6 +1343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            actions: _react.PropTypes.object.isRequired,
 	            appState: _react.PropTypes.object.isRequired
@@ -1394,9 +1398,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _context = this.context;
 	            var actions = _context.actions;
 	            var entityID = _context.entityID;
+	            var sceneID = _context.sceneID;
 	            var setCamera = actions._internal.setCamera;
 
-	            setCamera(entityID, this.props);
+	            setCamera(sceneID, entityID, this.props);
 	        }
 
 	        //TODO: Add a componentWillUnmount() to detach camera.
@@ -1410,6 +1415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -1462,15 +1468,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
 	            var _context = this.context;
+	            var sceneID = _context.sceneID;
 	            var actions = _context.actions;
 	            var entityID = _context.entityID;
 	            var createMaterial = actions._internal.createMaterial;
 
-	            createMaterial(entityID);
+	            createMaterial(sceneID, entityID);
 	        }
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -1613,10 +1621,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var fileName = _props.fileName;
 	            var _context = this.context;
 	            var actions = _context.actions;
+	            var sceneID = _context.sceneID;
 	            var entityID = _context.entityID;
 	            var importMesh = actions._internal.importMesh;
 
-	            importMesh(path, fileName, entityID);
+	            importMesh(path, fileName, sceneID, entityID);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
@@ -1631,6 +1640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -1691,6 +1701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
 	            var _context = this.context;
+	            var sceneID = _context.sceneID;
 	            var actions = _context.actions;
 	            var entityID = _context.entityID;
 	            var _props = this.props;
@@ -1698,7 +1709,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var img = _props.img;
 	            var createParticles = actions._internal.createParticles;
 
-	            createParticles(entityID, targetEntityID, img);
+	            createParticles(sceneID, entityID, targetEntityID, img);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
@@ -1713,6 +1724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -1781,7 +1793,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Trigger, [{
 	        key: "render",
 	        value: function render() {
-	            var entityID = this.context.entityID;
+	            var _context = this.context;
+	            var entityID = _context.entityID;
+	            var sceneID = _context.sceneID;
 	            var children = this.props.children;
 
 	            return _react2["default"].createElement(
@@ -1789,6 +1803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                null,
 	                _react2["default"].createElement(_RenderTrigger2["default"], {
 	                    targetEntityID: entityID,
+	                    sceneID: sceneID,
 	                    triggers: this.props
 	                }),
 	                _react2["default"].createElement(
@@ -1802,6 +1817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "contextTypes",
 	        value: {
 	            entityID: _react.PropTypes.string,
+	            sceneID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
 	        },
@@ -2002,11 +2018,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var targetEntityID = _props.targetEntityID;
 	            var triggers = _props.triggers;
 	            var _context = this.context;
+	            var sceneID = _context.sceneID;
 	            var actions = _context.actions;
 	            var entityID = _context.entityID;
 	            var createTriggers = actions._internal.createTriggers;
 
-	            createTriggers(targetEntityID, entityID, triggers);
+	            createTriggers(sceneID, targetEntityID, entityID, triggers);
 	        }
 
 	        //TODO: remove triggers that were added on componentWillUnmount()
@@ -2014,6 +2031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -2165,6 +2183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
 	            var _context = this.context;
+	            var sceneID = _context.sceneID;
 	            var entityID = _context.entityID;
 	            var appState = _context.appState;
 	            var _props = this.props;
@@ -2174,7 +2193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var endFrame = _props.endFrame;
 
 	            var targetMesh = appState.getIn(["entities", targetEntityID, "entity"]);
-	            var scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
+	            var scene = appState.getIn(["entities", sceneID, "entity"]);
 	            var animation = appState.getIn(["entities", entityID, "entity"]);
 
 	            animation.setKeys(keyFrames);
@@ -2191,6 +2210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string.isRequired,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -3807,6 +3827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "getChildContext",
 	        value: function getChildContext() {
 	            return {
+	                sceneID: this.id,
 	                entityID: this.id
 	            };
 	        }
@@ -3835,7 +3856,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var appState = this.context.appState;
 
-	            return appState.has("sceneID") ? _react2["default"].createElement(
+	            var hasScene = appState.hasIn(["entities", this.id]);
+
+	            return hasScene ? _react2["default"].createElement(
 	                "div",
 	                null,
 	                this.props.children
@@ -3851,6 +3874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "childContextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string,
 	            entityID: _react.PropTypes.string
 	        },
 	        enumerable: true
@@ -3992,9 +4016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _systems = __webpack_require__(48);
 
-	var initState = {
-	    lights: {}
-	};
+	var initState = {};
 
 	var Akkad = (function (_React$Component) {
 	    _inherits(Akkad, _React$Component);
@@ -4261,9 +4283,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports["default"] = {
-	    setCamera: function setCamera(state, actions, entityID, config) {
+	    setCamera: function setCamera(state, actions, sceneID, entityID, config) {
 	        var canvas = state.getIn(["entities", state.get("canvasID"), "entity"]);
-	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
 
 	        var camera = cameraCreators[config.type](entityID, config, scene);
 
@@ -4343,10 +4365,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports["default"] = {
-	    createLight: function createLight(state, actions, entityID, props) {
+	    createLight: function createLight(state, actions, sceneID, entityID, props) {
 	        var type = props.type;
 
-	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
 	        var light = lightCreators[type](scene, entityID, props);
 
 	        var lightObj = _immutable2["default"].Map({
@@ -4392,7 +4414,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 
 	        state = state.setIn(["entities", sceneID], sceneObj);
-	        state = state.set("sceneID", sceneID);
 
 	        return state;
 	    },
@@ -4509,11 +4530,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	var ShapeActions = {
-	    createShape: function createShape(state, actions, entityID, props) {
+	    createShape: function createShape(state, actions, sceneID, entityID, props) {
 	        var type = props.type;
 
 	        if (type && shapeCreators[type]) {
-	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	            var scene = state.getIn(["entities", sceneID, "entity"]);
 	            var options = _classes.Helpers.convertShapeProps(props);
 	            var shape = shapeCreators[type](scene, entityID, options);
 
@@ -5783,8 +5804,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _immutable2 = _interopRequireDefault(_immutable);
 
 	var MaterialActions = {
-	    createMaterial: function createMaterial(state, actions, entityID) {
-	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	    createMaterial: function createMaterial(state, actions, sceneID, entityID) {
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
 
 	        var material = new _babylonjs2["default"].StandardMaterial(entityID, scene);
 
@@ -5908,12 +5929,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	var TriggerActions = {
-	    createTriggers: function createTriggers(state, actions, targetEntityID, entityID, triggers) {
+	    createTriggers: function createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
 	        var mesh = state.getIn(["entities", targetEntityID, "entity"]);
 
 	        /* Create an Action Manager on Mesh if it doesn't already exist */
 	        if (!mesh.actionManager) {
-	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	            var scene = state.getIn(["entities", sceneID, "entity"]);
 	            mesh.actionManager = new _babylonjs.ActionManager(scene);
 	        }
 
@@ -5974,16 +5995,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	var MeshActions = {
-	    importMesh: function importMesh(state, actions, path, fileName, entityID) {
+	    importMesh: function importMesh(state, actions, path, fileName, sceneID, entityID) {
 	        var scene, meshes;
 	        return _regeneratorRuntime.async(function importMesh$(context$1$0) {
 	            while (1) switch (context$1$0.prev = context$1$0.next) {
 	                case 0:
-	                    scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
-	                    context$1$0.next = 3;
+	                    scene = state.getIn(["entities", sceneID, "entity"]);
+
+	                    console.log("here", sceneID);
+
+	                    context$1$0.next = 4;
 	                    return _regeneratorRuntime.awrap(_importMesh(path, fileName, scene));
 
-	                case 3:
+	                case 4:
 	                    meshes = context$1$0.sent;
 
 	                    meshes.forEach(function (mesh) {
@@ -5998,7 +6022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                    return context$1$0.abrupt("return", state);
 
-	                case 6:
+	                case 7:
 	                case "end":
 	                    return context$1$0.stop();
 	            }
@@ -6813,8 +6837,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _immutable2 = _interopRequireDefault(_immutable);
 
 	var ParticlesActions = {
-	    createParticles: function createParticles(state, actions, entityID, targetEntityID, img) {
-	        var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+	    createParticles: function createParticles(state, actions, sceneID, entityID, targetEntityID, img) {
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
 	        var targetEntity = state.getIn(["entities", targetEntityID, "entity"]);
 
 	        var particles = new _babylonjs2["default"].ParticleSystem(entityID, 2000, scene);
@@ -7076,6 +7100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
+	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object

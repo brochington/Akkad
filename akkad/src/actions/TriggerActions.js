@@ -12,12 +12,12 @@ const triggerHandlers = {
 };
 
 const TriggerActions = {
-    createTriggers(state, actions, targetEntityID, entityID, triggers) {
+    createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
         const mesh = state.getIn(["entities", targetEntityID, "entity"]);
 
         /* Create an Action Manager on Mesh if it doesn't already exist */
         if (!mesh.actionManager) {
-            const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+            const scene = state.getIn(["entities", sceneID, "entity"]);
             mesh.actionManager = new ActionManager(scene);
         }
         

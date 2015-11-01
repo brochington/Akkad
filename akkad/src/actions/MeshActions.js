@@ -17,8 +17,9 @@ const importMesh = (path, fileName, scene, progressCallback = () => {}) => {
 };
 
 const MeshActions = {
-    async importMesh(state, actions, path, fileName, entityID) {
-        const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+    async importMesh(state, actions, path, fileName, sceneID, entityID) {
+        const scene = state.getIn(["entities", sceneID, "entity"]);
+        console.log("here", sceneID);
 
         const meshes = await importMesh(path, fileName, scene);
 

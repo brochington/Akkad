@@ -8,6 +8,7 @@ import {
 
 class BasicAnimation extends React.Component {
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
         appState: PropTypes.object, 
         actions: PropTypes.object

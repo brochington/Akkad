@@ -46,9 +46,9 @@ const lightCreators = {
 };
 
 export default {
-    createLight(state, actions, entityID, props) {
+    createLight(state, actions, sceneID, entityID, props) {
         const {type} = props;
-        const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+        const scene = state.getIn(["entities", sceneID, "entity"]);
         const light = lightCreators[type](scene, entityID, props);
 
         const lightObj = Immutable.Map({

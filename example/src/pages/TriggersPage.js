@@ -5,6 +5,8 @@ import triggerActions from "../actions/triggerActions";
 import TriggersScene from "../scenes/TriggersScene";
 import Overlay from "../components/Overlay";
 
+const initState = {};
+
 class Landing extends Component {
     render() {
         return (
@@ -13,7 +15,6 @@ class Landing extends Component {
                     Triggers Demo
                 </h2>
                 <p>A small demo of various triggers</p>
-                <Overlay />
                 <Akkad actions={triggerActions}>
                     <TriggersScene />
                 </Akkad>

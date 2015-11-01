@@ -7,16 +7,17 @@ class RenderLight extends AkkadAbstractComponent {
     }
 
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
         actions: PropTypes.object.isRequired,
         appState: PropTypes.object.isRequired
     }
 
     componentWillMount() {
-        const {actions, entityID} = this.context;
+        const {actions, sceneID, entityID} = this.context;
         const {createLight} = actions._internal;
 
-        createLight(entityID, this.props);
+        createLight(sceneID, entityID, this.props);
     }
 
     componentWillUnmount() {

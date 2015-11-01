@@ -3,8 +3,9 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderParticles extends AkkadAbstractComponent {
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
-        appState: PropTypes.object, 
+        appState: PropTypes.object,
         actions: PropTypes.object
     }
 
@@ -14,11 +15,11 @@ class RenderParticles extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
-        const {actions, entityID} = this.context;
+        const {sceneID, actions, entityID} = this.context;
         const {targetEntityID, img} = this.props;
         const {createParticles} = actions._internal;
 
-        createParticles(entityID, targetEntityID, img);
+        createParticles(sceneID, entityID, targetEntityID, img);
     }
 
     componentWillUnmount() {

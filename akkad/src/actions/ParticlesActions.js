@@ -2,8 +2,8 @@ import Babylon from "babylonjs";
 import Immutable from "immutable";
 
 const ParticlesActions = {
-    createParticles(state, actions, entityID, targetEntityID, img) {
-        const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+    createParticles(state, actions,sceneID, entityID, targetEntityID, img) {
+        const scene = state.getIn(["entities", sceneID, "entity"]);
         const targetEntity = state.getIn(["entities", targetEntityID, "entity"]);
 
         const particles = new Babylon.ParticleSystem(entityID, 2000, scene);

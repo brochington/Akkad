@@ -3,6 +3,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderTrigger extends AkkadAbstractComponent {
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
         appState: PropTypes.object,
         actions: PropTypes.object
@@ -15,10 +16,10 @@ class RenderTrigger extends AkkadAbstractComponent {
 
     componentDidMount() {
         const {targetEntityID, triggers} = this.props;
-        const {actions, entityID} = this.context;
+        const {sceneID, actions, entityID} = this.context;
         const {createTriggers} = actions._internal;
 
-        createTriggers(targetEntityID, entityID, triggers);
+        createTriggers(sceneID, targetEntityID, entityID, triggers);
     }
 
     //TODO: remove triggers that were added on componentWillUnmount()

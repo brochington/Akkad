@@ -3,6 +3,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 
 class RenderShape extends AkkadAbstractComponent {
     static contextTypes = {
+        sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
         actions: PropTypes.object.isRequired,
         appState: PropTypes.object.isRequired
@@ -19,10 +20,10 @@ class RenderShape extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
-        const {entityID, actions} = this.context;
+        const {sceneID, entityID, actions} = this.context;
         const {createShape} = actions._internal;
 
-        createShape(entityID, this.props);
+        createShape(sceneID, entityID, this.props);
     }
 
     componentWillUnmount() {

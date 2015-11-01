@@ -65,11 +65,11 @@ const shapeCreators = {
 };
 
 const ShapeActions = {
-    createShape(state, actions, entityID, props) {
+    createShape(state, actions, sceneID, entityID, props) {
         const {type} = props;
 
         if (type && shapeCreators[type]) {
-            const scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
+            const scene = state.getIn(["entities", sceneID, "entity"]);
             const options = Helpers.convertShapeProps(props);
             const shape = shapeCreators[type](scene, entityID, options);
 
@@ -78,7 +78,7 @@ const ShapeActions = {
                 entity: shape,
                 type: "mesh"
             });
-
+            
             state = state.setIn(["entities", entityID], meshObj);
         }
         return state;

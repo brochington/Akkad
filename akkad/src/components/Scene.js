@@ -3,7 +3,7 @@ import React, {PropTypes} from "react";
 class Scene extends React.Component {
     constructor() {
         super();
-       
+
         this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
     }
 
@@ -13,11 +13,13 @@ class Scene extends React.Component {
     }
 
     static childContextTypes = {
+        sceneID: PropTypes.string,
         entityID: PropTypes.string
     }
 
     getChildContext() {
         return {
+            sceneID: this.id,
             entityID: this.id
         };
     }
@@ -38,8 +40,10 @@ class Scene extends React.Component {
 
     render() {
         const {appState} = this.context;
+        const hasScene = appState.hasIn(["entities", this.id]);
 
-        return appState.has("sceneID") ? (
+
+        return hasScene ? (
             <div>
                 {this.props.children}
             </div>
