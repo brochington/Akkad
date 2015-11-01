@@ -2,11 +2,7 @@ import React, {PropTypes} from "react";
 import Immutable from "immutable";
 import _actions from "../actions";
 import {StateManager} from "../classes";
-import Entity from "./Entity";
-import EntityLoaded from "./EntityLoaded";
-import DOMInjector from "./DOMInjector";
 import PropsToContext from "./PropsToContext";
-import {RenderAkkadCanvas} from "./systems";
 
 class Akkad extends React.Component {
     constructor() {
@@ -36,7 +32,7 @@ class Akkad extends React.Component {
 
     render() {
         const {stateManager} = this;
-        const {children, styles} = this.props;
+        const {children} = this.props;
 
         return stateManager.actions && stateManager.appState && (
             <PropsToContext 

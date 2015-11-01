@@ -1,11 +1,10 @@
-import React, {PropTypes, Component} from "react";
-import Immutable from "immutable";
+import React, {PropTypes} from "react";
 
 /**
 * A basic class to add actions and appState to the app's context.
 * Might want to make this more generic if the need arises.
 */
-class PropsToContext extends Component {
+class PropsToContext extends React.Component {
     static propTypes = {
         actions: PropTypes.object,
         appState: PropTypes.object

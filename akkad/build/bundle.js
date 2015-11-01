@@ -3931,23 +3931,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classes = __webpack_require__(113);
 
-	var _Entity = __webpack_require__(59);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(60);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _DOMInjector = __webpack_require__(152);
-
-	var _DOMInjector2 = _interopRequireDefault(_DOMInjector);
-
 	var _PropsToContext = __webpack_require__(172);
 
 	var _PropsToContext2 = _interopRequireDefault(_PropsToContext);
-
-	var _systems = __webpack_require__(48);
 
 	var Akkad = (function (_React$Component) {
 	    _inherits(Akkad, _React$Component);
@@ -3982,9 +3968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "render",
 	        value: function render() {
 	            var stateManager = this.stateManager;
-	            var _props = this.props;
-	            var children = _props.children;
-	            var styles = _props.styles;
+	            var children = this.props.children;
 
 	            return stateManager.actions && stateManager.appState && _react2["default"].createElement(
 	                _PropsToContext2["default"],
@@ -4052,10 +4036,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _ShapeActions2 = _interopRequireDefault(_ShapeActions);
 
-	var _MeshTriggerActions = __webpack_require__(141);
-
-	var _MeshTriggerActions2 = _interopRequireDefault(_MeshTriggerActions);
-
 	var _MaterialActions = __webpack_require__(142);
 
 	var _MaterialActions2 = _interopRequireDefault(_MaterialActions);
@@ -4076,7 +4056,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _ParticlesActions2 = _interopRequireDefault(_ParticlesActions);
 
-	exports["default"] = _extends({}, _appActions2["default"], _CameraActions2["default"], _LightActions2["default"], _SceneActions2["default"], _ShapeActions2["default"], _MeshTriggerActions2["default"], _MaterialActions2["default"], _AnimationActions2["default"], _TriggerActions2["default"], _MeshActions2["default"], _ParticlesActions2["default"]);
+	exports["default"] = _extends({}, _appActions2["default"], _CameraActions2["default"], _LightActions2["default"], _SceneActions2["default"], _ShapeActions2["default"], _MaterialActions2["default"], _AnimationActions2["default"], _TriggerActions2["default"], _MeshActions2["default"], _ParticlesActions2["default"]);
 	module.exports = exports["default"];
 
 /***/ },
@@ -5669,41 +5649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 141 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(91);
-
-	var MeshTriggerActions = {
-	    createMeshTriggers: function createMeshTriggers(state, actions, entityID, triggers) {
-	        var mesh = state.getIn(["entities", entityID, "entity"]);
-
-	        if (!mesh.actionManager) {
-	            var scene = state.getIn(["entities", state.get("sceneID"), "entity"]);
-	            mesh.actionManager = new _babylonjs.ActionManager(scene);
-	        }
-
-	        state = state.updateIn(["meshes", entityID], function (meshObj) {
-	            return meshObj.set("triggers", triggers);
-	        });
-
-	        return state;
-	    },
-	    updateMeshTriggers: function updateMeshTriggers(state, actions, entityID, updatedTriggers) {
-	        return state.setIn(["meshes", entityID, "triggers"], updatedTriggers);
-	    }
-	};
-
-	exports["default"] = MeshTriggerActions;
-	module.exports = exports["default"];
-
-/***/ },
+/* 141 */,
 /* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -6780,172 +6726,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 152 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _EngineWrapper = __webpack_require__(153);
-
-	var _EngineWrapper2 = _interopRequireDefault(_EngineWrapper);
-
-	var DOMInjector = (function (_React$Component) {
-	    _inherits(DOMInjector, _React$Component);
-
-	    function DOMInjector() {
-	        _classCallCheck(this, DOMInjector);
-
-	        _get(Object.getPrototypeOf(DOMInjector.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(DOMInjector, [{
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate(nextProps) {
-	            var appState = nextProps.appState;
-
-	            var setState = appState.get("akkadTreeSetState", function () {});
-	            setState(nextProps);
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var children = _props.children;
-	            var appState = _props.appState;
-	            var actions = _props.actions;
-
-	            return _react2["default"].createElement(
-	                _EngineWrapper2["default"],
-	                {
-	                    appState: appState,
-	                    actions: actions
-	                },
-	                children
-	            );
-	        }
-	    }], [{
-	        key: "propTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return DOMInjector;
-	})(_react2["default"].Component);
-
-	exports["default"] = DOMInjector;
-	module.exports = exports["default"];
-
-/***/ },
-/* 153 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Engine = __webpack_require__(20);
-
-	var _Engine2 = _interopRequireDefault(_Engine);
-
-	var EngineWrapper = (function (_React$Component) {
-	    _inherits(EngineWrapper, _React$Component);
-
-	    function EngineWrapper() {
-	        _classCallCheck(this, EngineWrapper);
-
-	        _get(Object.getPrototypeOf(EngineWrapper.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(EngineWrapper, [{
-	        key: "getinitialState",
-	        value: function getinitialState() {
-	            return {
-	                reactid: null
-	            };
-	        }
-	    }, {
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var engineWrapper = this.refs.engineWrapper;
-	            var reactid = engineWrapper.dataset.reactid;
-
-	            this.setState({ reactid: reactid });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var children = _props.children;
-	            var appState = _props.appState;
-	            var actions = _props.actions;
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: "engine-wrapper", ref: "engineWrapper" },
-	                this.state && this.state.reactid && _react2["default"].createElement(
-	                    _Engine2["default"],
-	                    {
-	                        appState: appState,
-	                        actions: actions,
-	                        reactid: this.state.reactid
-	                    },
-	                    children
-	                )
-	            );
-	        }
-	    }], [{
-	        key: "propTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return EngineWrapper;
-	})(_react2["default"].Component);
-
-	exports["default"] = EngineWrapper;
-	module.exports = exports["default"];
-
-/***/ },
+/* 152 */,
+/* 153 */,
 /* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -8399,17 +8181,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _immutable = __webpack_require__(106);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
 	/**
 	* A basic class to add actions and appState to the app's context.
 	* Might want to make this more generic if the need arises.
 	*/
 
-	var PropsToContext = (function (_Component) {
-	    _inherits(PropsToContext, _Component);
+	var PropsToContext = (function (_React$Component) {
+	    _inherits(PropsToContext, _React$Component);
 
 	    function PropsToContext() {
 	        _classCallCheck(this, PropsToContext);
@@ -8455,7 +8233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return PropsToContext;
-	})(_react.Component);
+	})(_react2["default"].Component);
 
 	exports["default"] = PropsToContext;
 	module.exports = exports["default"];
