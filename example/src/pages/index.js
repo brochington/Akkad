@@ -4,6 +4,7 @@ import MeshPage from "./MeshPage";
 import ShapesPage from "./ShapesPage";
 import CollisionsPage from "./CollisionsPage";
 import TriggersPage from "./TriggersPage";
+import ClickTheBox from "./ClickTheBox";
 
 export default {
     Landing,
@@ -11,5 +12,6 @@ export default {
     MeshPage,
     ShapesPage,
     CollisionsPage,
-    TriggersPage
+    TriggersPage,
+    ClickTheBox
 };

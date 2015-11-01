@@ -10,15 +10,13 @@ const initState = {};
 class Landing extends Component {
     render() {
         return (
-            <div>
+            <Akkad actions={triggerActions}>
                 <h2>
                     Triggers Demo
                 </h2>
                 <p>A small demo of various triggers</p>
-                <Akkad actions={triggerActions}>
                     <TriggersScene />
-                </Akkad>
-            </div>
+            </Akkad>
         );
     }
 }

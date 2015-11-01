@@ -43,9 +43,9 @@ export default App;
 
 Above is the Akkad version of Hello World, which will display a 3D rendered cube that can be spun around in every which way. There are a few important things to note about the components used: 
 
-- `<Akkad>`: The "master" component. Every Akkad application starts here. If you forget it, then things won't work :\
+- `<Akkad>`: The "master" component. Every Akkad application starts here. If you forget it, then things won't work :\. The Akkad component sets up the application state that is used for everything contained within it. This is super cool, because you can use Scene's state with normal React DOM changes. This allows you to create things like overlays (think FPS HUD's), use a DOM text input field to change text inside of your Scene, and all kinds of cool things. Visit the Triggers Demo in the example application to see how this is done.
 
-- `<Scene />`: Every Akkad application must contain a `<Scene />`. All the cool parts of your 3D creation will live as children of the Scene. You may exchange Scenes within an Akkad App. 
+- `<Scene />`: Every Akkad application must contain a `<Scene />`. All the cool parts of your 3D creation will live as children of the Scene. You may exchange Scenes within an Akkad App. One Akkad application may have multiple Scenes.
 
 - Every Scene must also contain a Camera and Light component. See the components documentation for additional options beside `<ArcRotateCamera>` and `<HemisphericLigh>`, as well as details to what these actually do.
 

@@ -23,7 +23,7 @@ class RenderTrigger extends AkkadAbstractComponent {
     }
 
     componentWillUnmount() {
-        const {targetEntityID, triggers} = this.props;
+        const {targetEntityID} = this.props;
         const {actions} = this.context;
         const {disposeTriggers} = actions._internal;
 

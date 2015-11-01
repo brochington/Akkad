@@ -28,6 +28,9 @@ class Landing extends Component {
                     <li>
                         <Link to="/triggers">Triggers</Link>
                     </li>
+                    <li>
+                        <Link to="/clickthebox">Click The Box</Link>
+                    </li>
                 </ul>
                 {children}
             </div>

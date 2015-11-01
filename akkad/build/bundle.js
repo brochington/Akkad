@@ -1934,9 +1934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            var _props2 = this.props;
-	            var targetEntityID = _props2.targetEntityID;
-	            var triggers = _props2.triggers;
+	            var targetEntityID = this.props.targetEntityID;
 	            var actions = this.context.actions;
 	            var disposeTriggers = actions._internal.disposeTriggers;
 
@@ -5787,7 +5785,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    disposeTriggers: function disposeTriggers(state, actions, targetEntityID) {
 	        var mesh = state.getIn(["entities", targetEntityID, "entity"]);
 
-	        if (mesh.actionManager) {
+	        if (mesh && mesh.actionManager) {
 	            mesh.actionManager.dispose();
 	        }
 

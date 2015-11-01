@@ -52,7 +52,7 @@ const TriggerActions = {
     disposeTriggers(state, actions, targetEntityID) {
         const mesh = state.getIn(["entities", targetEntityID, "entity"]);
 
-        if (mesh.actionManager) {
+        if (mesh && mesh.actionManager) {
             mesh.actionManager.dispose();
         }
 

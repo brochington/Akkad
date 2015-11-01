@@ -6,7 +6,8 @@ import {
     SimpleBox,
     ShapesPage,
     CollisionsPage,
-    TriggersPage
+    TriggersPage,
+    ClickTheBox
 } from "./pages";
 
 const Routes = (
@@ -17,6 +18,7 @@ const Routes = (
             <Route path="shapes" component={ShapesPage} />
             <Route path="collisions" component={CollisionsPage} />
             <Route path="triggers" component={TriggersPage} />
+            <Route path="clickthebox" component={ClickTheBox} />
         </Route>
     </Router>
 );
