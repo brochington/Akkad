@@ -9,7 +9,8 @@ const {Trigger, Color} = systems;
 
 class Scene1 extends Component {
     static contextTypes = {
-        actions: PropTypes.object
+        actions: PropTypes.object,
+        appState: PropTypes.object
     }
 
     render() {

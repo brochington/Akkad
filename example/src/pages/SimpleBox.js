@@ -7,15 +7,13 @@ import Scene1 from "../scenes/Scene1";
 class Landing extends Component {
     render() {
         return (
-            <div>
+            <Akkad actions={triggerActions}>
                 <h2>
                     Hello Box
                 </h2>
                 <p>Try rotating and clicking on the box ;)</p>
-                <Akkad actions={triggerActions}>
-                    <Scene1 />
-                </Akkad>
-            </div>
+                <Scene1 />
+            </Akkad>
         );
     }
 }

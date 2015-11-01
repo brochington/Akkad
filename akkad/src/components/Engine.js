@@ -72,7 +72,7 @@ class Engine extends React.Component {
         const {setEngine} = actions._internal;
         const canvasID = appState.get("canvasID");
 
-        setEngine(canvasID, this.id, ::this.setState);
+        setEngine(canvasID, this.id);
 
         this.mountAppChildren({
             actions,
@@ -86,6 +86,7 @@ class Engine extends React.Component {
     }
 
     render() {
+        console.log("render engine");
         return (
             <div />
         );

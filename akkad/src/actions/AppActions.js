@@ -22,7 +22,7 @@ export default {
         return state;
     },
 
-    setEngine(state, actions, canvasID, engineID, setState) {
+    setEngine(state, actions, canvasID, engineID) {
         const canvas = state.getIn(["entities", canvasID, "entity"]);
 
         const engineObj = Immutable.Map({
@@ -33,7 +33,6 @@ export default {
 
         state = state.set("engineID", engineID);
         state = state.setIn(["entities", engineID], engineObj);
-        state = state.set("akkadTreeSetState", setState);
 
         return state;
     },

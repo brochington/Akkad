@@ -5,9 +5,8 @@ import {StateManager} from "../classes";
 import Entity from "./Entity";
 import EntityLoaded from "./EntityLoaded";
 import DOMInjector from "./DOMInjector";
+import PropsToContext from "./PropsToContext";
 import {RenderAkkadCanvas} from "./systems";
-
-const initState = {};
 
 class Akkad extends React.Component {
     constructor() {
@@ -18,7 +17,8 @@ class Akkad extends React.Component {
     static propTypes = {
         canvasNode: PropTypes.object,
         actions: PropTypes.object,
-        styles: PropTypes.object
+        styles: PropTypes.object,
+        initState: PropTypes.object
     }
 
     componentWillMount() {
@@ -29,7 +29,7 @@ class Akkad extends React.Component {
 
         this.stateManager.init(
             actions, // actions object
-            () => Immutable.fromJS(initState), // init function
+            () => Immutable.fromJS(this.props.initState || {}), // init function
             (appState, actions) => this.setState({appState, actions}) // called after action is returned.
         );
     }
@@ -39,21 +39,12 @@ class Akkad extends React.Component {
         const {children, styles} = this.props;
 
         return stateManager.actions && stateManager.appState && (
-            <Entity>
-                <RenderAkkadCanvas
-                    appState={stateManager.appState}
-                    actions={stateManager.actions}
-                    styles={styles}
-                />
-                <EntityLoaded appState={stateManager.appState}>
-                    <DOMInjector
-                        appState={stateManager.appState}
-                        actions={stateManager.actions}
-                    >
-                        {children}
-                    </DOMInjector>
-                </EntityLoaded>
-            </Entity>
+            <PropsToContext 
+                actions={stateManager.actions}
+                appState={stateManager.appState}
+            >
+                {children}
+            </PropsToContext>
         );
     }
 }

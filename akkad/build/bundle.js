@@ -527,7 +527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var canvasID = appState.get("canvasID");
 
-	            setEngine(canvasID, this.id, this.setState.bind(this));
+	            setEngine(canvasID, this.id);
 
 	            this.mountAppChildren({
 	                actions: actions,
@@ -543,6 +543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "render",
 	        value: function render() {
+	            console.log("render engine");
 	            return _react2["default"].createElement("div", null);
 	        }
 	    }], [{
@@ -924,10 +925,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _RenderAkkadCanvas = __webpack_require__(49);
-
-	var _RenderAkkadCanvas2 = _interopRequireDefault(_RenderAkkadCanvas);
-
 	var _RenderShape = __webpack_require__(50);
 
 	var _RenderShape2 = _interopRequireDefault(_RenderShape);
@@ -1019,7 +1016,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _CallMethodOnEntity2 = _interopRequireDefault(_CallMethodOnEntity);
 
 	exports["default"] = {
-	    RenderAkkadCanvas: _RenderAkkadCanvas2["default"],
 	    RenderShape: _RenderShape2["default"],
 	    RenderLight: _RenderLight2["default"],
 	    RenderCamera: _RenderCamera2["default"],
@@ -1046,96 +1042,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _get = __webpack_require__(21)["default"];
-
-	var _inherits = __webpack_require__(27)["default"];
-
-	var _createClass = __webpack_require__(38)["default"];
-
-	var _classCallCheck = __webpack_require__(41)["default"];
-
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(45);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var RenderAkkadCanvas = (function (_React$Component) {
-	    _inherits(RenderAkkadCanvas, _React$Component);
-
-	    function RenderAkkadCanvas() {
-	        _classCallCheck(this, RenderAkkadCanvas);
-
-	        _get(Object.getPrototypeOf(RenderAkkadCanvas.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(RenderAkkadCanvas, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var entityID = this.context.entityID;
-	            var actions = this.props.actions;
-	            var setCanvas = actions._internal.setCanvas;
-
-	            var canvas = this.refs["akkadCanvas" + entityID];
-
-	            setCanvas(entityID, canvas);
-	        }
-	    }, {
-	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {
-	            var entityID = this.context.entityID;
-	            var actions = this.props.actions;
-	            var disposeCanvas = actions._internal.disposeCanvas;
-
-	            disposeCanvas(entityID);
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var entityID = this.context.entityID;
-	            var styles = this.props.styles;
-
-	            return _react2["default"].createElement("canvas", {
-	                ref: "akkadCanvas" + entityID,
-	                className: "akkad-canvas",
-	                id: entityID,
-	                style: styles
-	            });
-	        }
-	    }], [{
-	        key: "contextTypes",
-	        value: {
-	            entityID: _react.PropTypes.string,
-	            actions: _react.PropTypes.object,
-	            appState: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }, {
-	        key: "propTypes",
-	        value: {
-	            appState: _react.PropTypes.object,
-	            actions: _react.PropTypes.object,
-	            styles: _react.PropTypes.object
-	        },
-	        enumerable: true
-	    }]);
-
-	    return RenderAkkadCanvas;
-	})(_react2["default"].Component);
-
-	exports["default"] = RenderAkkadCanvas;
-	module.exports = exports["default"];
-
-/***/ },
+/* 49 */,
 /* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3825,6 +3732,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(Scene, [{
 	        key: "getChildContext",
+	        // still setting id on entity for immediate child systems.
 	        value: function getChildContext() {
 	            return {
 	                sceneID: this.id,
@@ -3834,37 +3742,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            var _context$actions$_internal = this.context.actions._internal;
-	            var setScene = _context$actions$_internal.setScene;
-	            var startRenderLoop = _context$actions$_internal.startRenderLoop;
+	            var setScene = this.context.actions._internal.setScene;
 
-	            setScene(this.id);
-	            startRenderLoop(this.id);
+	            var canvas = this.refs["akkadCanvas" + this.id];
+
+	            setScene(this.id, canvas);
+
+	            // setCanvas(this.id, canvas);
+	            // const {setScene, startRenderLoop} = this.context.actions._internal;
+
+	            // setScene(this.id);
+	            // startRenderLoop(this.id);
 	        }
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            var _context$actions$_internal2 = this.context.actions._internal;
-	            var disposeScene = _context$actions$_internal2.disposeScene;
-	            var stopRenderLoop = _context$actions$_internal2.stopRenderLoop;
+	            // const {disposeScene, stopRenderLoop} = this.context.actions._internal;
 
-	            stopRenderLoop();
-	            disposeScene(this.id);
+	            // stopRenderLoop();
+	            // disposeScene(this.id);
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
 	            var appState = this.context.appState;
+	            var _props = this.props;
+	            var styles = _props.styles;
+	            var children = _props.children;
 
 	            var hasScene = appState.hasIn(["entities", this.id]);
 
-	            return hasScene ? _react2["default"].createElement(
+	            return _react2["default"].createElement(
 	                "div",
 	                null,
-	                this.props.children
-	            ) : null;
+	                _react2["default"].createElement("canvas", {
+	                    ref: "akkadCanvas" + this.id,
+	                    className: "akkad-canvas",
+	                    id: this.id,
+	                    style: styles
+	                }),
+	                _react2["default"].createElement(
+	                    "div",
+	                    null,
+	                    hasScene && children
+	                )
+	            );
 	        }
 	    }], [{
+	        key: "propTypes",
+	        value: {
+	            styles: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }, {
 	        key: "contextTypes",
 	        value: {
 	            appState: _react.PropTypes.object,
@@ -3875,8 +3805,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "childContextTypes",
 	        value: {
 	            sceneID: _react.PropTypes.string,
-	            entityID: _react.PropTypes.string
-	        },
+	            entityID: _react.PropTypes.string },
 	        enumerable: true
 	    }]);
 
@@ -4014,9 +3943,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _DOMInjector2 = _interopRequireDefault(_DOMInjector);
 
-	var _systems = __webpack_require__(48);
+	var _PropsToContext = __webpack_require__(172);
 
-	var initState = {};
+	var _PropsToContext2 = _interopRequireDefault(_PropsToContext);
+
+	var _systems = __webpack_require__(48);
 
 	var Akkad = (function (_React$Component) {
 	    _inherits(Akkad, _React$Component);
@@ -4040,7 +3971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this.stateManager.init(actions, // actions object
 	            function () {
-	                return _immutable2["default"].fromJS(initState);
+	                return _immutable2["default"].fromJS(_this.props.initState || {});
 	            }, // init function
 	            function (appState, actions) {
 	                return _this.setState({ appState: appState, actions: actions });
@@ -4056,25 +3987,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var styles = _props.styles;
 
 	            return stateManager.actions && stateManager.appState && _react2["default"].createElement(
-	                _Entity2["default"],
-	                null,
-	                _react2["default"].createElement(_systems.RenderAkkadCanvas, {
-	                    appState: stateManager.appState,
+	                _PropsToContext2["default"],
+	                {
 	                    actions: stateManager.actions,
-	                    styles: styles
-	                }),
-	                _react2["default"].createElement(
-	                    _EntityLoaded2["default"],
-	                    { appState: stateManager.appState },
-	                    _react2["default"].createElement(
-	                        _DOMInjector2["default"],
-	                        {
-	                            appState: stateManager.appState,
-	                            actions: stateManager.actions
-	                        },
-	                        children
-	                    )
-	                )
+	                    appState: stateManager.appState
+	                },
+	                children
 	            );
 	        }
 	    }], [{
@@ -4082,7 +4000,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: {
 	            canvasNode: _react.PropTypes.object,
 	            actions: _react.PropTypes.object,
-	            styles: _react.PropTypes.object
+	            styles: _react.PropTypes.object,
+	            initState: _react.PropTypes.object
 	        },
 	        enumerable: true
 	    }]);
@@ -4201,7 +4120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return state;
 	    },
 
-	    setEngine: function setEngine(state, actions, canvasID, engineID, setState) {
+	    setEngine: function setEngine(state, actions, canvasID, engineID) {
 	        var canvas = state.getIn(["entities", canvasID, "entity"]);
 
 	        var engineObj = _immutable2["default"].Map({
@@ -4212,7 +4131,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        state = state.set("engineID", engineID);
 	        state = state.setIn(["entities", engineID], engineObj);
-	        state = state.set("akkadTreeSetState", setState);
 
 	        return state;
 	    },
@@ -4284,7 +4202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports["default"] = {
 	    setCamera: function setCamera(state, actions, sceneID, entityID, config) {
-	        var canvas = state.getIn(["entities", state.get("canvasID"), "entity"]);
+	        var canvas = state.getIn(["entities", "canvas-" + sceneID, "entity"]);
 	        var scene = state.getIn(["entities", sceneID, "entity"]);
 
 	        var camera = cameraCreators[config.type](entityID, config, scene);
@@ -4403,35 +4321,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _immutable2 = _interopRequireDefault(_immutable);
 
 	exports["default"] = {
-	    setScene: function setScene(state, actions, sceneID) {
-	        var engine = state.getIn(["entities", state.get("engineID"), "entity"]);
+	    setScene: function setScene(state, actions, sceneID, canvas) {
+	        var canvasID = "canvas-" + sceneID;
+	        var engineID = "engine-" + sceneID;
+
+	        var engine = new _babylonjs2["default"].Engine(canvas, true);
 	        var scene = new _babylonjs2["default"].Scene(engine);
 
-	        var sceneObj = _immutable2["default"].Map({
+	        state = state.setIn(["entities", canvasID], _immutable2["default"].Map({
+	            id: canvasID,
+	            entity: canvas,
+	            type: "canvas"
+	        }));
+
+	        state = state.setIn(["entities", engineID], _immutable2["default"].Map({
+	            id: engineID,
+	            entity: engine,
+	            type: "engine"
+	        }));
+
+	        state = state.setIn(["entities", sceneID], _immutable2["default"].Map({
 	            id: sceneID,
 	            entity: scene,
 	            type: "scene"
-	        });
-
-	        state = state.setIn(["entities", sceneID], sceneObj);
-
-	        return state;
-	    },
-
-	    disposeScene: function disposeScene(state, actions, sceneID) {
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
-
-	        scene.dispose();
-
-	        state["delete"]("sceneID");
-	        state.deleteIn(["entities", sceneID]);
-
-	        return state;
-	    },
-
-	    startRenderLoop: function startRenderLoop(state, actions, sceneID) {
-	        var engine = state.getIn(["entities", state.get("engineID"), "entity"]);
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
+	        }));
 
 	        engine.runRenderLoop(function () {
 	            scene.render();
@@ -4440,10 +4353,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return state;
 	    },
 
-	    stopRenderLoop: function stopRenderLoop(state) {
-	        var engine = state.getIn(["entities", state.get("engineID"), "entity"]);
+	    disposeScene: function disposeScene(state, actions, sceneID) {
+	        var scene = state.getIn(["entities", sceneID, "entity"]);
+	        var engine = state.getIn(["entities", "engine-" + sceneID, "entity"]);
+
+	        scene.dispose();
 
 	        engine.stopRenderLoop();
+
+	        state.deleteIn(["entities", sceneID]);
+	        state.deleteIn(["entities", "canvas-" + sceneID]);
+	        state.deleteIn(["entities", "engine-" + sceneID]);
 
 	        return state;
 	    }
@@ -7100,7 +7020,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: "contextTypes",
 	        value: {
-	            sceneID: _react.PropTypes.string.isRequired,
 	            entityID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
@@ -8454,6 +8373,91 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Torus;
+	module.exports = exports["default"];
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _immutable = __webpack_require__(106);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	/**
+	* A basic class to add actions and appState to the app's context.
+	* Might want to make this more generic if the need arises.
+	*/
+
+	var PropsToContext = (function (_Component) {
+	    _inherits(PropsToContext, _Component);
+
+	    function PropsToContext() {
+	        _classCallCheck(this, PropsToContext);
+
+	        _get(Object.getPrototypeOf(PropsToContext.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(PropsToContext, [{
+	        key: "getChildContext",
+	        value: function getChildContext() {
+	            var _props = this.props;
+	            var actions = _props.actions;
+	            var appState = _props.appState;
+
+	            return {
+	                actions: actions,
+	                appState: appState
+	            };
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                "div",
+	                null,
+	                this.props.children
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            actions: _react.PropTypes.object,
+	            appState: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }, {
+	        key: "childContextTypes",
+	        value: {
+	            actions: _react.PropTypes.object,
+	            appState: _react.PropTypes.object
+	        },
+	        enumerable: true
+	    }]);
+
+	    return PropsToContext;
+	})(_react.Component);
+
+	exports["default"] = PropsToContext;
 	module.exports = exports["default"];
 
 /***/ }

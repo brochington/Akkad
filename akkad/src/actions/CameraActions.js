@@ -37,7 +37,7 @@ const cameraCreators = {
 
 export default {
     setCamera(state, actions, sceneID, entityID, config) {
-        const canvas = state.getIn(["entities", state.get("canvasID"), "entity"]);
+        const canvas = state.getIn(["entities", `canvas-${sceneID}`, "entity"]);
         const scene = state.getIn(["entities", sceneID, "entity"]);
 
         const camera = cameraCreators[config.type](entityID, config, scene);
