@@ -20,6 +20,8 @@ const TriggerActions = {
             const scene = state.getIn(["entities", sceneID, "entity"]);
             mesh.actionManager = new ActionManager(scene);
         }
+
+        console.log("actionManager", mesh.actionManager);
         
         Immutable.Map(triggers)
                     .filter((func, triggerName) => triggerHandlers[triggerName])
@@ -40,6 +42,19 @@ const TriggerActions = {
                     .forEach(triggerObj => {
                         mesh.actionManager.registerAction(triggerObj.get("entity"));
                     });
+
+        return state;
+    },
+    /**
+    * For now this is just deleting the action manager. In the future this might need
+    * to remove individual triggers from a mesh/scene.
+    */
+    disposeTriggers(state, actions, targetEntityID) {
+        const mesh = state.getIn(["entities", targetEntityID, "entity"]);
+
+        if (mesh.actionManager) {
+            mesh.actionManager.dispose();
+        }
 
         return state;
     }

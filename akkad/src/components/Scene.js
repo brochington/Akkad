@@ -33,19 +33,12 @@ class Scene extends React.Component {
         const canvas = this.refs[`akkadCanvas${this.id}`];
 
         setScene(this.id, canvas);
-
-        // setCanvas(this.id, canvas);
-        // const {setScene, startRenderLoop} = this.context.actions._internal;
-        
-        // setScene(this.id);
-        // startRenderLoop(this.id);
     }
 
     componentWillUnmount() {
-        // const {disposeScene, stopRenderLoop} = this.context.actions._internal;
+        const {disposeScene} = this.context.actions._internal;
         
-        // stopRenderLoop();
-        // disposeScene(this.id);
+        disposeScene(this.id);
     }
 
     render() {
@@ -64,7 +57,6 @@ class Scene extends React.Component {
                 <div>
                     {hasScene && children}
                 </div>
-                
             </div>
         );
     }

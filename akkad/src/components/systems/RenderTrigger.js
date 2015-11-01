@@ -22,8 +22,13 @@ class RenderTrigger extends AkkadAbstractComponent {
         createTriggers(sceneID, targetEntityID, entityID, triggers);
     }
 
-    //TODO: remove triggers that were added on componentWillUnmount()
+    componentWillUnmount() {
+        const {targetEntityID, triggers} = this.props;
+        const {actions} = this.context;
+        const {disposeTriggers} = actions._internal;
 
+        disposeTriggers(targetEntityID);
+    }
 }
 
 export default RenderTrigger;
