@@ -10,19 +10,24 @@ Every Akkad application requires both an <Akkad /> and <Scene /> component.
 Top level component in an Akkad application.
 
 Props:
-- `canvasNode<Element>`: Element that Babylon will target
+- `initState<object>`: The initial state of you application
 - `actions<Object>`: Object of methods that are internal actions
 
 example:
 ```
-<Akkad canvasNode={document.getElementById("akkad-canvas")} >
-	<MyApplication />
+<Akkad
+	initState={{count: 0}}
+	actions={{
+		increment: state => state.update("count", count => ++count)
+	}}
+>
+	<MyScene />
 </Akkad>
 ```
 
 ## `<Scene />`
 
-A component that houses the rest of your Akkad application. Every Akkad must include a single `<Scene>`
+A component that houses the rest of your Akkad application components. You can have multiple `<Scene />` components in a single `<Akkad />` application.
 
 # Lights
 
