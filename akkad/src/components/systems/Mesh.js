@@ -18,6 +18,7 @@ class Mesh extends React.Component {
     render() {
         const {entityID} = this.context;
         const {path, fileName, children} = this.props;
+
         return (
             <Entity>
                 <RenderMesh 

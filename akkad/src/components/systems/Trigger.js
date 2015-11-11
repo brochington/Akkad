@@ -24,6 +24,7 @@ class Trigger extends React.Component {
     render() {
         const {entityID, sceneID} = this.context;
         const {children} = this.props;
+        
         return (
             <Entity>
                 <RenderTrigger 

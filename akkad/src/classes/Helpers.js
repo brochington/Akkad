@@ -1,10 +1,11 @@
-import Babylon from "babylonjs";
+import {Color4, Vector4, Vector3, Space} from "babylonjs";
 
 const shapePropTransforms = {
-    faceColors: (color4Array) => new Babylon.Color4(...color4Array),
-    faceUV: (vector4Array) => new Babylon.Vector4(...vector4Array),
-    axis: (vector3Array) => new Babylon.Vector3(...vector3Array),
-    space: (spaceType) => Babylon.Space[spaceType]
+    faceColors: color4Array => new Color4(...color4Array),
+    faceUV: vector4Array => new Vector4(...vector4Array),
+    axis: vector3Array => new Vector3(...vector3Array),
+    space: spaceType => Space[spaceType],
+    vectors: vectors => vectors.map(vector => new Vector3(...vector))
 };
 
 /* converts prop values to Babylon accepted values */

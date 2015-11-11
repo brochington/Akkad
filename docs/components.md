@@ -127,3 +127,16 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 - `height<Number>`
 - `width<Number>`
 - `subdivisions<Any>`
+
+## `<Lines />`
+
+### Props:
+- `vectors<Array>`: An array of vector (x, y, z) arrays
+
+## `<DashedLines />`
+
+### Props:
+- `vectors<Array>`: An array of vector (x, y, z) arrays
+- `dashSize<Number>`: size of dash, relative to gapSize 
+- `gapSize<Number>`: size of gaps between dashes
+- `dashNumber<Number>`: Number of gaps per line

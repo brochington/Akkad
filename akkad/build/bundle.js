@@ -4378,6 +4378,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var sideOrientation = _options$sideOrientation2 === undefined ? 0 : _options$sideOrientation2;
 
 	        return new _babylonjs.Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
+	    },
+
+	    lines: function lines(scene, entityID, options) {
+	        var vectors = options.vectors;
+
+	        return new _babylonjs.Mesh.CreateLines(entityID, vectors, scene);
+	    },
+
+	    dashedLines: function dashedLines(scene, entityID, options) {
+	        var vectors = options.vectors;
+	        var dashSize = options.dashSize;
+	        var gapSize = options.gapSize;
+	        var dashNumber = options.dashNumber;
+
+	        return new _babylonjs.Mesh.CreateDashedLines(entityID, vectors, dashSize, gapSize, dashNumber, scene);
 	    }
 	};
 
@@ -5558,28 +5573,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _bind = __webpack_require__(89)["default"];
 
-	var _interopRequireDefault = __webpack_require__(18)["default"];
-
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
 	var _babylonjs = __webpack_require__(90);
 
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
 	var shapePropTransforms = {
 	    faceColors: function faceColors(color4Array) {
-	        return new (_bind.apply(_babylonjs2["default"].Color4, [null].concat(_toConsumableArray(color4Array))))();
+	        return new (_bind.apply(_babylonjs.Color4, [null].concat(_toConsumableArray(color4Array))))();
 	    },
 	    faceUV: function faceUV(vector4Array) {
-	        return new (_bind.apply(_babylonjs2["default"].Vector4, [null].concat(_toConsumableArray(vector4Array))))();
+	        return new (_bind.apply(_babylonjs.Vector4, [null].concat(_toConsumableArray(vector4Array))))();
 	    },
 	    axis: function axis(vector3Array) {
-	        return new (_bind.apply(_babylonjs2["default"].Vector3, [null].concat(_toConsumableArray(vector3Array))))();
+	        return new (_bind.apply(_babylonjs.Vector3, [null].concat(_toConsumableArray(vector3Array))))();
 	    },
 	    space: function space(spaceType) {
-	        return _babylonjs2["default"].Space[spaceType];
+	        return _babylonjs.Space[spaceType];
+	    },
+	    vectors: function vectors(_vectors) {
+	        return _vectors.map(function (vector) {
+	            return new (_bind.apply(_babylonjs.Vector3, [null].concat(_toConsumableArray(vector))))();
+	        });
 	    }
 	};
 
@@ -5833,13 +5849,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            while (1) switch (context$1$0.prev = context$1$0.next) {
 	                case 0:
 	                    scene = state.getIn(["entities", sceneID, "entity"]);
-
-	                    console.log("here", sceneID);
-
-	                    context$1$0.next = 4;
+	                    context$1$0.next = 3;
 	                    return _regeneratorRuntime.awrap(_importMesh(path, fileName, scene));
 
-	                case 4:
+	                case 3:
 	                    meshes = context$1$0.sent;
 
 	                    meshes.forEach(function (mesh) {
@@ -5854,7 +5867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                    return context$1$0.abrupt("return", state);
 
-	                case 7:
+	                case 6:
 	                case "end":
 	                    return context$1$0.stop();
 	            }
@@ -7645,13 +7658,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Torus2 = _interopRequireDefault(_Torus);
 
+	var _Lines = __webpack_require__(169);
+
+	var _Lines2 = _interopRequireDefault(_Lines);
+
+	var _DashedLines = __webpack_require__(170);
+
+	var _DashedLines2 = _interopRequireDefault(_DashedLines);
+
 	exports["default"] = {
 	    Sphere: _Sphere2["default"],
 	    Box: _Box2["default"],
 	    Disc: _Disc2["default"],
 	    Ground: _Ground2["default"],
 	    Cylinder: _Cylinder2["default"],
-	    Torus: _Torus2["default"]
+	    Torus: _Torus2["default"],
+	    Lines: _Lines2["default"],
+	    DashedLines: _DashedLines2["default"]
 	};
 	module.exports = exports["default"];
 
@@ -8200,6 +8223,176 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = Torus;
+	module.exports = exports["default"];
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(58);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(59);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var Lines = (function (_React$Component) {
+	    _inherits(Lines, _React$Component);
+
+	    function Lines() {
+	        _classCallCheck(this, Lines);
+
+	        _get(Object.getPrototypeOf(Lines.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Lines, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var _props$vectors = _props.vectors;
+	            var vectors = _props$vectors === undefined ? [] : _props$vectors;
+	            var children = _props.children;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "lines",
+	                    vectors: vectors
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            vectors: _react.PropTypes.arrayOf(_react.PropTypes.array)
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Lines;
+	})(_react2["default"].Component);
+
+	exports["default"] = Lines;
+	module.exports = exports["default"];
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(58);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(59);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var DashedLines = (function (_React$Component) {
+	    _inherits(DashedLines, _React$Component);
+
+	    function DashedLines() {
+	        _classCallCheck(this, DashedLines);
+
+	        _get(Object.getPrototypeOf(DashedLines.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(DashedLines, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var _props$vectors = _props.vectors;
+	            var vectors = _props$vectors === undefined ? [] : _props$vectors;
+	            var _props$dashSize = _props.dashSize;
+	            var dashSize = _props$dashSize === undefined ? null : _props$dashSize;
+	            var _props$gapSize = _props.gapSize;
+	            var gapSize = _props$gapSize === undefined ? null : _props$gapSize;
+	            var _props$dashNumber = _props.dashNumber;
+	            var dashNumber = _props$dashNumber === undefined ? null : _props$dashNumber;
+	            var children = _props.children;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "dashedLines",
+	                    vectors: vectors,
+	                    dashSize: dashSize,
+	                    gapSize: gapSize,
+	                    dashNumber: dashNumber
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            vectors: _react.PropTypes.arrayOf(_react.PropTypes.array),
+	            dashSize: _react.PropTypes.number,
+	            gapSize: _react.PropTypes.number,
+	            dashNumber: _react.PropTypes.number
+	        },
+	        enumerable: true
+	    }]);
+
+	    return DashedLines;
+	})(_react2["default"].Component);
+
+	exports["default"] = DashedLines;
 	module.exports = exports["default"];
 
 /***/ }

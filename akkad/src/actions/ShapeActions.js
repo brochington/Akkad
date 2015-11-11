@@ -1,6 +1,7 @@
-import {Mesh} from "babylonjs";
+import {Mesh, Vector3} from "babylonjs";
 import Immutable from "immutable";
 import {Helpers} from "../classes";
+
 
 const shapeCreators = {
     box(scene, entityID, options) {
@@ -61,6 +62,18 @@ const shapeCreators = {
         } = options;
 
         return new Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
+    },
+
+    lines(scene, entityID, options) {
+        const {vectors} = options;
+
+        return new Mesh.CreateLines(entityID, vectors, scene);
+    },
+
+    dashedLines(scene, entityID, options) {
+        const {vectors, dashSize, gapSize, dashNumber} = options;
+
+        return new Mesh.CreateDashedLines(entityID, vectors, dashSize, gapSize, dashNumber, scene);
     }
 };
 

@@ -19,7 +19,9 @@ const {
     Disc,
     Cylinder,
     Torus,
-    Ground
+    Ground,
+    Lines,
+    DashedLines
 } = shapes;
 
 class ShapesPage extends Component {
@@ -71,6 +73,14 @@ class ShapesPage extends Component {
                                 space="LOCAL"
                             />
                         </Torus>
+                        <Lines 
+                            vectors={[[2, 3, 4], [3, 4, 7], [5, 3, 6]]}
+                        />
+                        <DashedLines 
+                            vectors={[[4, 2, 8], [7, 4, 4], [9, 1, 6]]}
+                            dashSize={600}
+                            gapSize={1000}
+                        />
                         <Ground 
                             height={300}
                             width={300}

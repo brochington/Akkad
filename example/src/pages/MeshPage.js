@@ -25,7 +25,7 @@ class MeshPage extends Component {
                             fileName={skullMesh.split("/")[2]}
                         >
                             <Position vector={[0, 0, 0]}/>
-                            <Rotate 
+                            <Rotate
                                 axis={[0, 1.2, 0]}
                                 amount={60}
                                 space="LOCAL"
