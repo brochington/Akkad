@@ -5,6 +5,7 @@ import AkkadAbstractComponent from "../AkkadAbstractComponent";
 class Texture extends AkkadAbstractComponent {
     static contextTypes = {
         entityID: PropTypes.string,
+        sceneID: PropTypes.string,
         appState: PropTypes.object,
         actions: PropTypes.object
     }
@@ -18,9 +19,9 @@ class Texture extends AkkadAbstractComponent {
     }
 
     componentDidMount() {
-        const {appState, entityID} = this.context;
+        const {appState, sceneID, entityID} = this.context;
         const {image} = this.props;
-        const scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
+        const scene = appState.getIn(["entities", sceneID, "entity"]);
 
         const entityObj = appState.getIn(["entities", entityID]);
         const type = entityObj.get("type");

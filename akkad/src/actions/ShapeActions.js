@@ -1,8 +1,11 @@
-import {Mesh, Vector3} from "babylonjs";
+import {Mesh} from "babylonjs";
 import Immutable from "immutable";
 import {Helpers} from "../classes";
 
-
+/*
+TODO: In Babylon 2.3 all shape contructors will take an options object. 
+      Will need to convert some of these shape methods.
+*/
 const shapeCreators = {
     box(scene, entityID, options) {
         return new Mesh.CreateBox(entityID, options, scene);
@@ -16,6 +19,32 @@ const shapeCreators = {
         return new Mesh.CreateGround(entityID, options, scene);
     },
 
+    groundFromHeightMap(scene, entityID, options) {
+        const {
+            heightMap, 
+            meshWidth,
+            meshHeight,
+            subdivisions = 250, 
+            minHeight,
+            maxHeight
+        } = options;
+
+        return new Promise(resolve => {
+            return new Mesh.CreateGroundFromHeightMap(
+                entityID, 
+                heightMap,
+                meshWidth, 
+                meshHeight,
+                subdivisions,
+                minHeight,
+                maxHeight, 
+                scene, 
+                true, // updatable
+                resolve
+            );
+        });        
+    },
+
     disc(scene, entityID, options) {
         const {
             radius, 
@@ -25,7 +54,6 @@ const shapeCreators = {
         } = options;
 
         const disc = new Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
-        console.log(disc);
         return disc;
 
     },
@@ -78,13 +106,17 @@ const shapeCreators = {
 };
 
 const ShapeActions = {
-    createShape(state, actions, sceneID, entityID, props) {
+    async createShape(state, actions, sceneID, entityID, props) {
         const {type} = props;
 
         if (type && shapeCreators[type]) {
             const scene = state.getIn(["entities", sceneID, "entity"]);
             const options = Helpers.convertShapeProps(props);
-            const shape = shapeCreators[type](scene, entityID, options);
+            let shape = shapeCreators[type](scene, entityID, options);
+
+            if(shape instanceof Promise) {
+                shape = await shape;
+            }
 
             const meshObj = Immutable.Map({
                 id: entityID,

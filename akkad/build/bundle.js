@@ -2895,10 +2895,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentDidMount() {
 	            var _context = this.context;
 	            var appState = _context.appState;
+	            var sceneID = _context.sceneID;
 	            var entityID = _context.entityID;
 	            var image = this.props.image;
 
-	            var scene = appState.getIn(["entities", appState.get("sceneID"), "entity"]);
+	            var scene = appState.getIn(["entities", sceneID, "entity"]);
 
 	            var entityObj = appState.getIn(["entities", entityID]);
 	            var type = entityObj.get("type");
@@ -2926,6 +2927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "contextTypes",
 	        value: {
 	            entityID: _react.PropTypes.string,
+	            sceneID: _react.PropTypes.string,
 	            appState: _react.PropTypes.object,
 	            actions: _react.PropTypes.object
 	        },
@@ -4308,6 +4310,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	var _Promise = __webpack_require__(121)["default"];
+
+	var _regeneratorRuntime = __webpack_require__(144)["default"];
+
 	var _interopRequireDefault = __webpack_require__(18)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
@@ -4322,6 +4328,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classes = __webpack_require__(112);
 
+	/*
+	TODO: In Babylon 2.3 all shape contructors will take an options object. 
+	      Will need to convert some of these shape methods.
+	*/
 	var shapeCreators = {
 	    box: function box(scene, entityID, options) {
 	        return new _babylonjs.Mesh.CreateBox(entityID, options, scene);
@@ -4335,6 +4345,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return new _babylonjs.Mesh.CreateGround(entityID, options, scene);
 	    },
 
+	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options) {
+	        var heightMap = options.heightMap;
+	        var meshWidth = options.meshWidth;
+	        var meshHeight = options.meshHeight;
+	        var _options$subdivisions = options.subdivisions;
+	        var subdivisions = _options$subdivisions === undefined ? 250 : _options$subdivisions;
+	        var minHeight = options.minHeight;
+	        var maxHeight = options.maxHeight;
+
+	        return new _Promise(function (resolve) {
+	            return new _babylonjs.Mesh.CreateGroundFromHeightMap(entityID, heightMap, meshWidth, meshHeight, subdivisions, minHeight, maxHeight, scene, true, // updatable
+	            resolve);
+	        });
+	    },
+
 	    disc: function disc(scene, entityID, options) {
 	        var radius = options.radius;
 	        var tessellation = options.tessellation;
@@ -4344,7 +4369,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var sideOrientation = _options$sideOrientation === undefined ? null : _options$sideOrientation;
 
 	        var disc = new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
-	        console.log(disc);
 	        return disc;
 	    },
 
@@ -4357,8 +4381,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var diameterBottom = _options$diameterBottom === undefined ? 1 : _options$diameterBottom;
 	        var _options$tessellation = options.tessellation;
 	        var tessellation = _options$tessellation === undefined ? 30 : _options$tessellation;
-	        var _options$subdivisions = options.subdivisions;
-	        var subdivisions = _options$subdivisions === undefined ? 6 : _options$subdivisions;
+	        var _options$subdivisions2 = options.subdivisions;
+	        var subdivisions = _options$subdivisions2 === undefined ? 6 : _options$subdivisions2;
 	        var _options$updatable2 = options.updatable;
 	        var updatable = _options$updatable2 === undefined ? true : _options$updatable2;
 
@@ -4398,22 +4422,49 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var ShapeActions = {
 	    createShape: function createShape(state, actions, sceneID, entityID, props) {
-	        var type = props.type;
+	        var type, scene, options, shape, meshObj;
+	        return _regeneratorRuntime.async(function createShape$(context$1$0) {
+	            while (1) switch (context$1$0.prev = context$1$0.next) {
+	                case 0:
+	                    type = props.type;
 
-	        if (type && shapeCreators[type]) {
-	            var scene = state.getIn(["entities", sceneID, "entity"]);
-	            var options = _classes.Helpers.convertShapeProps(props);
-	            var shape = shapeCreators[type](scene, entityID, options);
+	                    if (!(type && shapeCreators[type])) {
+	                        context$1$0.next = 11;
+	                        break;
+	                    }
 
-	            var meshObj = _immutable2["default"].Map({
-	                id: entityID,
-	                entity: shape,
-	                type: "mesh"
-	            });
+	                    scene = state.getIn(["entities", sceneID, "entity"]);
+	                    options = _classes.Helpers.convertShapeProps(props);
+	                    shape = shapeCreators[type](scene, entityID, options);
 
-	            state = state.setIn(["entities", entityID], meshObj);
-	        }
-	        return state;
+	                    if (!(shape instanceof _Promise)) {
+	                        context$1$0.next = 9;
+	                        break;
+	                    }
+
+	                    context$1$0.next = 8;
+	                    return _regeneratorRuntime.awrap(shape);
+
+	                case 8:
+	                    shape = context$1$0.sent;
+
+	                case 9:
+	                    meshObj = _immutable2["default"].Map({
+	                        id: entityID,
+	                        entity: shape,
+	                        type: "mesh"
+	                    });
+
+	                    state = state.setIn(["entities", entityID], meshObj);
+
+	                case 11:
+	                    return context$1$0.abrupt("return", state);
+
+	                case 12:
+	                case "end":
+	                    return context$1$0.stop();
+	            }
+	        }, null, this);
 	    }
 	};
 
@@ -7650,6 +7701,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Ground2 = _interopRequireDefault(_Ground);
 
+	var _GroundFromHeightMap = __webpack_require__(171);
+
+	var _GroundFromHeightMap2 = _interopRequireDefault(_GroundFromHeightMap);
+
 	var _Cylinder = __webpack_require__(167);
 
 	var _Cylinder2 = _interopRequireDefault(_Cylinder);
@@ -7671,6 +7726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Box: _Box2["default"],
 	    Disc: _Disc2["default"],
 	    Ground: _Ground2["default"],
+	    GroundFromHeightMap: _GroundFromHeightMap2["default"],
 	    Cylinder: _Cylinder2["default"],
 	    Torus: _Torus2["default"],
 	    Lines: _Lines2["default"],
@@ -7983,16 +8039,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _systems = __webpack_require__(48);
 
-	var Sphere = (function (_React$Component) {
-	    _inherits(Sphere, _React$Component);
+	var Ground = (function (_React$Component) {
+	    _inherits(Ground, _React$Component);
 
-	    function Sphere() {
-	        _classCallCheck(this, Sphere);
+	    function Ground() {
+	        _classCallCheck(this, Ground);
 
-	        _get(Object.getPrototypeOf(Sphere.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Ground.prototype), "constructor", this).apply(this, arguments);
 	    }
 
-	    _createClass(Sphere, [{
+	    _createClass(Ground, [{
 	        key: "render",
 	        value: function render() {
 	            var _props = this.props;
@@ -8007,7 +8063,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    type: "ground",
 	                    width: width,
 	                    height: height
-
 	                }),
 	                _react2["default"].createElement(
 	                    _EntityLoaded2["default"],
@@ -8025,10 +8080,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        enumerable: true
 	    }]);
 
-	    return Sphere;
+	    return Ground;
 	})(_react2["default"].Component);
 
-	exports["default"] = Sphere;
+	exports["default"] = Ground;
 	module.exports = exports["default"];
 
 /***/ },
@@ -8393,6 +8448,99 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 
 	exports["default"] = DashedLines;
+	module.exports = exports["default"];
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _get = __webpack_require__(21)["default"];
+
+	var _inherits = __webpack_require__(27)["default"];
+
+	var _createClass = __webpack_require__(38)["default"];
+
+	var _classCallCheck = __webpack_require__(41)["default"];
+
+	var _interopRequireDefault = __webpack_require__(18)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(45);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(58);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(59);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _systems = __webpack_require__(48);
+
+	var Ground = (function (_React$Component) {
+	    _inherits(Ground, _React$Component);
+
+	    function Ground() {
+	        _classCallCheck(this, Ground);
+
+	        _get(Object.getPrototypeOf(Ground.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Ground, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var meshHeight = _props.meshHeight;
+	            var meshWidth = _props.meshWidth;
+	            var heightMap = _props.heightMap;
+	            var subdivisions = _props.subdivisions;
+	            var minHeight = _props.minHeight;
+	            var maxHeight = _props.maxHeight;
+	            var children = _props.children;
+
+	            return _react2["default"].createElement(
+	                _Entity2["default"],
+	                null,
+	                _react2["default"].createElement(_systems.RenderShape, {
+	                    type: "groundFromHeightMap",
+	                    meshHeight: meshHeight,
+	                    meshWidth: meshWidth,
+	                    subdivisions: subdivisions,
+	                    minHeight: minHeight,
+	                    maxHeight: maxHeight,
+	                    heightMap: heightMap
+	                }),
+	                _react2["default"].createElement(
+	                    _EntityLoaded2["default"],
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }], [{
+	        key: "propTypes",
+	        value: {
+	            meshHeight: _react.PropTypes.number,
+	            meshWidth: _react.PropTypes.number,
+	            heightMap: _react.PropTypes.string,
+	            subdivisions: _react.PropTypes.number,
+	            minHeight: _react.PropTypes.number,
+	            maxHeight: _react.PropTypes.number
+	        },
+	        enumerable: true
+	    }]);
+
+	    return Ground;
+	})(_react2["default"].Component);
+
+	exports["default"] = Ground;
 	module.exports = exports["default"];
 
 /***/ }

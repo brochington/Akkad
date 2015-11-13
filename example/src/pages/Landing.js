@@ -31,6 +31,9 @@ class Landing extends Component {
                     <li>
                         <Link to="/clickthebox">Click The Box</Link>
                     </li>
+                    <li>
+                        <Link to="/heightmap">Height Map</Link>
+                    </li>
                 </ul>
                 {children}
             </div>

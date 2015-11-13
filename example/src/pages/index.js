@@ -5,6 +5,7 @@ import ShapesPage from "./ShapesPage";
 import CollisionsPage from "./CollisionsPage";
 import TriggersPage from "./TriggersPage";
 import ClickTheBox from "./ClickTheBox";
+import HeightMapPage from "./HeightMapPage";
 
 export default {
     Landing,
@@ -13,5 +14,6 @@ export default {
     ShapesPage,
     CollisionsPage,
     TriggersPage,
-    ClickTheBox
+    ClickTheBox,
+    HeightMapPage
 };

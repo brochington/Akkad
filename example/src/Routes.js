@@ -7,7 +7,8 @@ import {
     ShapesPage,
     CollisionsPage,
     TriggersPage,
-    ClickTheBox
+    ClickTheBox,
+    HeightMapPage
 } from "./pages";
 
 const Routes = (
@@ -19,6 +20,7 @@ const Routes = (
             <Route path="collisions" component={CollisionsPage} />
             <Route path="triggers" component={TriggersPage} />
             <Route path="clickthebox" component={ClickTheBox} />
+            <Route path="heightmap" component={HeightMapPage} />
         </Route>
     </Router>
 );

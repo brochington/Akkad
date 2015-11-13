@@ -3,7 +3,7 @@ import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import {RenderShape} from "../systems";
 
-class Sphere extends React.Component {
+class Ground extends React.Component {
     static propTypes = {
         height: PropTypes.number,
         width: PropTypes.number
@@ -11,13 +11,13 @@ class Sphere extends React.Component {
 
     render() {
         const {height, width, children} = this.props;
+
         return (
             <Entity>
                 <RenderShape 
                     type="ground"
                     width={width}
                     height={height}
-
                 />
                 <EntityLoaded>
                     {children}
@@ -27,4 +27,4 @@ class Sphere extends React.Component {
     }
 }
 
-export default Sphere;
+export default Ground;

@@ -128,6 +128,16 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 - `width<Number>`
 - `subdivisions<Any>`
 
+## `GroundFromHeightMap />`
+
+### Props:
+- `meshHeight<Number>`: Height of the ground mesh
+- `meshWidth<Number>`: Width of the ground mesh
+- `heightMap<ImageURL>`: Url of height map image
+- `subdivisions<Number>`: Complexity of the height map mesh, higher gives better detail
+- `minHeight<Number>`: Lowest level of the height map mesh
+- `maxHeight<Number>`: Highest level of the height map mesh
+
 ## `<Lines />`
 
 ### Props:
