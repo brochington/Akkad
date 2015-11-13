@@ -8,6 +8,10 @@
     "url": "https://github.com/brochington/akkad/issues",
     "email": "brochington@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brochington/Akkad"
+  },
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && webpack",
