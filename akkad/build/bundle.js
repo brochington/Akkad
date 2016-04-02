@@ -5352,10 +5352,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*
-	TODO: In Babylon 2.3 all shape contructors will take an options object.
-	      Will need to convert some of these shape methods.
-	*/
 	var shapeCreators = {
 	    box: function box(scene, entityID, options) {
 	        var size = options.size;
