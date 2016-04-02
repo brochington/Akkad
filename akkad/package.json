@@ -15,7 +15,10 @@
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && webpack",
-    "watch": "npm run clean && webpack --watch"
+    "watch": "npm run clean && webpack --watch",
+    "link": "npm unlink && npm link",
+    "setup:build": "npm run link && npm run build",
+    "setup:watch": "npm run link && npm run watch"
   },
   "dependencies": {
     "babylonjs": "^2.2.0",

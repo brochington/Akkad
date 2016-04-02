@@ -35,8 +35,17 @@ module.exports = {
         }]
     },
     resolve: {
+        root: [
+            path.resolve('./node_modules')
+        ],
+        fallback: [
+            path.resolve('../akkad/node_modules')
+        ],
         alias: {
-            react: path.join(__dirname, 'node_modules', 'react')
+            // "react": path.join(__dirname, 'node_modules', 'react'),
+            // "react-dom": path.join(__dirname, 'node_modules', 'react-dom'),
+            // "babylonjs": path.join(__dirname, 'node_modules', 'babylonjs'),
+            // "immutable": path.join(__dirname, 'node_modules', 'immutable')
         },
         extensions: ['', '.js']
     }
