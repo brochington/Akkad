@@ -34,7 +34,7 @@ const AnimationActions = {
             type: "animation"
         });
 
-        return state.setIn(["entities", entityID], animationObj);
+        return state().setIn(["entities", entityID], animationObj);
     }
 };
 

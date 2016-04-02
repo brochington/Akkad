@@ -81,13 +81,13 @@ class ShapesPage extends Component {
                             dashSize={600}
                             gapSize={1000}
                         />
-                        {/*<Ground 
+                        <Ground
                             height={300}
                             width={300}
                         >
                             <Position vector={[0, -2, 0]} />
                             <CheckCollisions />
-                        </Ground>*/}
+                        </Ground>
                     </Scene>
                 </Akkad>
             </div>

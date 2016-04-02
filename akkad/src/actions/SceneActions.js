@@ -5,47 +5,45 @@ export default {
     setScene(state, actions, sceneID, canvas) {
         const canvasID = `canvas-${sceneID}`;
         const engineID = `engine-${sceneID}`;
-        
+
         const engine = new Babylon.Engine(canvas, true);
         const scene = new Babylon.Scene(engine);
 
-        state = state.setIn(["entities", canvasID], Immutable.Map({
-            id: canvasID,
-            entity: canvas,
-            type: "canvas"
-        }));
-
-        state = state.setIn(["entities", engineID], Immutable.Map({
-            id: engineID,
-            entity: engine,
-            type: "engine"
-        }));
-
-        state = state.setIn(["entities", sceneID], Immutable.Map({
-            id: sceneID,
-            entity: scene,
-            type: "scene"
-        }));
+        const newState = state()
+                .setIn(["entities", canvasID], Immutable.Map({
+                    id: canvasID,
+                    entity: canvas,
+                    type: "canvas"
+                }))
+                .setIn(["entities", engineID], Immutable.Map({
+                    id: engineID,
+                    entity: engine,
+                    type: "engine"
+                }))
+                .setIn(["entities", sceneID], Immutable.Map({
+                    id: sceneID,
+                    entity: scene,
+                    type: "scene"
+                }));
 
         engine.runRenderLoop(() => {
             scene.render();
         });
 
-        return state;
+        return newState;
     },
 
     disposeScene(state, actions, sceneID) {
-        const scene = state.getIn(["entities", sceneID, "entity"]);
-        const engine = state.getIn(["entities", `engine-${sceneID}`, "entity"]);
+        const scene = state().getIn(["entities", sceneID, "entity"]);
+        const engine = state().getIn(["entities", `engine-${sceneID}`, "entity"]);
 
         scene.dispose();
 
         engine.stopRenderLoop();
 
-        state.deleteIn(["entities", sceneID]);
-        state.deleteIn(["entities", `canvas-${sceneID}`]);
-        state.deleteIn(["entities", `engine-${sceneID}`]);
-
-        return state;
+        return state()
+                .deleteIn(["entities", sceneID])
+                .deleteIn(["entities", `canvas-${sceneID}`])
+                .deleteIn(["entities", `engine-${sceneID}`]);
     }
 };

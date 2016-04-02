@@ -4,7 +4,7 @@ import ClickTheBoxScene from "../scenes/ClickTheBoxScene";
 
 const counterActions = {
     increment(state, actions) {
-        return state.update("count", count => ++count);
+        return state().update("count", count => ++count);
     }
 }
 
@@ -15,7 +15,7 @@ const initState = {
 class ClickTheBox extends Component {
     render() {
         return (
-            <Akkad 
+            <Akkad
                 initState={initState}
                 actions={counterActions}
             >

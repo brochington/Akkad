@@ -4760,6 +4760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
+	            console.log("this.context", this.context);
 	            var setScene = this.context.actions._internal.setScene;
 
 	            var canvas = this.refs["akkadCanvas" + this.id];
@@ -5090,7 +5091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = {
 	    disposeEntity: function disposeEntity(state, actions, entityID) {
-	        return state.deleteIn(["entities", entityID]);
+	        return state().deleteIn(["entities", entityID]);
 	    }
 	};
 
@@ -5155,8 +5156,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.default = {
 	    setCamera: function setCamera(state, actions, sceneID, entityID, config) {
-	        var canvas = state.getIn(["entities", "canvas-" + sceneID, "entity"]);
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
+	        var canvas = state().getIn(["entities", "canvas-" + sceneID, "entity"]);
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
 
 	        var camera = cameraCreators[config.type](entityID, config, scene);
 
@@ -5168,7 +5169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: "camera"
 	        });
 
-	        return state.setIn(["entities", entityID], cameraObj);
+	        return state().setIn(["entities", entityID], cameraObj);
 	    }
 	};
 
@@ -5239,7 +5240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    createLight: function createLight(state, actions, sceneID, entityID, props) {
 	        var type = props.type;
 
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
 	        var light = lightCreators[type](scene, entityID, props);
 
 	        var lightObj = _immutable2.default.Map({
@@ -5248,7 +5249,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: "light"
 	        });
 
-	        return state.setIn(["entities", entityID], lightObj);
+	        return state().setIn(["entities", entityID], lightObj);
 	    }
 	};
 
@@ -5280,19 +5281,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var engine = new _babylonjs2.default.Engine(canvas, true);
 	        var scene = new _babylonjs2.default.Scene(engine);
 
-	        state = state.setIn(["entities", canvasID], _immutable2.default.Map({
+	        var newState = state().setIn(["entities", canvasID], _immutable2.default.Map({
 	            id: canvasID,
 	            entity: canvas,
 	            type: "canvas"
-	        }));
-
-	        state = state.setIn(["entities", engineID], _immutable2.default.Map({
+	        })).setIn(["entities", engineID], _immutable2.default.Map({
 	            id: engineID,
 	            entity: engine,
 	            type: "engine"
-	        }));
-
-	        state = state.setIn(["entities", sceneID], _immutable2.default.Map({
+	        })).setIn(["entities", sceneID], _immutable2.default.Map({
 	            id: sceneID,
 	            entity: scene,
 	            type: "scene"
@@ -5302,21 +5299,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            scene.render();
 	        });
 
-	        return state;
+	        return newState;
 	    },
 	    disposeScene: function disposeScene(state, actions, sceneID) {
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
-	        var engine = state.getIn(["entities", "engine-" + sceneID, "entity"]);
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+	        var engine = state().getIn(["entities", "engine-" + sceneID, "entity"]);
 
 	        scene.dispose();
 
 	        engine.stopRenderLoop();
 
-	        state.deleteIn(["entities", sceneID]);
-	        state.deleteIn(["entities", "canvas-" + sceneID]);
-	        state.deleteIn(["entities", "engine-" + sceneID]);
-
-	        return state;
+	        return state().deleteIn(["entities", sceneID]).deleteIn(["entities", "canvas-" + sceneID]).deleteIn(["entities", "engine-" + sceneID]);
 	    }
 	};
 
@@ -5464,7 +5457,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                break;
 	                            }
 
-	                            scene = state.getIn(["entities", sceneID, "entity"]);
+	                            scene = state().getIn(["entities", sceneID, "entity"]);
 	                            options = _classes.Helpers.convertShapeProps(props);
 	                            shape = shapeCreators[type](scene, entityID, options);
 
@@ -5485,12 +5478,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                entity: shape,
 	                                type: "mesh"
 	                            });
-
-
-	                            state = state.setIn(["entities", entityID], meshObj);
+	                            return _context.abrupt("return", state().setIn(["entities", entityID], meshObj));
 
 	                        case 11:
-	                            return _context.abrupt("return", state);
+	                            return _context.abrupt("return", state());
 
 	                        case 12:
 	                        case "end":
@@ -7042,10 +7033,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _promise = __webpack_require__(148);
-
-	var _promise2 = _interopRequireDefault(_promise);
-
 	var _extends2 = __webpack_require__(2);
 
 	var _extends3 = _interopRequireDefault(_extends2);
@@ -7076,24 +7063,89 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var StateManager = function () {
 	    function StateManager() {
+	        var _this = this;
+
 	        (0, _classCallCheck3.default)(this, StateManager);
+
+	        this.wrapActions = function (acc, val, name) {
+	            if (typeof val === "function") {
+	                acc[name] = function () {
+	                    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                        args[_key] = arguments[_key];
+	                    }
+
+	                    return _this.actionWrapper.apply(_this, [name, val].concat(args));
+	                };
+	            }
+	            return acc;
+	        };
+
+	        this.handleActionReturnTypes = function (newState) {
+	            // if (newState instanceof Promise) {
+	            if (typeof newState.then === "function") {
+	                newState.then(_this.callSetStateCallback);
+	            }
+
+	            // Detect if newState is actually a generator function.
+	            else if (typeof newState.next === "function") {
+	                    _this.generatorHandler(newState);
+	                }
+
+	                // newState should be an immutable object.
+	                else {
+	                        _this.callSetStateCallback(newState);
+	                    }
+	        };
+
+	        this.generatorHandler = function (genObject) {
+	            var _genObject$next = genObject.next();
+
+	            var value = _genObject$next.value;
+	            var done = _genObject$next.done;
+
+
+	            value && _this.handleActionReturnTypes(value);
+
+	            if (!done) {
+	                _this.generatorHandler(genObject);
+	            }
+	        };
+
+	        this.callSetStateCallback = function (newState) {
+	            if (_immutable2.default.Map.isMap(newState)) {
+	                if (newState !== _this[_state]) {
+	                    _this[_state] = newState;
+	                }
+	                // call the callback specified in the init method.
+	                _this[_stateSetCallback](_this[_state], _this[_wrappedActions]);
+	            } else {
+	                console.error("recieved state that was not an immutable map. Did you remember to add a return value in your action?");
+	                console.log(newState);
+	            }
+	        };
 	    }
 
 	    (0, _createClass3.default)(StateManager, [{
 	        key: "init",
 	        value: function init(actions, initFunc, stateSetCallback) {
+	            // attach stateManager to window for debugging
+	            if (window) window.stateManager = this;
+
 	            try {
 	                if (!this[_hasBeenInitialized]) {
 	                    this[_hasBeenInitialized] = true;
 
 	                    /* wrap actions */
-	                    var wrappedActions = _immutable2.default.Map(actions).reduce(this.wrapActions.bind(this), {});
+	                    var wrappedActions = _immutable2.default.Map(actions).reduce(this.wrapActions, {});
+
 	                    /* wrap internal actions */
 	                    var wrappedInternalActions = _immutable2.default.Map(actions._internal).reduce(this.wrapActions.bind(this), {});
 
 	                    this[_wrappedActions] = (0, _extends3.default)({}, wrappedActions, {
 	                        _internal: wrappedInternalActions
 	                    });
+
+	                    console.log("actions...", actions);
 
 	                    this[_actions] = actions;
 
@@ -7110,62 +7162,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }, {
-	        key: "wrapActions",
+	        key: "actionWrapper",
 
-
-	        /* wraps actions with... the actionWrapper */
-	        value: function wrapActions(acc, val, name) {
-	            var _this = this;
-
-	            if (typeof val === "function") {
-	                acc[name] = function () {
-	                    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	                        args[_key] = arguments[_key];
-	                    }
-
-	                    return _this.actionWrapper.apply(_this, [val].concat(args));
-	                };
-	            }
-	            return acc;
-	        }
 
 	        /* injects state and actions as args into actions that are called. */
-
-	    }, {
-	        key: "actionWrapper",
-	        value: function actionWrapper(func) {
-	            for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-	                args[_key2 - 1] = arguments[_key2];
-	            }
+	        value: function actionWrapper(name, func) {
+	            var _this2 = this;
 
 	            // call the action function with correct args.
-	            var newState = func.apply(undefined, [this[_state], this[_wrappedActions]].concat(args));
+	            console.log("action: ", name);
 
-	            if (newState instanceof _promise2.default) {
-	                newState.then(this.callSetStateCallback.bind(this));
-	            } else {
-	                this.callSetStateCallback(newState);
+	            for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	                args[_key2 - 2] = arguments[_key2];
 	            }
+
+	            var newState = func.apply(undefined, [function () {
+	                return _this2[_state];
+	            }, this[_wrappedActions]].concat(args));
+
+	            this.handleActionReturnTypes(newState);
 
 	            return this[_state];
 	        }
 
+	        /* handles standard values, promises (from async functions) and generator function return values */
+
+
+	        /* A recursive function to handle the output of generator functions. */
+
+
 	        /* Checks to make sure object is an immutable map, then calls the setState callback */
 
-	    }, {
-	        key: "callSetStateCallback",
-	        value: function callSetStateCallback(newState) {
-	            if (_immutable2.default.Map.isMap(newState)) {
-	                if (newState !== this[_state]) {
-	                    this[_state] = newState;
-	                }
-	                // call the callback specified in the init method.
-	                this[_stateSetCallback](this[_state], this[_wrappedActions]);
-	            } else {
-	                console.error("recieved state that was not an immutable map.");
-	                console.log(newState);
-	            }
-	        }
 	    }, {
 	        key: "actions",
 	        get: function get() {
@@ -7176,6 +7203,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        get: function get() {
 	            return this[_state];
 	        }
+
+	        /* wraps actions with... the actionWrapper */
+
 	    }]);
 	    return StateManager;
 	}();
@@ -7258,7 +7288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var MaterialActions = {
 	    createMaterial: function createMaterial(state, actions, sceneID, entityID) {
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
 
 	        var material = new _babylonjs2.default.StandardMaterial(entityID, scene);
 
@@ -7268,7 +7298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: "material"
 	        });
 
-	        return state.setIn(["entities", entityID], materialObj);
+	        return state().setIn(["entities", entityID], materialObj);
 	    }
 	};
 
@@ -7332,7 +7362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: "animation"
 	        });
 
-	        return state.setIn(["entities", entityID], animationObj);
+	        return state().setIn(["entities", entityID], animationObj);
 	    }
 	};
 
@@ -7382,11 +7412,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var TriggerActions = {
 	    createTriggers: function createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
-	        var mesh = state.getIn(["entities", targetEntityID, "entity"]);
+	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
 
 	        /* Create an Action Manager on Mesh if it doesn't already exist */
 	        if (!mesh.actionManager) {
-	            var scene = state.getIn(["entities", sceneID, "entity"]);
+	            var scene = state().getIn(["entities", sceneID, "entity"]);
 	            mesh.actionManager = new _babylonjs.ActionManager(scene);
 	        }
 
@@ -7411,7 +7441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            mesh.actionManager.registerAction(triggerObj.get("entity"));
 	        });
 
-	        return state;
+	        return state();
 	    },
 
 	    /**
@@ -7419,13 +7449,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * to remove individual triggers from a mesh/scene.
 	    */
 	    disposeTriggers: function disposeTriggers(state, actions, targetEntityID) {
-	        var mesh = state.getIn(["entities", targetEntityID, "entity"]);
+	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
 
 	        if (mesh && mesh.actionManager) {
 	            mesh.actionManager.dispose();
 	        }
 
-	        return state;
+	        return state();
 	    }
 	};
 
@@ -7475,17 +7505,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 
 	        return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-	            var scene, meshes;
+	            var scene, meshes, newState;
 	            return _regenerator2.default.wrap(function _callee$(_context) {
 	                while (1) {
 	                    switch (_context.prev = _context.next) {
 	                        case 0:
-	                            scene = state.getIn(["entities", sceneID, "entity"]);
+	                            scene = state().getIn(["entities", sceneID, "entity"]);
 	                            _context.next = 3;
 	                            return _importMesh(path, fileName, scene);
 
 	                        case 3:
 	                            meshes = _context.sent;
+	                            newState = state();
 
 
 	                            meshes.forEach(function (mesh) {
@@ -7495,12 +7526,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    type: "mesh"
 	                                });
 
-	                                state = state.setIn(["entities", entityID], meshObj);
+	                                newState = newState.setIn(["entities", entityID], meshObj);
 	                            });
 
-	                            return _context.abrupt("return", state);
+	                            return _context.abrupt("return", newState);
 
-	                        case 6:
+	                        case 7:
 	                        case "end":
 	                            return _context.stop();
 	                    }
@@ -7534,8 +7565,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var ParticlesActions = {
 	    createParticles: function createParticles(state, actions, sceneID, entityID, targetEntityID, img) {
-	        var scene = state.getIn(["entities", sceneID, "entity"]);
-	        var targetEntity = state.getIn(["entities", targetEntityID, "entity"]);
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+	        var targetEntity = state().getIn(["entities", targetEntityID, "entity"]);
 
 	        var particles = new _babylonjs2.default.ParticleSystem(entityID, 2000, scene);
 
@@ -7548,7 +7579,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: "particles"
 	        });
 
-	        return state.setIn(["entities", entityID], particlesObj);
+	        return state().setIn(["entities", entityID], particlesObj);
 	    }
 	};
 

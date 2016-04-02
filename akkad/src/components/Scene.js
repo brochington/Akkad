@@ -29,6 +29,7 @@ class Scene extends React.Component {
     }
 
     componentDidMount() {
+        console.log("this.context", this.context);
         const {setScene} = this.context.actions._internal;
         const canvas = this.refs[`akkadCanvas${this.id}`];
 
@@ -37,7 +38,7 @@ class Scene extends React.Component {
 
     componentWillUnmount() {
         const {disposeScene} = this.context.actions._internal;
-        
+
         disposeScene(this.id);
     }
 
@@ -48,7 +49,7 @@ class Scene extends React.Component {
 
         return (
             <div>
-                <canvas 
+                <canvas
                     ref={`akkadCanvas${this.id}`}
                     className="akkad-canvas"
                     id={this.id}

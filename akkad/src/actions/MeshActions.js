@@ -18,8 +18,9 @@ const importMesh = (path, fileName, scene, progressCallback = () => {}) => {
 
 const MeshActions = {
     async importMesh(state, actions, path, fileName, sceneID, entityID) {
-        const scene = state.getIn(["entities", sceneID, "entity"]);
+        const scene = state().getIn(["entities", sceneID, "entity"]);
         const meshes = await importMesh(path, fileName, scene);
+        let newState = state();
 
         meshes.forEach(mesh => {
             const meshObj = Immutable.Map({
@@ -28,11 +29,11 @@ const MeshActions = {
                 type: "mesh"
             });
 
-            state = state.setIn(["entities", entityID], meshObj);
+            newState = newState.setIn(["entities", entityID], meshObj);
         });
 
 
-        return state;
+        return newState;
     }
 };
 

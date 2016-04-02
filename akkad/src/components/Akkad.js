@@ -35,7 +35,7 @@ class Akkad extends React.Component {
         const {children} = this.props;
 
         return stateManager.actions && stateManager.appState && (
-            <PropsToContext 
+            <PropsToContext
                 actions={stateManager.actions}
                 appState={stateManager.appState}
             >

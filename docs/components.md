@@ -18,7 +18,7 @@ example:
 <Akkad
 	initState={{count: 0}}
 	actions={{
-		increment: state => state.update("count", count => ++count)
+		increment: state => state().update("count", count => ++count)
 	}}
 >
 	<MyScene />
@@ -55,7 +55,7 @@ A Cone of light that starts from a position and emits towards a direction
 - `position<[x, y, z]>`: Position of light
 - `direction<[x, y, z]>`: Direction light is pointed
 - `angle<Number>`: Size of the spotlight's conical beam (in radians)
-- `exponent<[x, y, z]>`: Defines the speed of the decay of the light with distance 
+- `exponent<[x, y, z]>`: Defines the speed of the decay of the light with distance
 - `diffuse<[r, g, b]>`: The color of the diffuse reflection of the light
 - `specular<[r, g, b]>`: The color of the specular reflection of the light
 
@@ -85,7 +85,7 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 ## <Particles />
 
 #### Props:
-- `img<Url>`: Required, location of particle image. 
+- `img<Url>`: Required, location of particle image.
 
 # Shapes
 
@@ -147,6 +147,6 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 
 ### Props:
 - `vectors<Array>`: An array of vector (x, y, z) arrays
-- `dashSize<Number>`: size of dash, relative to gapSize 
+- `dashSize<Number>`: size of dash, relative to gapSize
 - `gapSize<Number>`: size of gaps between dashes
 - `dashNumber<Number>`: Number of gaps per line

@@ -27,7 +27,7 @@ const lightCreators = {
         } = props;
 
         const spotLight = new Babylon.SpotLight(
-            entityID, 
+            entityID,
             new Babylon.Vector3(...position),
             new Babylon.Vector3(...direction),
             angle,
@@ -48,7 +48,7 @@ const lightCreators = {
 export default {
     createLight(state, actions, sceneID, entityID, props) {
         const {type} = props;
-        const scene = state.getIn(["entities", sceneID, "entity"]);
+        const scene = state().getIn(["entities", sceneID, "entity"]);
         const light = lightCreators[type](scene, entityID, props);
 
         const lightObj = Immutable.Map({
@@ -57,6 +57,6 @@ export default {
             type: "light"
         });
 
-        return state.setIn(["entities", entityID], lightObj);
+        return state().setIn(["entities", entityID], lightObj);
     }
 };
