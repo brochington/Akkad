@@ -22,7 +22,8 @@ module.exports = {
             loader: 'babel',
             include: path.join(__dirname, 'src'),
             query: {
-                stage: 0
+                cacheDirectory: true,
+                presets: ["react", "es2015", "stage-0"],
             }
         }, {
             test: /\.(jpe?g|png|gif|svg)$/i,

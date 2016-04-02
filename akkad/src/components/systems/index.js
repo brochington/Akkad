@@ -1,51 +1,74 @@
-import RenderShape from "./RenderShape";
-import RenderLight from "./RenderLight";
-import RenderCamera from "./RenderCamera";
-import RenderMaterial from "./RenderMaterial";
-import RenderAnimation from "./RenderAnimation";
-import RenderMesh from "./RenderMesh";
-import RenderParticles from "./RenderParticles";
+import importRenderShape from "./RenderShape";
+import importRenderLight from "./RenderLight";
+import importRenderCamera from "./RenderCamera";
+import importRenderMaterial from "./RenderMaterial";
+import importRenderAnimation from "./RenderAnimation";
+import importRenderMesh from "./RenderMesh";
+import importRenderParticles from "./RenderParticles";
 
-import Trigger from "./Trigger";
-import Mesh from "./Mesh";
+import importTrigger from "./Trigger";
+import importMesh from "./Mesh";
 
-import AnimateMesh from "./AnimateMesh";
-import Position from "./Position";
-import Rotate from "./Rotate";
-import Wireframe from "./Wireframe";
-import Texture from "./Texture";
-import Color from "./Color";
-import Gravity from "./Gravity";
-import ApplyGravity from "./ApplyGravity";
-import CheckCollisions from "./CheckCollisions";
-import CollisionsEnabled from "./CollisionsEnabled";
+import importAnimateMesh from "./AnimateMesh";
+import importPosition from "./Position";
+import importRotate from "./Rotate";
+import importWireframe from "./Wireframe";
+import importTexture from "./Texture";
+import importColor from "./Color";
+import importGravity from "./Gravity";
+import importApplyGravity from "./ApplyGravity";
+import importCheckCollisions from "./CheckCollisions";
+import importCollisionsEnabled from "./CollisionsEnabled";
 
 // Components mostly used internally
-import GenericProperty from "./GenericProperty";
-import SetEntityAsProperty from "./SetEntityAsProperty";
-import CallMethodOnEntity from "./CallMethodOnEntity";
+import importGenericProperty from "./GenericProperty";
+import importSetEntityAsProperty from "./SetEntityAsProperty";
+import importCallMethodOnEntity from "./CallMethodOnEntity";
 
 export default {
-    RenderShape,
-    RenderLight,
-    RenderCamera,
-    RenderMaterial,
-    RenderAnimation,
-    RenderMesh,
-    RenderParticles,
-    Trigger,
-    Color,
-    Mesh,
-    AnimateMesh,
-    Position,
-    Rotate,
-    Wireframe,
-    Texture,
-    Gravity,
-    ApplyGravity,
-    CheckCollisions,
-    CollisionsEnabled,
-    GenericProperty,
-    SetEntityAsProperty,
-    CallMethodOnEntity
+    RenderShape: importRenderShape,
+    RenderLight: importRenderLight,
+    RenderCamera: importRenderCamera,
+    RenderMaterial: importRenderMaterial,
+    RenderAnimation: importRenderAnimation,
+    RenderMesh: importRenderMesh,
+    RenderParticles: importRenderParticles,
+    Trigger: importTrigger,
+    Mesh: importMesh,
+    AnimateMesh: importAnimateMesh,
+    Position: importPosition,
+    Rotate: importRotate,
+    Wireframe: importWireframe,
+    Color: importColor,
+    Texture: importTexture,
+    Gravity: importGravity,
+    ApplyGravity: importApplyGravity,
+    CheckCollisions: importCheckCollisions,
+    CollisionsEnabled: importCollisionsEnabled,
+    GenericProperty: importGenericProperty,
+    SetEntityAsProperty: importSetEntityAsProperty,
+    CallMethodOnEntity: importCallMethodOnEntity
 };
+
+export const RenderShape = importRenderShape;
+export const RenderLight = importRenderLight;
+export const RenderCamera = importRenderCamera;
+export const RenderMaterial = importRenderMaterial;
+export const RenderAnimation = importRenderAnimation;
+export const RenderMesh = importRenderMesh;
+export const RenderParticles = importRenderParticles;
+export const Trigger =importTrigger;
+export const Mesh = importMesh;
+export const AnimateMesh = importAnimateMesh;
+export const Position = importPosition;
+export const Rotate = importRotate;
+export const Wireframe = importWireframe;
+export const Color = importColor;
+export const Texture = importTexture;
+export const Gravity = importGravity;
+export const ApplyGravity = importApplyGravity;
+export const CheckCollisions = importCheckCollisions;
+export const CollisionsEnable = importCollisionsEnabled;
+export const GenericProperty = importGenericProperty;
+export const SetEntityAsProperty = importSetEntityAsProperty;
+export const CallMethodOnEntity = importCallMethodOnEntity;

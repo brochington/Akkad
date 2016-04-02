@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {Akkad} from "akkad";
-import {Scene, Material, cameras, lights, shapes, systems} from "akkad";
+import Immutable, {fromJS} from 'immutable';
+import {Akkad, Scene, Material, cameras, lights, shapes, systems} from 'akkad';
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
@@ -15,6 +15,7 @@ class Scene1 extends Component {
 
     render() {
         const {setRandomDiffuseColor} = this.context.actions;
+
         return (
             <Scene>
                 <ArcRotateCamera

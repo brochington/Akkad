@@ -29,8 +29,8 @@ module.exports = {
             loader: 'babel',
             include: path.join(__dirname, 'src'),
             query: {
-                optional: ["runtime", "es7.classProperties", "es7.decorators"],
-                stage: 0
+                cacheDirectory: true,
+                presets: ["react", "es2015", "stage-0"]
             }
         }, {
             test: /\.js$/,

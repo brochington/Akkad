@@ -1,15 +1,17 @@
 import React from "react";
 import {Router, Route} from "react-router";
-import {
-    Landing, 
-    MeshPage, 
+import pages from './pages';
+
+const {
+    Landing,
+    MeshPage,
     SimpleBox,
     ShapesPage,
     CollisionsPage,
     TriggersPage,
     ClickTheBox,
     HeightMapPage
-} from "./pages";
+} = pages;
 
 const Routes = (
     <Router>

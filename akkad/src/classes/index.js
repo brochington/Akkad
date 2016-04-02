@@ -1,9 +1,13 @@
-import MeshManager from "./MeshManager";
-import StateManager from "./StateManager";
-import Helpers from "./Helpers";
+import importMeshManager from "./MeshManager";
+import importStateManager from "./StateManager";
+import importHelpers from "./Helpers";
 
 export default {
-    MeshManager,
-    StateManager,
-    Helpers
+    MeshManager: importMeshManager,
+    StateManager: importStateManager,
+    Helpers: importHelpers
 };
+
+export const MeshManager = importMeshManager;
+export const StateManager = importStateManager;
+export const Helpers = importHelpers;
