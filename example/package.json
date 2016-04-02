@@ -4,7 +4,7 @@
   "description": "An Akkad example application",
   "scripts": {
     "clean": "rimraf dist",
-    "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js",
+    "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js --display-error-details",
     "build": "npm run clean && npm run build:webpack",
     "start": "node devServer.js",
     "lint": "eslint src"
@@ -37,10 +37,8 @@
     "babylonjs": "^2.2.0",
     "history": "^1.12.5",
     "immutable": "^3.7.5",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8",
     "react-router": "^1.0.0-rc3"
-  },
-  "peerDependencies": {
-    "react": "^0.14.0-rc1",
-    "react-dom": "^0.14.0-rc1"
   }
 }
