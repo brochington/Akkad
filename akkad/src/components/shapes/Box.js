@@ -16,17 +16,15 @@ class Box extends React.Component {
 
     render() {
         const {
-            height = 1,
-            width = 1,
+            size = 1,
             children
         } = this.props;
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="box"
-                    height={height}
-                    width={width}
+                    size={size}
                 />
                 <EntityLoaded>
                     {children}

@@ -10,14 +10,15 @@ class Ground extends React.Component {
     }
 
     render() {
-        const {height, width, children} = this.props;
+        const {height = 6, width = 6, subdivisions = 2, children} = this.props;
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="ground"
                     width={width}
                     height={height}
+                    subdivisions={subdivisions}
                 />
                 <EntityLoaded>
                     {children}

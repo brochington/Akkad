@@ -2,52 +2,51 @@ import {Mesh} from "babylonjs";
 import Immutable from "immutable";
 import {Helpers} from "../classes";
 
-/*
-TODO: In Babylon 2.3 all shape contructors will take an options object. 
-      Will need to convert some of these shape methods.
-*/
 const shapeCreators = {
     box(scene, entityID, options) {
-        return new Mesh.CreateBox(entityID, options, scene);
+        const {size} = options;
+        return new Mesh.CreateBox(entityID, size, scene);
     },
 
     sphere(scene, entityID, options) {
-        return new Mesh.CreateSphere(entityID, options, scene);
+        const {segments, diameter} = options;
+        return new Mesh.CreateSphere(entityID, segments, diameter, scene);
     },
 
     ground(scene, entityID, options) {
-        return new Mesh.CreateGround(entityID, options, scene);
+        const {width, height, subdivisions} = options;
+        return new Mesh.CreateGround(entityID, width, height, subdivisions, scene);
     },
 
     groundFromHeightMap(scene, entityID, options) {
         const {
-            heightMap, 
+            heightMap,
             meshWidth,
             meshHeight,
-            subdivisions = 250, 
+            subdivisions = 250,
             minHeight,
             maxHeight
         } = options;
 
         return new Promise(resolve => {
             return new Mesh.CreateGroundFromHeightMap(
-                entityID, 
+                entityID,
                 heightMap,
-                meshWidth, 
+                meshWidth,
                 meshHeight,
                 subdivisions,
                 minHeight,
-                maxHeight, 
-                scene, 
+                maxHeight,
+                scene,
                 true, // updatable
                 resolve
             );
-        });        
+        });
     },
 
     disc(scene, entityID, options) {
         const {
-            radius, 
+            radius,
             tessellation,
             updatable = true,
             sideOrientation = null
@@ -72,7 +71,7 @@ const shapeCreators = {
             entityID,
             height,
             diameterTop,
-            diameterBottom, 
+            diameterBottom,
             tessellation,
             subdivisions,
             scene,
@@ -123,7 +122,7 @@ const ShapeActions = {
                 entity: shape,
                 type: "mesh"
             });
-            
+
             state = state.setIn(["entities", entityID], meshObj);
         }
         return state;

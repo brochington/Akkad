@@ -10,13 +10,13 @@ const {
     Color,
     Gravity,
     Trigger,
-    ApplyGravity, 
+    ApplyGravity,
     CheckCollisions,
     CollisionsEnabled
 } = systems;
 
 const {
-    Box, 
+    Box,
     Sphere,
     Disc,
     Cylinder,
@@ -30,8 +30,6 @@ class TriggersScene extends Component {
         appState: PropTypes.object
     }
 
-    // e
-
     render() {
         const {testKeyDown} = this.context.actions;
         console.log(this.context.appState.toJS());
@@ -44,9 +42,9 @@ class TriggersScene extends Component {
                     <Trigger onKeyDown={testKeyDown} />
                     <CollisionsEnabled />
                     <Gravity vector={[0, -0.9, 0]} />
-                    <FreeCamera 
+                    <FreeCamera
                         initialPosition={[0, 0, 10]}
-                        target={[0, 0, 0]} 
+                        target={[0, 0, 0]}
                     >
                         <CheckCollisions />
                         <ApplyGravity />
@@ -55,11 +53,9 @@ class TriggersScene extends Component {
                     <Box>
                         <Position vector={[2, 0, 0]} />
                     </Box>
-                    <Sphere 
+                    <Sphere
                         segments={24}
-                        diameterX={2}
-                        diameterY={2}
-                        diameterZ={2}
+                        diameter={2}
                     >
                         <Position vector={[-2, 0, 0]} />
                     </Sphere>

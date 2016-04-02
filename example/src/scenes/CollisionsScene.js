@@ -7,14 +7,14 @@ const {HemisphericLight} = lights;
 const {
     Position,
     Rotate,
-    Gravity, 
-    ApplyGravity, 
+    Gravity,
+    ApplyGravity,
     CheckCollisions,
     CollisionsEnabled
 } = systems;
 
 const {
-    Box, 
+    Box,
     Sphere,
     Disc,
     Cylinder,
@@ -33,9 +33,9 @@ class CollisionsScene extends Component {
             <Scene>
                 <CollisionsEnabled />
                 <Gravity vector={[0, -0.9, 0]} />
-                <FreeCamera 
+                <FreeCamera
                     initialPosition={[0, 0, 10]}
-                    target={[0, 0, 0]} 
+                    target={[0, 0, 0]}
                 >
                     <CheckCollisions />
                     <ApplyGravity />
@@ -44,11 +44,9 @@ class CollisionsScene extends Component {
                 <Box>
                     <Position vector={[2, 0, 0]} />
                 </Box>
-                <Sphere 
+                <Sphere
                     segments={24}
-                    diameterX={2}
-                    diameterY={2}
-                    diameterZ={2}
+                    diameter={2}
                 >
                     <Position vector={[-2, 0, 0]} />
                 </Sphere>
@@ -71,7 +69,7 @@ class CollisionsScene extends Component {
                         space="LOCAL"
                     />
                 </Torus>
-                <Ground 
+                <Ground
                     height={300}
                     width={300}
                 >

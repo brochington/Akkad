@@ -5353,18 +5353,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/*
-	TODO: In Babylon 2.3 all shape contructors will take an options object. 
+	TODO: In Babylon 2.3 all shape contructors will take an options object.
 	      Will need to convert some of these shape methods.
 	*/
 	var shapeCreators = {
 	    box: function box(scene, entityID, options) {
-	        return new _babylonjs.Mesh.CreateBox(entityID, options, scene);
+	        var size = options.size;
+
+	        return new _babylonjs.Mesh.CreateBox(entityID, size, scene);
 	    },
 	    sphere: function sphere(scene, entityID, options) {
-	        return new _babylonjs.Mesh.CreateSphere(entityID, options, scene);
+	        var segments = options.segments;
+	        var diameter = options.diameter;
+
+	        return new _babylonjs.Mesh.CreateSphere(entityID, segments, diameter, scene);
 	    },
 	    ground: function ground(scene, entityID, options) {
-	        return new _babylonjs.Mesh.CreateGround(entityID, options, scene);
+	        var width = options.width;
+	        var height = options.height;
+	        var subdivisions = options.subdivisions;
+
+	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene);
 	    },
 	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options) {
 	        var heightMap = options.heightMap;
@@ -8636,9 +8645,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var _props = this.props;
 	            var segments = _props.segments;
-	            var diameterX = _props.diameterX;
-	            var diameterY = _props.diameterY;
-	            var diameterZ = _props.diameterZ;
+	            var _props$diameter = _props.diameter;
+	            var diameter = _props$diameter === undefined ? 2 : _props$diameter;
 	            var children = _props.children;
 
 
@@ -8648,9 +8656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _react2.default.createElement(_systems.RenderShape, {
 	                    type: "sphere",
 	                    segments: segments,
-	                    diameterX: diameterX,
-	                    diameterY: diameterY,
-	                    diameterZ: diameterZ
+	                    diameter: diameter
 	                }),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
@@ -8729,10 +8735,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "render",
 	        value: function render() {
 	            var _props = this.props;
-	            var _props$height = _props.height;
-	            var height = _props$height === undefined ? 1 : _props$height;
-	            var _props$width = _props.width;
-	            var width = _props$width === undefined ? 1 : _props$width;
+	            var _props$size = _props.size;
+	            var size = _props$size === undefined ? 1 : _props$size;
 	            var children = _props.children;
 
 
@@ -8741,8 +8745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                null,
 	                _react2.default.createElement(_systems.RenderShape, {
 	                    type: "box",
-	                    height: height,
-	                    width: width
+	                    size: size
 	                }),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
@@ -8921,8 +8924,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "render",
 	        value: function render() {
 	            var _props = this.props;
-	            var height = _props.height;
-	            var width = _props.width;
+	            var _props$height = _props.height;
+	            var height = _props$height === undefined ? 6 : _props$height;
+	            var _props$width = _props.width;
+	            var width = _props$width === undefined ? 6 : _props$width;
+	            var _props$subdivisions = _props.subdivisions;
+	            var subdivisions = _props$subdivisions === undefined ? 2 : _props$subdivisions;
 	            var children = _props.children;
 
 
@@ -8932,7 +8939,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _react2.default.createElement(_systems.RenderShape, {
 	                    type: "ground",
 	                    width: width,
-	                    height: height
+	                    height: height,
+	                    subdivisions: subdivisions
 	                }),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,

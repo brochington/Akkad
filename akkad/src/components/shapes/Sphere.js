@@ -13,21 +13,17 @@ class Sphere extends React.Component {
 
     render() {
         const {
-            segments, 
-            diameterX, 
-            diameterY, 
-            diameterZ,
+            segments,
+            diameter = 2,
             children
         } = this.props;
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="sphere"
                     segments={segments}
-                    diameterX={diameterX}
-                    diameterY={diameterY}
-                    diameterZ={diameterZ}
+                    diameter={diameter}
                 />
                 <EntityLoaded>
                     {children}
