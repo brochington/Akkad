@@ -18,7 +18,7 @@ const shapeCreators = {
         return new Mesh.CreateGround(entityID, width, height, subdivisions, scene);
     },
 
-    groundFromHeightMap(scene, entityID, options) {
+    groundFromHeightMap(scene, entityID, options, callback) {
         const {
             heightMap,
             meshWidth,
@@ -28,20 +28,18 @@ const shapeCreators = {
             maxHeight
         } = options;
 
-        return new Promise(resolve => {
-            return new Mesh.CreateGroundFromHeightMap(
-                entityID,
-                heightMap,
-                meshWidth,
-                meshHeight,
-                subdivisions,
-                minHeight,
-                maxHeight,
-                scene,
-                true, // updatable
-                resolve
-            );
-        });
+        return new Mesh.CreateGroundFromHeightMap(
+            entityID,
+            heightMap,
+            meshWidth,
+            meshHeight,
+            subdivisions,
+            minHeight,
+            maxHeight,
+            scene,
+            true, // updatable
+            callback
+        );
     },
 
     disc(scene, entityID, options) {
@@ -52,9 +50,7 @@ const shapeCreators = {
             sideOrientation = null
         } = options;
 
-        const disc = new Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
-        return disc;
-
+        return new Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
     },
 
     cylinder(scene, entityID, options) {
@@ -105,17 +101,13 @@ const shapeCreators = {
 };
 
 const ShapeActions = {
-    async createShape(state, actions, sceneID, entityID, props) {
+    createShape(state, actions, sceneID, entityID, props) {
         const {type} = props;
 
         if (type && shapeCreators[type]) {
             const scene = state().getIn(["entities", sceneID, "entity"]);
             const options = Helpers.convertShapeProps(props);
-            let shape = shapeCreators[type](scene, entityID, options);
-
-            if(shape instanceof Promise) {
-                shape = await shape;
-            }
+            let shape = shapeCreators[type](scene, entityID, options, () => {/*action callback goes here.*/});
 
             const meshObj = Immutable.Map({
                 id: entityID,

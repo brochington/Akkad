@@ -2244,7 +2244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            return _react2.default.createElement(
 	                "div",
-	                null,
+	                { style: { display: "none" } },
 	                this.props.children
 	            );
 	        }
@@ -5323,18 +5323,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _regenerator = __webpack_require__(144);
-
-	var _regenerator2 = _interopRequireDefault(_regenerator);
-
-	var _asyncToGenerator2 = __webpack_require__(159);
-
-	var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-	var _promise = __webpack_require__(148);
-
-	var _promise2 = _interopRequireDefault(_promise);
-
 	var _babylonjs = __webpack_require__(122);
 
 	var _immutable = __webpack_require__(137);
@@ -5364,7 +5352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene);
 	    },
-	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options) {
+	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options, callback) {
 	        var heightMap = options.heightMap;
 	        var meshWidth = options.meshWidth;
 	        var meshHeight = options.meshHeight;
@@ -5374,10 +5362,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var maxHeight = options.maxHeight;
 
 
-	        return new _promise2.default(function (resolve) {
-	            return new _babylonjs.Mesh.CreateGroundFromHeightMap(entityID, heightMap, meshWidth, meshHeight, subdivisions, minHeight, maxHeight, scene, true, // updatable
-	            resolve);
-	        });
+	        return new _babylonjs.Mesh.CreateGroundFromHeightMap(entityID, heightMap, meshWidth, meshHeight, subdivisions, minHeight, maxHeight, scene, true, // updatable
+	        callback);
 	    },
 	    disc: function disc(scene, entityID, options) {
 	        var radius = options.radius;
@@ -5388,8 +5374,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var sideOrientation = _options$sideOrientat === undefined ? null : _options$sideOrientat;
 
 
-	        var disc = new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
-	        return disc;
+	        return new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
 	    },
 	    cylinder: function cylinder(scene, entityID, options) {
 	        var _options$height = options.height;
@@ -5442,54 +5427,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var ShapeActions = {
 	    createShape: function createShape(state, actions, sceneID, entityID, props) {
-	        var _this = this;
+	        var type = props.type;
 
-	        return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-	            var type, scene, options, shape, meshObj;
-	            return _regenerator2.default.wrap(function _callee$(_context) {
-	                while (1) {
-	                    switch (_context.prev = _context.next) {
-	                        case 0:
-	                            type = props.type;
 
-	                            if (!(type && shapeCreators[type])) {
-	                                _context.next = 11;
-	                                break;
-	                            }
+	        if (type && shapeCreators[type]) {
+	            var scene = state().getIn(["entities", sceneID, "entity"]);
+	            var options = _classes.Helpers.convertShapeProps(props);
+	            var shape = shapeCreators[type](scene, entityID, options, function () {/*action callback goes here.*/});
 
-	                            scene = state().getIn(["entities", sceneID, "entity"]);
-	                            options = _classes.Helpers.convertShapeProps(props);
-	                            shape = shapeCreators[type](scene, entityID, options);
+	            var meshObj = _immutable2.default.Map({
+	                id: entityID,
+	                entity: shape,
+	                type: "mesh"
+	            });
 
-	                            if (!(shape instanceof _promise2.default)) {
-	                                _context.next = 9;
-	                                break;
-	                            }
+	            return state().setIn(["entities", entityID], meshObj);
+	        }
 
-	                            _context.next = 8;
-	                            return shape;
-
-	                        case 8:
-	                            shape = _context.sent;
-
-	                        case 9:
-	                            meshObj = _immutable2.default.Map({
-	                                id: entityID,
-	                                entity: shape,
-	                                type: "mesh"
-	                            });
-	                            return _context.abrupt("return", state().setIn(["entities", entityID], meshObj));
-
-	                        case 11:
-	                            return _context.abrupt("return", state());
-
-	                        case 12:
-	                        case "end":
-	                            return _context.stop();
-	                    }
-	                }
-	            }, _callee, _this);
-	        }))();
+	        return state();
 	    }
 	};
 
@@ -7144,8 +7099,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this[_wrappedActions] = (0, _extends3.default)({}, wrappedActions, {
 	                        _internal: wrappedInternalActions
 	                    });
-
-	                    console.log("actions...", actions);
 
 	                    this[_actions] = actions;
 

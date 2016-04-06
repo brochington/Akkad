@@ -43,11 +43,13 @@ class CollisionsScene extends Component {
                 <HemisphericLight />
                 <Box>
                     <Position vector={[2, 0, 0]} />
+                    <CollisionsEnabled />
                 </Box>
                 <Sphere
                     segments={24}
                     diameter={2}
                 >
+                    <CollisionsEnabled />
                     <Position vector={[-2, 0, 0]} />
                 </Sphere>
                 <Cylinder>

@@ -21,13 +21,10 @@ class StateManager {
                 /* wrap internal actions */
                 const wrappedInternalActions = Immutable.Map(actions._internal).reduce(::this.wrapActions, {});
 
-
                 this[_wrappedActions] = {
                     ...wrappedActions,
                     _internal: wrappedInternalActions
                 };
-
-                console.log("actions...", actions);
 
                 this[_actions] = actions;
 
