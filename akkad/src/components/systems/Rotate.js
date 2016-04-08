@@ -1,6 +1,7 @@
 import {PropTypes} from "react";
 import Babylon from "babylonjs";
 import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import {hasEntity, getEntity} from "../../classes/Helpers";
 
 class Rotate extends AkkadAbstractComponent {
     static propTypes = {
@@ -21,10 +22,9 @@ class Rotate extends AkkadAbstractComponent {
         const axis = new Babylon.Vector3(...props.axis);
         const space = Babylon.Space[props.space];
 
-
-        const entity = appState.getIn(["entities", entityID, "entity"]);
-
-        entity.rotate(axis, amount, space);
+        if (hasEntity(appState, entityID)) {
+            getEntity(appState, entityID).rotate(axis, amount, space);
+        }
     }
 
     shouldComponentUpdate(nextProps) {
@@ -49,6 +49,14 @@ class Rotate extends AkkadAbstractComponent {
 
     componentWillMount() {
         this.updateRotation(this.props, this.context);
+    }
+
+    componentWillUnmount() {
+        this.updateRotation({
+            axis: [0, 0, 0],
+            amount: 0,
+            space: "LOCAL"
+        }, this.context);
     }
 }
 

@@ -1,6 +1,6 @@
 import {Mesh} from "babylonjs";
 import Immutable from "immutable";
-import {Helpers} from "../classes";
+import {convertShapeProps} from "../classes/Helpers";
 
 const shapeCreators = {
     box(scene, entityID, options) {
@@ -106,7 +106,7 @@ const ShapeActions = {
 
         if (type && shapeCreators[type]) {
             const scene = state().getIn(["entities", sceneID, "entity"]);
-            const options = Helpers.convertShapeProps(props);
+            const options = convertShapeProps(props);
             let shape = shapeCreators[type](scene, entityID, options, () => {/*action callback goes here.*/});
 
             const meshObj = Immutable.Map({

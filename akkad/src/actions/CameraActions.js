@@ -32,6 +32,19 @@ const cameraCreators = {
         }
 
         return camera;
+    },
+
+    webVRFree(entityID, config, scene) {
+        const initialPosition = new Babylon.Vector3(...config.initialPosition);
+
+        const camera = new Babylon.WebVRFreeCamera(entityID, initialPosition, scene);
+
+        if(config.target) {
+            const target = new Babylon.Vector3(...config.target);
+            camera.setTarget(target);
+        }
+
+        return camera;
     }
 };
 

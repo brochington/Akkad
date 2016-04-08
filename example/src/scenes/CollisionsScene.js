@@ -43,16 +43,17 @@ class CollisionsScene extends Component {
                 <HemisphericLight />
                 <Box>
                     <Position vector={[2, 0, 0]} />
-                    <CollisionsEnabled />
+                    <CheckCollisions />
                 </Box>
                 <Sphere
                     segments={24}
                     diameter={2}
                 >
-                    <CollisionsEnabled />
+                    <CheckCollisions />
                     <Position vector={[-2, 0, 0]} />
                 </Sphere>
                 <Cylinder>
+                    <CheckCollisions />
                     <Rotate
                         axis={[1, 1.2, 0]}
                         amount={60}
@@ -64,6 +65,7 @@ class CollisionsScene extends Component {
                     thickness={.5}
                     tessellation={30}
                 >
+                    <CheckCollisions />
                     <Position vector={[4, 0, 1]} />
                     <Rotate
                         axis={[1, 1.2, 0]}

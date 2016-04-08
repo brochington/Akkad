@@ -10,7 +10,8 @@ const {
     CollisionsPage,
     TriggersPage,
     ClickTheBox,
-    HeightMapPage
+    HeightMapPage,
+    WebVRPage
 } = pages;
 
 const Routes = (
@@ -23,6 +24,7 @@ const Routes = (
             <Route path="triggers" component={TriggersPage} />
             <Route path="clickthebox" component={ClickTheBox} />
             <Route path="heightmap" component={HeightMapPage} />
+            <Route path="webvr" component={WebVRPage} />
         </Route>
     </Router>
 );

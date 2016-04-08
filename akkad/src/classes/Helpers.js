@@ -1,4 +1,5 @@
 import {Color4, Vector4, Vector3, Space} from "babylonjs";
+import Immutable from "immutable";
 
 const shapePropTransforms = {
     faceColors: color4Array => new Color4(...color4Array),
@@ -9,7 +10,7 @@ const shapePropTransforms = {
 };
 
 /* converts prop values to Babylon accepted values */
-const convertShapeProps = (props) => {
+export const convertShapeProps = (props) => {
     let newProps = {};
 
     for (let prop in props) {
@@ -20,6 +21,10 @@ const convertShapeProps = (props) => {
     return newProps;
 };
 
-export default {
-    convertShapeProps
+export const hasEntity = (appState = Immutable.Map(), entityID) => {
+    return appState.hasIn(["entities", entityID, "entity"]);
+};
+
+export const getEntity = (appState = Immutable.Map(), entityID) => {
+    return appState.getIn(["entities", entityID, "entity"], Immutable.Map()) || Immutable.Map();
 };

@@ -7,7 +7,7 @@
 		exports["akkad"] = factory(require("react"), require("react/lib/ReactMultiChild"), require("react/lib/ReactUpdates"), require("babylonjs"), require("immutable"));
 	else
 		root["akkad"] = factory(root["react"], root["react/lib/ReactMultiChild"], root["react/lib/ReactUpdates"], root["babylonjs"], root["immutable"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_94__, __WEBPACK_EXTERNAL_MODULE_95__, __WEBPACK_EXTERNAL_MODULE_96__, __WEBPACK_EXTERNAL_MODULE_122__, __WEBPACK_EXTERNAL_MODULE_137__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_94__, __WEBPACK_EXTERNAL_MODULE_95__, __WEBPACK_EXTERNAL_MODULE_96__, __WEBPACK_EXTERNAL_MODULE_122__, __WEBPACK_EXTERNAL_MODULE_125__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -88,11 +88,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _cameras2 = _interopRequireDefault(_cameras);
 
-	var _meshes = __webpack_require__(180);
+	var _meshes = __webpack_require__(181);
 
 	var _meshes2 = _interopRequireDefault(_meshes);
 
-	var _shapes = __webpack_require__(181);
+	var _shapes = __webpack_require__(182);
 
 	var _shapes2 = _interopRequireDefault(_shapes);
 
@@ -667,11 +667,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Engine2 = _interopRequireDefault(_Engine);
 
-	var _Scene = __webpack_require__(134);
+	var _Scene = __webpack_require__(136);
 
 	var _Scene2 = _interopRequireDefault(_Scene);
 
-	var _Material = __webpack_require__(135);
+	var _Material = __webpack_require__(137);
 
 	var _Material2 = _interopRequireDefault(_Material);
 
@@ -683,7 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
 
-	var _Akkad = __webpack_require__(136);
+	var _Akkad = __webpack_require__(138);
 
 	var _Akkad2 = _interopRequireDefault(_Akkad);
 
@@ -2007,43 +2007,43 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Rotate2 = _interopRequireDefault(_Rotate);
 
-	var _Wireframe = __webpack_require__(124);
+	var _Wireframe = __webpack_require__(126);
 
 	var _Wireframe2 = _interopRequireDefault(_Wireframe);
 
-	var _Texture = __webpack_require__(125);
+	var _Texture = __webpack_require__(127);
 
 	var _Texture2 = _interopRequireDefault(_Texture);
 
-	var _Color = __webpack_require__(126);
+	var _Color = __webpack_require__(128);
 
 	var _Color2 = _interopRequireDefault(_Color);
 
-	var _Gravity = __webpack_require__(127);
+	var _Gravity = __webpack_require__(129);
 
 	var _Gravity2 = _interopRequireDefault(_Gravity);
 
-	var _ApplyGravity = __webpack_require__(128);
+	var _ApplyGravity = __webpack_require__(130);
 
 	var _ApplyGravity2 = _interopRequireDefault(_ApplyGravity);
 
-	var _CheckCollisions = __webpack_require__(129);
+	var _CheckCollisions = __webpack_require__(131);
 
 	var _CheckCollisions2 = _interopRequireDefault(_CheckCollisions);
 
-	var _CollisionsEnabled = __webpack_require__(130);
+	var _CollisionsEnabled = __webpack_require__(132);
 
 	var _CollisionsEnabled2 = _interopRequireDefault(_CollisionsEnabled);
 
-	var _GenericProperty = __webpack_require__(131);
+	var _GenericProperty = __webpack_require__(133);
 
 	var _GenericProperty2 = _interopRequireDefault(_GenericProperty);
 
-	var _SetEntityAsProperty = __webpack_require__(132);
+	var _SetEntityAsProperty = __webpack_require__(134);
 
 	var _SetEntityAsProperty2 = _interopRequireDefault(_SetEntityAsProperty);
 
-	var _CallMethodOnEntity = __webpack_require__(133);
+	var _CallMethodOnEntity = __webpack_require__(135);
 
 	var _CallMethodOnEntity2 = _interopRequireDefault(_CallMethodOnEntity);
 
@@ -3620,6 +3620,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _AkkadAbstractComponent2 = _interopRequireDefault(_AkkadAbstractComponent);
 
+	var _Helpers = __webpack_require__(124);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Rotate = function (_AkkadAbstractCompone) {
@@ -3644,9 +3646,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var axis = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(props.axis))))();
 	            var space = _babylonjs2.default.Space[props.space];
 
-	            var entity = appState.getIn(["entities", entityID, "entity"]);
-
-	            entity.rotate(axis, amount, space);
+	            if ((0, _Helpers.hasEntity)(appState, entityID)) {
+	                (0, _Helpers.getEntity)(appState, entityID).rotate(axis, amount, space);
+	            }
 	        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
 	    }
 
@@ -3680,6 +3682,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentWillMount() {
 	            this.updateRotation(this.props, this.context);
 	        }
+	    }, {
+	        key: "componentWillUnmount",
+	        value: function componentWillUnmount() {
+	            this.updateRotation({
+	                axis: [0, 0, 0],
+	                amount: 0,
+	                space: "LOCAL"
+	            }, this.context);
+	        }
 	    }]);
 	    return Rotate;
 	}(_AkkadAbstractComponent2.default);
@@ -3698,6 +3709,81 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 124 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getEntity = exports.hasEntity = exports.convertShapeProps = undefined;
+
+	var _toConsumableArray2 = __webpack_require__(113);
+
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+	var _babylonjs = __webpack_require__(122);
+
+	var _immutable = __webpack_require__(125);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var shapePropTransforms = {
+	    faceColors: function faceColors(color4Array) {
+	        return new (Function.prototype.bind.apply(_babylonjs.Color4, [null].concat((0, _toConsumableArray3.default)(color4Array))))();
+	    },
+	    faceUV: function faceUV(vector4Array) {
+	        return new (Function.prototype.bind.apply(_babylonjs.Vector4, [null].concat((0, _toConsumableArray3.default)(vector4Array))))();
+	    },
+	    axis: function axis(vector3Array) {
+	        return new (Function.prototype.bind.apply(_babylonjs.Vector3, [null].concat((0, _toConsumableArray3.default)(vector3Array))))();
+	    },
+	    space: function space(spaceType) {
+	        return _babylonjs.Space[spaceType];
+	    },
+	    vectors: function vectors(_vectors) {
+	        return _vectors.map(function (vector) {
+	            return new (Function.prototype.bind.apply(_babylonjs.Vector3, [null].concat((0, _toConsumableArray3.default)(vector))))();
+	        });
+	    }
+	};
+
+	/* converts prop values to Babylon accepted values */
+	var convertShapeProps = exports.convertShapeProps = function convertShapeProps(props) {
+	    var newProps = {};
+
+	    for (var prop in props) {
+	        var val = props[prop];
+	        newProps[prop] = shapePropTransforms[prop] ? shapePropTransforms[prop](val) : val;
+	    }
+
+	    return newProps;
+	};
+
+	var hasEntity = exports.hasEntity = function hasEntity() {
+	    var appState = arguments.length <= 0 || arguments[0] === undefined ? _immutable2.default.Map() : arguments[0];
+	    var entityID = arguments[1];
+
+	    return appState.hasIn(["entities", entityID, "entity"]);
+	};
+
+	var getEntity = exports.getEntity = function getEntity() {
+	    var appState = arguments.length <= 0 || arguments[0] === undefined ? _immutable2.default.Map() : arguments[0];
+	    var entityID = arguments[1];
+
+	    return appState.getIn(["entities", entityID, "entity"], _immutable2.default.Map()) || _immutable2.default.Map();
+	};
+
+/***/ },
+/* 125 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_125__;
+
+/***/ },
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3786,7 +3872,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Wireframe;
 
 /***/ },
-/* 125 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3890,7 +3976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Texture;
 
 /***/ },
-/* 126 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4032,7 +4118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Color;
 
 /***/ },
-/* 127 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4138,7 +4224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Gravity;
 
 /***/ },
-/* 128 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4222,7 +4308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ApplyGravity;
 
 /***/ },
-/* 129 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4306,7 +4392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CheckCollisions;
 
 /***/ },
-/* 130 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4390,7 +4476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CollisionsEnabled;
 
 /***/ },
-/* 131 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4504,7 +4590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GenericProperty;
 
 /***/ },
-/* 132 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4615,7 +4701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = SetEntityAsProperty;
 
 /***/ },
-/* 133 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4701,7 +4787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CallMethodOnEntity;
 
 /***/ },
-/* 134 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4818,7 +4904,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Scene;
 
 /***/ },
-/* 135 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4905,7 +4991,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Material;
 
 /***/ },
-/* 136 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4942,15 +5028,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
-	var _actions2 = __webpack_require__(138);
+	var _actions2 = __webpack_require__(139);
 
 	var _actions3 = _interopRequireDefault(_actions2);
 
-	var _classes = __webpack_require__(160);
+	var _classes = __webpack_require__(166);
 
 	var _PropsToContext = __webpack_require__(169);
 
@@ -5017,13 +5103,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Akkad;
 
 /***/ },
-/* 137 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_137__;
-
-/***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5036,43 +5116,43 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
-	var _appActions = __webpack_require__(139);
+	var _appActions = __webpack_require__(140);
 
 	var _appActions2 = _interopRequireDefault(_appActions);
 
-	var _CameraActions = __webpack_require__(140);
+	var _CameraActions = __webpack_require__(141);
 
 	var _CameraActions2 = _interopRequireDefault(_CameraActions);
 
-	var _LightActions = __webpack_require__(141);
+	var _LightActions = __webpack_require__(142);
 
 	var _LightActions2 = _interopRequireDefault(_LightActions);
 
-	var _SceneActions = __webpack_require__(142);
+	var _SceneActions = __webpack_require__(143);
 
 	var _SceneActions2 = _interopRequireDefault(_SceneActions);
 
-	var _ShapeActions = __webpack_require__(143);
+	var _ShapeActions = __webpack_require__(144);
 
 	var _ShapeActions2 = _interopRequireDefault(_ShapeActions);
 
-	var _MaterialActions = __webpack_require__(164);
+	var _MaterialActions = __webpack_require__(145);
 
 	var _MaterialActions2 = _interopRequireDefault(_MaterialActions);
 
-	var _AnimationActions = __webpack_require__(165);
+	var _AnimationActions = __webpack_require__(146);
 
 	var _AnimationActions2 = _interopRequireDefault(_AnimationActions);
 
-	var _TriggerActions = __webpack_require__(166);
+	var _TriggerActions = __webpack_require__(147);
 
 	var _TriggerActions2 = _interopRequireDefault(_TriggerActions);
 
-	var _MeshActions = __webpack_require__(167);
+	var _MeshActions = __webpack_require__(148);
 
 	var _MeshActions2 = _interopRequireDefault(_MeshActions);
 
-	var _ParticlesActions = __webpack_require__(168);
+	var _ParticlesActions = __webpack_require__(165);
 
 	var _ParticlesActions2 = _interopRequireDefault(_ParticlesActions);
 
@@ -5081,7 +5161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = (0, _extends3.default)({}, _appActions2.default, _CameraActions2.default, _LightActions2.default, _SceneActions2.default, _ShapeActions2.default, _MaterialActions2.default, _AnimationActions2.default, _TriggerActions2.default, _MeshActions2.default, _ParticlesActions2.default);
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5096,7 +5176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 140 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5113,7 +5193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
@@ -5151,6 +5231,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return camera;
+	    },
+	    webVRFree: function webVRFree(entityID, config, scene) {
+	        var initialPosition = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.initialPosition))))();
+
+	        var camera = new _babylonjs2.default.WebVRFreeCamera(entityID, initialPosition, scene);
+
+	        if (config.target) {
+	            var target = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.target))))();
+	            camera.setTarget(target);
+	        }
+
+	        return camera;
 	    }
 	};
 
@@ -5174,7 +5266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5191,7 +5283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
@@ -5254,7 +5346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5267,7 +5359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs2 = _interopRequireDefault(_babylonjs);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
@@ -5314,7 +5406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5325,11 +5417,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _babylonjs = __webpack_require__(122);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
-	var _classes = __webpack_require__(160);
+	var _Helpers = __webpack_require__(124);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5432,7 +5524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (type && shapeCreators[type]) {
 	            var scene = state().getIn(["entities", sceneID, "entity"]);
-	            var options = _classes.Helpers.convertShapeProps(props);
+	            var options = (0, _Helpers.convertShapeProps)(props);
 	            var shape = shapeCreators[type](scene, entityID, options, function () {/*action callback goes here.*/});
 
 	            var meshObj = _immutable2.default.Map({
@@ -5451,7 +5543,284 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ShapeActions;
 
 /***/ },
-/* 144 */
+/* 145 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(122);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(125);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var MaterialActions = {
+	    createMaterial: function createMaterial(state, actions, sceneID, entityID) {
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+
+	        var material = new _babylonjs2.default.StandardMaterial(entityID, scene);
+
+	        var materialObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: material,
+	            type: "material"
+	        });
+
+	        return state().setIn(["entities", entityID], materialObj);
+	    }
+	};
+
+	exports.default = MaterialActions;
+
+/***/ },
+/* 146 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(122);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(125);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var valueTypeMap = {
+	    float: _babylonjs2.default.Animation.ANIMATIONTYPE_FLOAT,
+	    vector2: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR2,
+	    vector3: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR3,
+	    quaternion: _babylonjs2.default.Animation.ANIMATIONTYPE_QUATERNION,
+	    matrix: _babylonjs2.default.Animation.ANIMATIONTYPE_MATRIX,
+	    color: _babylonjs2.default.Animation.ANIMATIONTYPE_COLOR3
+	};
+
+	var loopModeMap = {
+	    relative: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_RELATIVE,
+	    cycle: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CYCLE,
+	    constant: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CONSTANT
+	};
+
+	var AnimationActions = {
+	    createAnimation: function createAnimation(state, actions, config) {
+	        var entityID = config.entityID;
+	        var meshProperty = config.meshProperty;
+	        var valueType = config.valueType;
+	        var loopMode = config.loopMode;
+	        var _config$fps = config.fps;
+	        var fps = _config$fps === undefined ? 30 : _config$fps;
+
+
+	        var animation = new _babylonjs2.default.Animation(entityID, // name
+	        meshProperty, // property type to animate
+	        fps, // fps
+	        valueTypeMap[valueType], // value type of animation
+	        loopModeMap[loopMode] // loop mode
+	        );
+
+	        var animationObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: animation,
+	            type: "animation"
+	        });
+
+	        return state().setIn(["entities", entityID], animationObj);
+	    }
+	};
+
+	exports.default = AnimationActions;
+
+/***/ },
+/* 147 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(122);
+
+	var _immutable = __webpack_require__(125);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var triggerHandlers = {
+	    onClick: function onClick() {
+	        return _babylonjs.ActionManager.OnPickTrigger;
+	    },
+	    onLeftClick: function onLeftClick() {
+	        return _babylonjs.ActionManager.OnLeftPickTrigger;
+	    },
+	    onRightClick: function onRightClick() {
+	        return _babylonjs.ActionManager.OnRightPickTrigger;
+	    }, // need to disable menu pop up...
+	    onMouseOver: function onMouseOver() {
+	        return _babylonjs.ActionManager.OnPointerOverTrigger;
+	    },
+	    onMouseOut: function onMouseOut() {
+	        return _babylonjs.ActionManager.OnPointerOutTrigger;
+	    },
+	    onKeyDown: function onKeyDown() {
+	        return _babylonjs.ActionManager.OnKeyDownTrigger;
+	    },
+	    onKeyUp: function onKeyUp() {
+	        return _babylonjs.ActionManager.OnKeyUpTrigger;
+	    }
+	};
+
+	var TriggerActions = {
+	    createTriggers: function createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
+	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
+
+	        /* Create an Action Manager on Mesh if it doesn't already exist */
+	        if (!mesh.actionManager) {
+	            var scene = state().getIn(["entities", sceneID, "entity"]);
+	            mesh.actionManager = new _babylonjs.ActionManager(scene);
+	        }
+
+	        console.log("actionManager", mesh.actionManager);
+
+	        _immutable2.default.Map(triggers).filter(function (func, triggerName) {
+	            return triggerHandlers[triggerName];
+	        }).map(function (func, triggerName) {
+	            var trigger = triggerHandlers[triggerName]();
+	            var injectedFunc = function injectedFunc(evt) {
+	                return func(evt, targetEntityID, entityID);
+	            };
+
+	            return _immutable2.default.Map({
+	                targetEntityID: targetEntityID,
+	                triggerName: triggerName,
+	                id: entityID,
+	                entity: new _babylonjs.ExecuteCodeAction(trigger, injectedFunc),
+	                type: "trigger"
+	            });
+	        }).forEach(function (triggerObj) {
+	            mesh.actionManager.registerAction(triggerObj.get("entity"));
+	        });
+
+	        return state();
+	    },
+
+	    /**
+	    * For now this is just deleting the action manager. In the future this might need
+	    * to remove individual triggers from a mesh/scene.
+	    */
+	    disposeTriggers: function disposeTriggers(state, actions, targetEntityID) {
+	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
+
+	        if (mesh && mesh.actionManager) {
+	            mesh.actionManager.dispose();
+	        }
+
+	        return state();
+	    }
+	};
+
+	exports.default = TriggerActions;
+
+/***/ },
+/* 148 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _regenerator = __webpack_require__(149);
+
+	var _regenerator2 = _interopRequireDefault(_regenerator);
+
+	var _asyncToGenerator2 = __webpack_require__(164);
+
+	var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+	var _promise = __webpack_require__(153);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	var _babylonjs = __webpack_require__(122);
+
+	var _immutable = __webpack_require__(125);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _importMesh = function _importMesh(path, fileName, scene) {
+	    var progressCallback = arguments.length <= 3 || arguments[3] === undefined ? function () {} : arguments[3];
+
+
+	    return new _promise2.default(function (resolve, reject) {
+	        _babylonjs.SceneLoader.ImportMesh("", path, fileName, scene, resolve, progressCallback, reject);
+	    });
+	};
+
+	var MeshActions = {
+	    importMesh: function importMesh(state, actions, path, fileName, sceneID, entityID) {
+	        var _this = this;
+
+	        return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+	            var scene, meshes, newState;
+	            return _regenerator2.default.wrap(function _callee$(_context) {
+	                while (1) {
+	                    switch (_context.prev = _context.next) {
+	                        case 0:
+	                            scene = state().getIn(["entities", sceneID, "entity"]);
+	                            _context.next = 3;
+	                            return _importMesh(path, fileName, scene);
+
+	                        case 3:
+	                            meshes = _context.sent;
+	                            newState = state();
+
+
+	                            meshes.forEach(function (mesh) {
+	                                var meshObj = _immutable2.default.Map({
+	                                    id: entityID,
+	                                    entity: mesh,
+	                                    type: "mesh"
+	                                });
+
+	                                newState = newState.setIn(["entities", entityID], meshObj);
+	                            });
+
+	                            return _context.abrupt("return", newState);
+
+	                        case 7:
+	                        case "end":
+	                            return _context.stop();
+	                    }
+	                }
+	            }, _callee, _this);
+	        }))();
+	    }
+	};
+
+	exports.default = MeshActions;
+
+/***/ },
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// This method of obtaining a reference to the global object needs to be
@@ -5472,7 +5841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Force reevalutation of runtime.js.
 	g.regeneratorRuntime = undefined;
 
-	module.exports = __webpack_require__(145);
+	module.exports = __webpack_require__(150);
 
 	if (hadRuntime) {
 	  // Restore the original runtime.
@@ -5491,12 +5860,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 145 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module, process) {"use strict";
 
-	var _promise = __webpack_require__(148);
+	var _promise = __webpack_require__(153);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
@@ -6146,10 +6515,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	// object, this seems to be the most reliable technique that does not
 	// use indirect eval (which violates Content Security Policy).
 	(typeof global === "undefined" ? "undefined" : (0, _typeof3.default)(global)) === "object" ? global : (typeof window === "undefined" ? "undefined" : (0, _typeof3.default)(window)) === "object" ? window : (typeof self === "undefined" ? "undefined" : (0, _typeof3.default)(self)) === "object" ? self : undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(146)(module), __webpack_require__(147)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(151)(module), __webpack_require__(152)))
 
 /***/ },
-/* 146 */
+/* 151 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -6165,7 +6534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 147 */
+/* 152 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -6262,23 +6631,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 148 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(149), __esModule: true };
+	module.exports = { "default": __webpack_require__(154), __esModule: true };
 
 /***/ },
-/* 149 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(85);
 	__webpack_require__(59);
 	__webpack_require__(71);
-	__webpack_require__(150);
+	__webpack_require__(155);
 	module.exports = __webpack_require__(8).Promise;
 
 /***/ },
-/* 150 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6290,12 +6659,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  , isObject           = __webpack_require__(14)
 	  , anObject           = __webpack_require__(13)
 	  , aFunction          = __webpack_require__(10)
-	  , anInstance         = __webpack_require__(151)
-	  , forOf              = __webpack_require__(152)
+	  , anInstance         = __webpack_require__(156)
+	  , forOf              = __webpack_require__(157)
 	  , setProto           = __webpack_require__(90).set
-	  , speciesConstructor = __webpack_require__(153)
-	  , task               = __webpack_require__(154).set
-	  , microtask          = __webpack_require__(156)
+	  , speciesConstructor = __webpack_require__(158)
+	  , task               = __webpack_require__(159).set
+	  , microtask          = __webpack_require__(161)
 	  , PROMISE            = 'Promise'
 	  , TypeError          = global.TypeError
 	  , process            = global.process
@@ -6487,7 +6856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
 	    this._n = false;          // <- notify
 	  };
-	  Internal.prototype = __webpack_require__(157)($Promise.prototype, {
+	  Internal.prototype = __webpack_require__(162)($Promise.prototype, {
 	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
 	    then: function then(onFulfilled, onRejected){
 	      var reaction    = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -6514,7 +6883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	$export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
 	__webpack_require__(69)($Promise, PROMISE);
-	__webpack_require__(158)(PROMISE);
+	__webpack_require__(163)(PROMISE);
 	Wrapper = __webpack_require__(8)[PROMISE];
 
 	// statics
@@ -6584,7 +6953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 151 */
+/* 156 */
 /***/ function(module, exports) {
 
 	module.exports = function(it, Constructor, name, forbiddenField){
@@ -6594,7 +6963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 152 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx         = __webpack_require__(9)
@@ -6618,7 +6987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 153 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.3.20 SpeciesConstructor(O, defaultConstructor)
@@ -6631,11 +7000,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 154 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx                = __webpack_require__(9)
-	  , invoke             = __webpack_require__(155)
+	  , invoke             = __webpack_require__(160)
 	  , html               = __webpack_require__(68)
 	  , cel                = __webpack_require__(18)
 	  , global             = __webpack_require__(7)
@@ -6711,7 +7080,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 155 */
+/* 160 */
 /***/ function(module, exports) {
 
 	// fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -6732,11 +7101,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 156 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(7)
-	  , macrotask = __webpack_require__(154).set
+	  , macrotask = __webpack_require__(159).set
 	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
 	  , process   = global.process
 	  , Promise   = global.Promise
@@ -6795,7 +7164,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 157 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var hide = __webpack_require__(11);
@@ -6807,7 +7176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 158 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6826,14 +7195,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 159 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	exports.__esModule = true;
 
-	var _promise = __webpack_require__(148);
+	var _promise = __webpack_require__(153);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
@@ -6869,7 +7238,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 160 */
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(122);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(125);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ParticlesActions = {
+	    createParticles: function createParticles(state, actions, sceneID, entityID, targetEntityID, img) {
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+	        var targetEntity = state().getIn(["entities", targetEntityID, "entity"]);
+
+	        var particles = new _babylonjs2.default.ParticleSystem(entityID, 2000, scene);
+
+	        particles.particleTexture = new _babylonjs2.default.Texture(img, scene);
+	        particles.emitter = targetEntity;
+
+	        var particlesObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: particles,
+	            type: "particles"
+	        });
+
+	        return state().setIn(["entities", entityID], particlesObj);
+	    }
+	};
+
+	exports.default = ParticlesActions;
+
+/***/ },
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6879,15 +7290,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Helpers = exports.StateManager = exports.MeshManager = undefined;
 
-	var _MeshManager = __webpack_require__(161);
+	var _MeshManager = __webpack_require__(167);
 
 	var _MeshManager2 = _interopRequireDefault(_MeshManager);
 
-	var _StateManager = __webpack_require__(162);
+	var _StateManager = __webpack_require__(168);
 
 	var _StateManager2 = _interopRequireDefault(_StateManager);
 
-	var _Helpers = __webpack_require__(163);
+	var _Helpers = __webpack_require__(124);
 
 	var _Helpers2 = _interopRequireDefault(_Helpers);
 
@@ -6903,7 +7314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Helpers = exports.Helpers = _Helpers2.default;
 
 /***/ },
-/* 161 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6924,7 +7335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
@@ -6979,7 +7390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = MeshManager;
 
 /***/ },
-/* 162 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7004,7 +7415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _symbol2 = _interopRequireDefault(_symbol);
 
-	var _immutable = __webpack_require__(137);
+	var _immutable = __webpack_require__(125);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
@@ -7164,379 +7575,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 	exports.default = StateManager;
-
-/***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _toConsumableArray2 = __webpack_require__(113);
-
-	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-	var _babylonjs = __webpack_require__(122);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var shapePropTransforms = {
-	    faceColors: function faceColors(color4Array) {
-	        return new (Function.prototype.bind.apply(_babylonjs.Color4, [null].concat((0, _toConsumableArray3.default)(color4Array))))();
-	    },
-	    faceUV: function faceUV(vector4Array) {
-	        return new (Function.prototype.bind.apply(_babylonjs.Vector4, [null].concat((0, _toConsumableArray3.default)(vector4Array))))();
-	    },
-	    axis: function axis(vector3Array) {
-	        return new (Function.prototype.bind.apply(_babylonjs.Vector3, [null].concat((0, _toConsumableArray3.default)(vector3Array))))();
-	    },
-	    space: function space(spaceType) {
-	        return _babylonjs.Space[spaceType];
-	    },
-	    vectors: function vectors(_vectors) {
-	        return _vectors.map(function (vector) {
-	            return new (Function.prototype.bind.apply(_babylonjs.Vector3, [null].concat((0, _toConsumableArray3.default)(vector))))();
-	        });
-	    }
-	};
-
-	/* converts prop values to Babylon accepted values */
-	var convertShapeProps = function convertShapeProps(props) {
-	    var newProps = {};
-
-	    for (var prop in props) {
-	        var val = props[prop];
-	        newProps[prop] = shapePropTransforms[prop] ? shapePropTransforms[prop](val) : val;
-	    }
-
-	    return newProps;
-	};
-
-	exports.default = {
-	    convertShapeProps: convertShapeProps
-	};
-
-/***/ },
-/* 164 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(122);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(137);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var MaterialActions = {
-	    createMaterial: function createMaterial(state, actions, sceneID, entityID) {
-	        var scene = state().getIn(["entities", sceneID, "entity"]);
-
-	        var material = new _babylonjs2.default.StandardMaterial(entityID, scene);
-
-	        var materialObj = _immutable2.default.Map({
-	            id: entityID,
-	            entity: material,
-	            type: "material"
-	        });
-
-	        return state().setIn(["entities", entityID], materialObj);
-	    }
-	};
-
-	exports.default = MaterialActions;
-
-/***/ },
-/* 165 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(122);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(137);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var valueTypeMap = {
-	    float: _babylonjs2.default.Animation.ANIMATIONTYPE_FLOAT,
-	    vector2: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR2,
-	    vector3: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR3,
-	    quaternion: _babylonjs2.default.Animation.ANIMATIONTYPE_QUATERNION,
-	    matrix: _babylonjs2.default.Animation.ANIMATIONTYPE_MATRIX,
-	    color: _babylonjs2.default.Animation.ANIMATIONTYPE_COLOR3
-	};
-
-	var loopModeMap = {
-	    relative: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_RELATIVE,
-	    cycle: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CYCLE,
-	    constant: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CONSTANT
-	};
-
-	var AnimationActions = {
-	    createAnimation: function createAnimation(state, actions, config) {
-	        var entityID = config.entityID;
-	        var meshProperty = config.meshProperty;
-	        var valueType = config.valueType;
-	        var loopMode = config.loopMode;
-	        var _config$fps = config.fps;
-	        var fps = _config$fps === undefined ? 30 : _config$fps;
-
-
-	        var animation = new _babylonjs2.default.Animation(entityID, // name
-	        meshProperty, // property type to animate
-	        fps, // fps
-	        valueTypeMap[valueType], // value type of animation
-	        loopModeMap[loopMode] // loop mode
-	        );
-
-	        var animationObj = _immutable2.default.Map({
-	            id: entityID,
-	            entity: animation,
-	            type: "animation"
-	        });
-
-	        return state().setIn(["entities", entityID], animationObj);
-	    }
-	};
-
-	exports.default = AnimationActions;
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(122);
-
-	var _immutable = __webpack_require__(137);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var triggerHandlers = {
-	    onClick: function onClick() {
-	        return _babylonjs.ActionManager.OnPickTrigger;
-	    },
-	    onLeftClick: function onLeftClick() {
-	        return _babylonjs.ActionManager.OnLeftPickTrigger;
-	    },
-	    onRightClick: function onRightClick() {
-	        return _babylonjs.ActionManager.OnRightPickTrigger;
-	    }, // need to disable menu pop up...
-	    onMouseOver: function onMouseOver() {
-	        return _babylonjs.ActionManager.OnPointerOverTrigger;
-	    },
-	    onMouseOut: function onMouseOut() {
-	        return _babylonjs.ActionManager.OnPointerOutTrigger;
-	    },
-	    onKeyDown: function onKeyDown() {
-	        return _babylonjs.ActionManager.OnKeyDownTrigger;
-	    },
-	    onKeyUp: function onKeyUp() {
-	        return _babylonjs.ActionManager.OnKeyUpTrigger;
-	    }
-	};
-
-	var TriggerActions = {
-	    createTriggers: function createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
-	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
-
-	        /* Create an Action Manager on Mesh if it doesn't already exist */
-	        if (!mesh.actionManager) {
-	            var scene = state().getIn(["entities", sceneID, "entity"]);
-	            mesh.actionManager = new _babylonjs.ActionManager(scene);
-	        }
-
-	        console.log("actionManager", mesh.actionManager);
-
-	        _immutable2.default.Map(triggers).filter(function (func, triggerName) {
-	            return triggerHandlers[triggerName];
-	        }).map(function (func, triggerName) {
-	            var trigger = triggerHandlers[triggerName]();
-	            var injectedFunc = function injectedFunc(evt) {
-	                return func(evt, targetEntityID, entityID);
-	            };
-
-	            return _immutable2.default.Map({
-	                targetEntityID: targetEntityID,
-	                triggerName: triggerName,
-	                id: entityID,
-	                entity: new _babylonjs.ExecuteCodeAction(trigger, injectedFunc),
-	                type: "trigger"
-	            });
-	        }).forEach(function (triggerObj) {
-	            mesh.actionManager.registerAction(triggerObj.get("entity"));
-	        });
-
-	        return state();
-	    },
-
-	    /**
-	    * For now this is just deleting the action manager. In the future this might need
-	    * to remove individual triggers from a mesh/scene.
-	    */
-	    disposeTriggers: function disposeTriggers(state, actions, targetEntityID) {
-	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
-
-	        if (mesh && mesh.actionManager) {
-	            mesh.actionManager.dispose();
-	        }
-
-	        return state();
-	    }
-	};
-
-	exports.default = TriggerActions;
-
-/***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _regenerator = __webpack_require__(144);
-
-	var _regenerator2 = _interopRequireDefault(_regenerator);
-
-	var _asyncToGenerator2 = __webpack_require__(159);
-
-	var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-	var _promise = __webpack_require__(148);
-
-	var _promise2 = _interopRequireDefault(_promise);
-
-	var _babylonjs = __webpack_require__(122);
-
-	var _immutable = __webpack_require__(137);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _importMesh = function _importMesh(path, fileName, scene) {
-	    var progressCallback = arguments.length <= 3 || arguments[3] === undefined ? function () {} : arguments[3];
-
-
-	    return new _promise2.default(function (resolve, reject) {
-	        _babylonjs.SceneLoader.ImportMesh("", path, fileName, scene, resolve, progressCallback, reject);
-	    });
-	};
-
-	var MeshActions = {
-	    importMesh: function importMesh(state, actions, path, fileName, sceneID, entityID) {
-	        var _this = this;
-
-	        return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-	            var scene, meshes, newState;
-	            return _regenerator2.default.wrap(function _callee$(_context) {
-	                while (1) {
-	                    switch (_context.prev = _context.next) {
-	                        case 0:
-	                            scene = state().getIn(["entities", sceneID, "entity"]);
-	                            _context.next = 3;
-	                            return _importMesh(path, fileName, scene);
-
-	                        case 3:
-	                            meshes = _context.sent;
-	                            newState = state();
-
-
-	                            meshes.forEach(function (mesh) {
-	                                var meshObj = _immutable2.default.Map({
-	                                    id: entityID,
-	                                    entity: mesh,
-	                                    type: "mesh"
-	                                });
-
-	                                newState = newState.setIn(["entities", entityID], meshObj);
-	                            });
-
-	                            return _context.abrupt("return", newState);
-
-	                        case 7:
-	                        case "end":
-	                            return _context.stop();
-	                    }
-	                }
-	            }, _callee, _this);
-	        }))();
-	    }
-	};
-
-	exports.default = MeshActions;
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(122);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(137);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ParticlesActions = {
-	    createParticles: function createParticles(state, actions, sceneID, entityID, targetEntityID, img) {
-	        var scene = state().getIn(["entities", sceneID, "entity"]);
-	        var targetEntity = state().getIn(["entities", targetEntityID, "entity"]);
-
-	        var particles = new _babylonjs2.default.ParticleSystem(entityID, 2000, scene);
-
-	        particles.particleTexture = new _babylonjs2.default.Texture(img, scene);
-	        particles.emitter = targetEntity;
-
-	        var particlesObj = _immutable2.default.Map({
-	            id: entityID,
-	            entity: particles,
-	            type: "particles"
-	        });
-
-	        return state().setIn(["entities", entityID], particlesObj);
-	    }
-	};
-
-	exports.default = ParticlesActions;
 
 /***/ },
 /* 169 */
@@ -8314,11 +8352,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _ArcRotateCamera2 = _interopRequireDefault(_ArcRotateCamera);
 
+	var _WebVRFreeCamera = __webpack_require__(180);
+
+	var _WebVRFreeCamera2 = _interopRequireDefault(_WebVRFreeCamera);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
 	    FreeCamera: _FreeCamera2.default,
-	    ArcRotateCamera: _ArcRotateCamera2.default
+	    ArcRotateCamera: _ArcRotateCamera2.default,
+	    WebVRFreeCamera: _WebVRFreeCamera2.default
 	};
 
 /***/ },
@@ -8502,12 +8545,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 180 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-/***/ },
-/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8516,39 +8553,143 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _Sphere = __webpack_require__(182);
+	var _getPrototypeOf = __webpack_require__(46);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(50);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(51);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(55);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(86);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(94);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _AkkadAbstractComponent = __webpack_require__(99);
+
+	var _AkkadAbstractComponent2 = _interopRequireDefault(_AkkadAbstractComponent);
+
+	var _systems = __webpack_require__(97);
+
+	var _Entity = __webpack_require__(107);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(108);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var PropTypes = _react2.default.PropTypes;
+
+	var WebVRFreeCamera = function (_AkkadAbstractCompone) {
+	    (0, _inherits3.default)(WebVRFreeCamera, _AkkadAbstractCompone);
+
+	    function WebVRFreeCamera() {
+	        (0, _classCallCheck3.default)(this, WebVRFreeCamera);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(WebVRFreeCamera).apply(this, arguments));
+	    }
+
+	    (0, _createClass3.default)(WebVRFreeCamera, [{
+	        key: "render",
+	        value: function render() {
+	            var _props = this.props;
+	            var target = _props.target;
+	            var initialPosition = _props.initialPosition;
+	            var children = _props.children;
+
+
+	            return _react2.default.createElement(
+	                _Entity2.default,
+	                null,
+	                _react2.default.createElement(_systems.RenderCamera, {
+	                    type: "webVRFree",
+	                    target: target,
+	                    initialPosition: initialPosition
+	                }),
+	                _react2.default.createElement(
+	                    _EntityLoaded2.default,
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }]);
+	    return WebVRFreeCamera;
+	}(_AkkadAbstractComponent2.default);
+
+	WebVRFreeCamera.propTypes = {
+	    initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
+	    target: PropTypes.arrayOf(PropTypes.number).isRequired
+	};
+	WebVRFreeCamera.contextTypes = {
+	    appState: PropTypes.object,
+	    actions: PropTypes.object
+	};
+	exports.default = WebVRFreeCamera;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Sphere = __webpack_require__(183);
 
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 
-	var _Box = __webpack_require__(183);
+	var _Box = __webpack_require__(184);
 
 	var _Box2 = _interopRequireDefault(_Box);
 
-	var _Disc = __webpack_require__(184);
+	var _Disc = __webpack_require__(185);
 
 	var _Disc2 = _interopRequireDefault(_Disc);
 
-	var _Ground = __webpack_require__(185);
+	var _Ground = __webpack_require__(186);
 
 	var _Ground2 = _interopRequireDefault(_Ground);
 
-	var _GroundFromHeightMap = __webpack_require__(186);
+	var _GroundFromHeightMap = __webpack_require__(187);
 
 	var _GroundFromHeightMap2 = _interopRequireDefault(_GroundFromHeightMap);
 
-	var _Cylinder = __webpack_require__(187);
+	var _Cylinder = __webpack_require__(188);
 
 	var _Cylinder2 = _interopRequireDefault(_Cylinder);
 
-	var _Torus = __webpack_require__(188);
+	var _Torus = __webpack_require__(189);
 
 	var _Torus2 = _interopRequireDefault(_Torus);
 
-	var _Lines = __webpack_require__(189);
+	var _Lines = __webpack_require__(190);
 
 	var _Lines2 = _interopRequireDefault(_Lines);
 
-	var _DashedLines = __webpack_require__(190);
+	var _DashedLines = __webpack_require__(191);
 
 	var _DashedLines2 = _interopRequireDefault(_DashedLines);
 
@@ -8567,7 +8708,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8658,7 +8799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Sphere;
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8749,7 +8890,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Box;
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8847,7 +8988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Disc;
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8940,7 +9081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Ground;
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9040,7 +9181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Ground;
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9141,7 +9282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Cylinder;
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9242,7 +9383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Torus;
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9327,7 +9468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Lines;
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

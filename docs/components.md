@@ -80,6 +80,13 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 #### Props:
 - `target<[x, y, z]>`: Required, Target of camera
 
+## `<WebVRFreeCamera />`
+
+#### Props:
+- `target<[x, y, z]>`: Required, Target of camera
+- `initialPosition<[x, y, z]>`: Required, initial position of camera
+
+
 # Particles:
 
 ## <Particles />

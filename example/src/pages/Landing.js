@@ -34,6 +34,9 @@ class Landing extends Component {
                     <li>
                         <Link to="/heightmap">Height Map</Link>
                     </li>
+                    <li>
+                        <Link to="/webvr">Web VR</Link>
+                    </li>
                 </ul>
                 {children}
             </div>

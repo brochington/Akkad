@@ -6,6 +6,7 @@ import CollisionsPage from "./CollisionsPage";
 import TriggersPage from "./TriggersPage";
 import ClickTheBox from "./ClickTheBox";
 import HeightMapPage from "./HeightMapPage";
+import WebVRPage from "./WebVRPage";
 
 export default {
     Landing,
@@ -15,5 +16,6 @@ export default {
     CollisionsPage,
     TriggersPage,
     ClickTheBox,
-    HeightMapPage
+    HeightMapPage,
+    WebVRPage
 };
