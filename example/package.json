@@ -5,10 +5,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js --display-error-details",
-    "build": "npm run clean && npm run build:webpack",
+    "build": "npm run clean && npm install && npm run build:webpack",
     "start:dev": "node devServer.js",
     "start:prod": "node prodServer.js",
-    "start": "npm run build:webpack && npm run start:prod",
+    "start": "npm run build && npm run start:prod",
     "lint": "eslint src",
     "rmrf": "rm -rf ./node_modules",
     "setup:dev": "npm run rmrf && npm link akkad && npm install && npm install && npm install react && npm install react-dom && npm start:dev"
