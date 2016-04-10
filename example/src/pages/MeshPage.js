@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Akkad, Scene, shapes, cameras, lights, systems} from "akkad";
 
-const googleStorageEndpoint = `http://storage.googleapis.com/akkad/`;
+const googleStorageEndpoint = `http://storage.googleapis.com/akkad-assets-1/`;
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
