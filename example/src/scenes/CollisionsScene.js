@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {Akkad, Scene, shapes, cameras, lights, systems} from "akkad";
-import skullMesh from "../meshes/skull.babylon";
 
 const {FreeCamera} = cameras;
 const {HemisphericLight} = lights;

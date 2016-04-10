@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Akkad, Scene, shapes, cameras, lights, systems} from "akkad";
-import skullMesh from "../meshes/skull.babylon";
+
+const googleStorageEndpoint = `http://storage.googleapis.com/akkad/`;
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
@@ -15,14 +16,14 @@ class MeshPage extends Component {
                 </h2>
                 <Akkad>
                     <Scene>
-                        <ArcRotateCamera 
+                        <ArcRotateCamera
                             initialPosition={[0, 0, 100]}
-                            target={[0, 0, 0]} 
+                            target={[0, 0, 0]}
                         />
                         <HemisphericLight />
-                        <Mesh 
-                            path={skullMesh.split("/")[1] + "/"}
-                            fileName={skullMesh.split("/")[2]}
+                        <Mesh
+                            path={googleStorageEndpoint}
+                            fileName={'skull.babylon'}
                         >
                             <Position vector={[0, 0, 0]}/>
                             <Rotate
