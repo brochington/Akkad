@@ -14,11 +14,12 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(port, function(err) {
+var server = app.listen(port, '0.0.0.0', function(err) {
   if (err) {
     console.log(err);
     return;
   }
 
-  console.log('Listening at http://0.0.0.0:' + port);
+  console.log('App listening at http://%s:%s', server.address().address, server.address().port);
+  console.log('Press Ctrl+C to quit.');
 });
