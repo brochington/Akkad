@@ -14,7 +14,7 @@
     "setup:dev": "npm run rmrf && npm link akkad && npm install && npm install && npm install react && npm install react-dom && npm start:dev"
   },
   "engine": {
-    "node": "5.10.1"
+    "node": "5.3.0"
   },
   "repository": {
     "type": "git",
