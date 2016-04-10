@@ -3,8 +3,9 @@
   "version": "0.0.2",
   "description": "An Akkad example application",
   "scripts": {
-    "clean": "rimraf dist",
-    "build:webpack": "NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.prod.js --display-error-details",
+    "clean": "rm -rf  ./dist",
+    "build:webpack": "NODE_ENV=production /app/node_modules/.bin/webpack --config webpack.config.prod.js --display-error-details",
+    "build:webpack:dev": "NODE_ENV=development webpack --config webpack.config.dev.js --display-error-details",
     "build": "npm run rmrf && npm install && npm run extras && npm run build:webpack",
     "extras": "npm bin",
     "start:dev": "node devServer.js",
@@ -12,7 +13,7 @@
     "start": "npm run build && npm run start:prod",
     "lint": "eslint src",
     "rmrf": "rm -rf ./node_modules",
-    "setup:dev": "npm run rmrf && npm link akkad && npm install && npm install && npm install react && npm install react-dom && npm start:dev",
+    "setup:dev": "npm run rmrf && npm link akkad && npm install && npm install && npm install react && npm install react-dom && npm run build:webpack:dev && npm run start:dev",
     "deploy": "gcloud preview app deploy"
   },
   "engines": {
