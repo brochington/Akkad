@@ -1,8 +1,8 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 import Babylon from "babylonjs";
 
-class Gravity extends AkkadAbstractComponent {
+class Gravity extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
@@ -16,7 +16,7 @@ class Gravity extends AkkadAbstractComponent {
     shouldComponentUpdate(nextProps) {
         const newVector = nextProps.vector;
         const oldVector = this.props.vector;
-        
+
         for (let axis in newVector) {
             if (newVector[axis] !== oldVector[axis]) {
                 return true;

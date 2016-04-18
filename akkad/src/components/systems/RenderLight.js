@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class RenderLight extends AkkadAbstractComponent {
+class RenderLight extends AbstractSystemComponent {
     static propTypes = {
         type: PropTypes.string
     }

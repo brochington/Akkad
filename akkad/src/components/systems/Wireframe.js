@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class Wireframe extends AkkadAbstractComponent {
+class Wireframe extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,

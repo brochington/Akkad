@@ -49,7 +49,7 @@ const cameraCreators = {
 };
 
 export default {
-    setCamera(state, actions, sceneID, entityID, config) {
+    setCamera: function* (state, actions, sceneID, entityID, config) {
         const canvas = state().getIn(["entities", `canvas-${sceneID}`, "entity"]);
         const scene = state().getIn(["entities", sceneID, "entity"]);
 
@@ -62,7 +62,7 @@ export default {
             entity: camera,
             type: "camera"
         });
-
-        return state().setIn(["entities", entityID], cameraObj);
+        console.log('set Camera!!');
+        yield state().setIn(["entities", entityID], cameraObj);
     }
 };

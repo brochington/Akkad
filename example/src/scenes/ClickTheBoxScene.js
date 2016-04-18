@@ -3,8 +3,8 @@ import {Scene, shapes, cameras, lights, systems} from "akkad";
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
-const {Trigger} = systems;
-const {Box} = shapes;
+const {Trigger, Position} = systems;
+const {Box, Sphere} = shapes;
 
 class ClickTheBoxScene extends Component {
     static contextTypes = {
@@ -13,6 +13,7 @@ class ClickTheBoxScene extends Component {
     }
 
     render() {
+
         const {appState, actions} = this.context;
 
         return (
@@ -29,6 +30,15 @@ class ClickTheBoxScene extends Component {
                     <Box>
                         <Trigger onClick={actions.increment} />
                     </Box>
+                    <Box>
+                        <Position vector={[2, 0, 0]} />
+                    </Box>
+                    <Sphere
+                        segments={24}
+                        diameter={2}
+                    >
+                        <Position vector={[-2, 0, 0]} />
+                    </Sphere>
                 </Scene>
             </div>
         );

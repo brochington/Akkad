@@ -1,9 +1,9 @@
 import {PropTypes} from "react";
 import Babylon from "babylonjs";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 import {hasEntity, getEntity} from "../../classes/Helpers";
 
-class Rotate extends AkkadAbstractComponent {
+class Rotate extends AbstractSystemComponent {
     static propTypes = {
         axis: PropTypes.arrayOf(PropTypes.number).isRequired,
         amount: PropTypes.number.isRequired,

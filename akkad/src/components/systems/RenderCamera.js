@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class RenderCamera extends AkkadAbstractComponent {
+class RenderCamera extends AbstractSystemComponent {
     static propTypes = {
         target: PropTypes.array,
         type: PropTypes.string.isRequired
@@ -19,7 +19,7 @@ class RenderCamera extends AkkadAbstractComponent {
         const {setCamera} = actions._internal;
         setCamera(sceneID, entityID, this.props);
     }
-    
+
     //TODO: Add a componentWillUnmount() to detach camera.
 }
 

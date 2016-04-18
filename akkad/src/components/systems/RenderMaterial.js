@@ -1,11 +1,11 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class RenderMaterial extends AkkadAbstractComponent {
+class RenderMaterial extends AbstractSystemComponent {
     static contextTypes = {
         sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
-        appState: PropTypes.object, 
+        appState: PropTypes.object,
         actions: PropTypes.object
     }
 

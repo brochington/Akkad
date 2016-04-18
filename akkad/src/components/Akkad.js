@@ -4,6 +4,8 @@ import _actions from "../actions";
 import {StateManager} from "../classes";
 import PropsToContext from "./PropsToContext";
 
+
+
 class Akkad extends React.Component {
     constructor() {
         super();
@@ -31,6 +33,7 @@ class Akkad extends React.Component {
     }
 
     render() {
+        console.log('render Akkad');
         const {stateManager} = this;
         const {children} = this.props;
 

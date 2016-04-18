@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class CollisionsEnabled extends AkkadAbstractComponent {
+class CollisionsEnabled extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
@@ -13,17 +13,18 @@ class CollisionsEnabled extends AkkadAbstractComponent {
     }
 
     componentWillMount() {
+        console.log('collisionsEnabled will Mount', this.context);
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
-        
+
         entity.collisionsEnabled = true;
     }
 
     componentWillUnmount() {
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
-        
-        entity.collisionsEnabled = false;   
+
+        entity.collisionsEnabled = false;
     }
 }
 

@@ -1,8 +1,8 @@
 import {PropTypes} from "react";
 import Babylon from "babylonjs";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class Texture extends AkkadAbstractComponent {
+class Texture extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         sceneID: PropTypes.string,

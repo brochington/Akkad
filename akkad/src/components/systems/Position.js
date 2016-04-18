@@ -1,8 +1,8 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 import Babylon from "babylonjs";
 
-class Position extends AkkadAbstractComponent {
+class Position extends AbstractSystemComponent {
     static propTypes = {
         vector: PropTypes.arrayOf(PropTypes.number)
     }
@@ -17,14 +17,14 @@ class Position extends AkkadAbstractComponent {
         const {appState, entityID} = context;
         const {vector} = props;
         const entity = appState.getIn(["entities", entityID, "entity"]);
-        
+
         entity.position = new Babylon.Vector3(...vector);
     }
 
     shouldComponentUpdate(nextProps) {
         const newVector = nextProps.vector;
         const oldVector = this.props.vector;
-            
+
         for (let axis in newVector) {
             if (newVector[axis] !== oldVector[axis]) {
                 return true;

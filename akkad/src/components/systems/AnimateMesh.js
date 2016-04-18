@@ -1,11 +1,11 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class AnimateMesh extends AkkadAbstractComponent {
+class AnimateMesh extends AbstractSystemComponent {
     static contextTypes = {
         sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string.isRequired,
-        appState: PropTypes.object, 
+        appState: PropTypes.object,
         actions: PropTypes.object
     }
 

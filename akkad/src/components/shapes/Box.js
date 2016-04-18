@@ -2,8 +2,9 @@ import React, {PropTypes} from "react";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import {RenderShape} from "../systems";
+import AkkadAbstractComponent from '../AkkadAbstractComponent';
 
-class Box extends React.Component {
+class Box extends AkkadAbstractComponent {
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object

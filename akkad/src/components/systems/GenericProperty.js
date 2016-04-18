@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class GenericProperty extends AkkadAbstractComponent {
+class GenericProperty extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
@@ -30,7 +30,7 @@ class GenericProperty extends AkkadAbstractComponent {
         const {propertyName} = this.props;
 
         const entity = appState.getIn(["entities", entityID, "entity"]);
-        
+
         entity[propertyName] = val;
     }
 

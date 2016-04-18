@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class ApplyGravity extends AkkadAbstractComponent {
+class ApplyGravity extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
@@ -15,15 +15,15 @@ class ApplyGravity extends AkkadAbstractComponent {
     componentWillMount() {
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
-        
+
         entity.applyGravity = true;
     }
 
     componentWillUnmount() {
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
-        
-        entity.applyGravity = false;   
+
+        entity.applyGravity = false;
     }
 }
 

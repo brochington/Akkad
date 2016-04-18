@@ -81,7 +81,6 @@ From the project root:
 $ cd akkad
 $ npm run setup:watch
 $ cd ../example
-$ npm run setup:dev
 $ npm run start:dev
 ```
 

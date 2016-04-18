@@ -1,8 +1,8 @@
 import {PropTypes} from "react";
 import Babylon from "babylonjs";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class Color extends AkkadAbstractComponent {
+class Color extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,

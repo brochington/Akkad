@@ -28,7 +28,7 @@ class ShapesPage extends Component {
         return (
             <div>
                 <h2>
-                    Mesh Example
+                    Shapes Example
                 </h2>
                 <Akkad>
                     <Scene>

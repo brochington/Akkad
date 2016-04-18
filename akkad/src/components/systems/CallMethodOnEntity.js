@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
-import AkkadAbstractComponent from "../AkkadAbstractComponent";
+import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class CallMethodOnEntity extends AkkadAbstractComponent {
+class CallMethodOnEntity extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string.isRequired,
         appState: PropTypes.object,
@@ -17,7 +17,7 @@ class CallMethodOnEntity extends AkkadAbstractComponent {
     componentDidMount() {
         const {entityID, appState} = this.context;
         const {targetEntityID, methodName, args} = this.props;
-        
+
         const entity = appState.getIn(["entities", (targetEntityID || entityID), "entity"]);
 
         if (args) {

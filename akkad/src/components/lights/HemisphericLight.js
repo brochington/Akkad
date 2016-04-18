@@ -4,7 +4,7 @@ import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import {RenderLight, GenericProperty} from "../systems";
 
-class DirectionalLight extends React.Component {
+class HemisphericLight extends React.Component {
     static propTypes = {
         source: PropTypes.arrayOf(PropTypes.number),
         diffuse: PropTypes.arrayOf(PropTypes.number),
@@ -15,14 +15,14 @@ class DirectionalLight extends React.Component {
         const {diffuse, specular, children} = this.props;
 
         const renderDiffuse = diffuse && (
-            <GenericProperty 
+            <GenericProperty
                 propertyName="diffuse"
                 onVal={new Babylon.Color3(...diffuse)}
             />
         );
 
         const renderSpecular = specular && (
-            <GenericProperty 
+            <GenericProperty
                 propertyName="specular"
                 onVal={new Babylon.Color3(...specular)}
             />
@@ -30,7 +30,7 @@ class DirectionalLight extends React.Component {
 
         return (
             <Entity>
-                <RenderLight 
+                <RenderLight
                     type="hemispheric"
                     {...this.props}
                 />
@@ -44,4 +44,4 @@ class DirectionalLight extends React.Component {
     }
 }
 
-export default DirectionalLight;
+export default HemisphericLight;
