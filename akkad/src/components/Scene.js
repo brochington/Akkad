@@ -2,13 +2,36 @@ import React, {PropTypes} from "react";
 import {AkkadRender} from "../classes";
 // import Immutable from 'immutable';
 
+class ShellComponent extends React.Component {
+    static propTypes = {
+        internalSetState: PropTypes.func
+    }
+    componentWillMount() {
+        console.log('shell will mount');
+    }
+
+    _setState = (newState) => {
+        console.log('hit _setState');
+        this.setState(newState);
+    }
+
+    render() {
+        console.log('will render!!');
+
+        return (
+            <span>
+                {this.props.children}
+            </span>
+        );
+    }
+}
+
 class Scene extends React.Component {
     constructor() {
         super();
 
         this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
         this.akkadRender = new AkkadRender();
-        this.shellComponent = <div></div>;
     }
 
     static propTypes = {
@@ -60,7 +83,7 @@ class Scene extends React.Component {
             ...this.context
         };
         if (hasScene) {
-            this.akkadRender.render(children, passedContext);
+            this.akkadRender.render(<ShellComponent>{children}</ShellComponent>, passedContext);
         }
 
     }

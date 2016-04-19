@@ -15,12 +15,12 @@ class AbstractSystemComponent extends React.Component {
     }
 
     render() {
-        return this.props.children ? this.props.children : null;
-        // return this.props.children ? (
-        //     <div>
-        //         {this.props.children}
-        //     </div>
-        // ) : null;
+        // return this.props.children ? this.props.children : null;
+        return this.props.children ? (
+            <div>
+                {this.props.children}
+            </div>
+        ) : null;
     }
 }
 
