@@ -7,19 +7,22 @@ import React, {PropTypes} from "react";
 class PropsToContext extends React.Component {
     static propTypes = {
         actions: PropTypes.object,
-        appState: PropTypes.object
+        appState: PropTypes.object,
+        setStateDoneTunnel: PropTypes.func
     }
 
     static childContextTypes = {
         actions: PropTypes.object,
-        appState: PropTypes.object
+        appState: PropTypes.object,
+        setStateDoneTunnel: PropTypes.func
     }
 
     getChildContext() {
-        const {actions, appState} = this.props;
+        const {actions, appState, setStateDoneTunnel} = this.props;
         return {
             actions,
-            appState
+            appState,
+            setStateDoneTunnel
         };
     }
 

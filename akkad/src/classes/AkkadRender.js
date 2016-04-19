@@ -10,6 +10,16 @@ class DummyComponent extends React.Component {
     }
 }
 
+function isFunction(possibleFunc) {
+    return possibleFunc instanceof Function;
+}
+
+function getNextContext(child, nextContext) {
+    return child && isFunction(child.getChildContext)
+                        ? {...nextContext, ...child.getChildContext()}
+                        : nextContext;
+}
+
 function createTree(children, nextContext) {
     if (!children) return null;
 
@@ -17,55 +27,83 @@ function createTree(children, nextContext) {
         return children.map(c => createTree(c, nextContext));
     }
 
-    const child = children.type instanceof Function
+    const child = isFunction(children.type)
                         ? new children.type(children.props, nextContext)
                         : children;
 
+    const newContext = getNextContext(child, nextContext);
+
     const renderedResult = child.render
                                 ? child.render()
-                                : new DummyComponent(child.props, nextContext);
+                                : new DummyComponent(child.props, newContext);
 
     return {
         child,
-        children: createTree(renderedResult, nextContext)
+        children: createTree(renderedResult, newContext)
     };
 }
 
 function mountComponents(componentTree) {
+    if (Array.isArray(componentTree)) componentTree.map(mountComponents);
 
-    if (Array.isArray(componentTree)) {
-        componentTree.map(mountComponents);
-    }
     const {child, children} = componentTree;
-    console.log('child', componentTree);
-    if (child && child.componentWillMount instanceof Function) {
+
+    if (child && isFunction(child.componentWillMount)) {
         child.componentWillMount(/*need to add nextProps, nextState, and nextContext */);
     }
 
     if (children) {
         mountComponents(children);
     }
+
+    if (child && isFunction(child.componentDidMount)) {
+        child.componentDidMount(/*need to add nextProps, nextState, and nextContext */);
+    }
+}
+
+// function diffTrees(oldTree, newTree) {
+//     // how do I do this...
+//     console.log('diffTrees');
+//     console.log(oldTree, newTree);
+// }
+
+function renderTree(treeObj, nextContext) {
+    console.log('renderTree!', treeObj, nextContext);
+    if (!treeObj) return null;
+    if (Array.isArray(treeObj)) return treeObj.map((child)=> renderTree(child, nextContext));
+
+    const {child, children} = treeObj;
+    const newContext = getNextContext(child, nextContext);
+    const newChildren = child && isFunction(child.render)
+                            ? createTree(child.render())
+                            : new DummyComponent(child.props, newContext);
+
+    console.log('newChildren');
+    console.log(children, newChildren);
+    return {
+        child,
+        children
+    };
+
+
 }
 
 class AkkadRender {
     _children = null;
+    _componentTree = null;
 
     render(newChildren, newContext) {
         // If this is the first run.
         if (Object.is(this._children, null)) {
-            console.log('first render', newChildren, newContext);
-            // ImmutableChildren.map(child => child.componentWillMount && child.componentWillMount());
-            // ImmutableChildren.map(child => child.render && child.render());
-            console.time('createTree');
             const componentTree = createTree(newChildren, newContext);
             mountComponents(componentTree);
-            console.timeEnd('createTree');
-            console.log("componentTree", componentTree);
             this._children = newChildren;
+            this._componentTree = componentTree;
+            console.log(componentTree);
             return;
         }
-
-        createTree(newChildren, newContext);
+        renderTree(this._componentTree, newContext);
+        // diffTrees(this._oldComponentTree, componentTree);
 
         // save children to compare with on next render cycle.
         this._children = newChildren;

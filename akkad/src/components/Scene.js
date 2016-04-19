@@ -8,6 +8,7 @@ class Scene extends React.Component {
 
         this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
         this.akkadRender = new AkkadRender();
+        this.shellComponent = <div></div>;
     }
 
     static propTypes = {
@@ -16,7 +17,8 @@ class Scene extends React.Component {
 
     static contextTypes = {
         appState: PropTypes.object,
-        actions: PropTypes.object
+        actions: PropTypes.object,
+        setStateDoneTunnel: PropTypes.func
     }
 
     static childContextTypes = {
@@ -29,6 +31,10 @@ class Scene extends React.Component {
             sceneID: this.id,
             entityID: this.id
         };
+    }
+
+    componentWillMount() {
+        this.context.setStateDoneTunnel(this.callAkkadRender);
     }
 
     componentDidMount() {
@@ -44,23 +50,34 @@ class Scene extends React.Component {
         disposeScene(this.id);
     }
 
-    render() {
+    callAkkadRender = () => {
         const {appState} = this.context;
-        const {styles, children} = this.props;
+        const {children} = this.props;
         const hasScene = appState.hasIn(["entities", this.id]);
-
-        // Note: because every scene will need a camera and light,
-        //       I'll make the assumption that this will be always be an array.
-        console.log('scene context', this.context);
         const passedContext = {
             sceneID: this.id,
             entityID: this.id,
             ...this.context
         };
-
         if (hasScene) {
             this.akkadRender.render(children, passedContext);
         }
+
+    }
+
+    render() {
+        // const {appState} = this.context;
+        const {styles} = this.props;
+        // const hasScene = appState.hasIn(["entities", this.id]);
+
+        // Note: because every scene will need a camera and light,
+        //       I'll make the assumption that this will be always be an array.
+        console.log('scene context', this.context);
+
+
+        // if (hasScene) {
+        //     this.akkadRender.render(children, passedContext);
+        // }
 
         return (
             <div>

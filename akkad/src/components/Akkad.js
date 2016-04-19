@@ -1,7 +1,7 @@
 import React, {PropTypes} from "react";
 import Immutable from "immutable";
 import _actions from "../actions";
-import {StateManager} from "../classes";
+import {StateManager, AkkadRender} from "../classes";
 import PropsToContext from "./PropsToContext";
 
 
@@ -11,6 +11,7 @@ class Akkad extends React.Component {
         super();
 
         this.stateManager = new StateManager();
+        this.akkadRender = new AkkadRender();
     }
     static propTypes = {
         canvasNode: PropTypes.object,
@@ -28,12 +29,18 @@ class Akkad extends React.Component {
         this.stateManager.init(
             actions, // actions object
             () => Immutable.fromJS(this.props.initState || {}), // init function
-            (appState, actions) => this.setState({appState, actions}) // called after action is returned.
+            (appState, actions) => this.setState({appState, actions},() => this.setStateCallback(appState, actions)) // called after action is returned.
         );
+    }
+    setStateCallback = () => {
+        this.cb && this.cb();
+    }
+
+    setStateDoneTunnel = (cb) => {
+        this.cb = cb;
     }
 
     render() {
-        console.log('render Akkad');
         const {stateManager} = this;
         const {children} = this.props;
 
@@ -41,6 +48,7 @@ class Akkad extends React.Component {
             <PropsToContext
                 actions={stateManager.actions}
                 appState={stateManager.appState}
+                setStateDoneTunnel={this.setStateDoneTunnel}
             >
                 {children}
             </PropsToContext>

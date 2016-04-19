@@ -4923,8 +4923,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Scene).call(this));
 
+	        _this.callAkkadRender = function () {
+	            var appState = _this.context.appState;
+	            var children = _this.props.children;
+
+	            var hasScene = appState.hasIn(["entities", _this.id]);
+	            var passedContext = (0, _extends3.default)({
+	                sceneID: _this.id,
+	                entityID: _this.id
+	            }, _this.context);
+	            if (hasScene) {
+	                _this.akkadRender.render(children, passedContext);
+	            }
+	        };
+
 	        _this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
 	        _this.akkadRender = new _classes.AkkadRender();
+	        _this.shellComponent = _react2.default.createElement("div", null);
 	        return _this;
 	    }
 
@@ -4936,6 +4951,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                sceneID: this.id,
 	                entityID: this.id
 	            };
+	        }
+	    }, {
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            this.context.setStateDoneTunnel(this.callAkkadRender);
 	        }
 	    }, {
 	        key: "componentDidMount",
@@ -4957,24 +4977,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var appState = this.context.appState;
-	            var _props = this.props;
-	            var styles = _props.styles;
-	            var children = _props.children;
-
-	            var hasScene = appState.hasIn(["entities", this.id]);
+	            // const {appState} = this.context;
+	            var styles = this.props.styles;
+	            // const hasScene = appState.hasIn(["entities", this.id]);
 
 	            // Note: because every scene will need a camera and light,
 	            //       I'll make the assumption that this will be always be an array.
-	            console.log('scene context', this.context);
-	            var passedContext = (0, _extends3.default)({
-	                sceneID: this.id,
-	                entityID: this.id
-	            }, this.context);
 
-	            if (hasScene) {
-	                this.akkadRender.render(children, passedContext);
-	            }
+	            console.log('scene context', this.context);
+
+	            // if (hasScene) {
+	            //     this.akkadRender.render(children, passedContext);
+	            // }
 
 	            return _react2.default.createElement(
 	                "div",
@@ -4997,7 +5011,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	Scene.contextTypes = {
 	    appState: _react.PropTypes.object,
-	    actions: _react.PropTypes.object
+	    actions: _react.PropTypes.object,
+	    setStateDoneTunnel: _react.PropTypes.func
 	};
 	Scene.childContextTypes = {
 	    sceneID: _react.PropTypes.string,
@@ -5321,6 +5336,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _is2 = _interopRequireDefault(_is);
 
+	var _extends2 = __webpack_require__(2);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
 	var _getPrototypeOf = __webpack_require__(46);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -5365,6 +5384,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react2.default.Component); // import Immutable from 'immutable';
 
 
+	function isFunction(possibleFunc) {
+	    return possibleFunc instanceof Function;
+	}
+
+	function getNextContext(child, nextContext) {
+	    return child && isFunction(child.getChildContext) ? (0, _extends3.default)({}, nextContext, child.getChildContext()) : nextContext;
+	}
+
 	function createTree(children, nextContext) {
 	    if (!children) return null;
 
@@ -5374,38 +5401,70 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    }
 
-	    var child = children.type instanceof Function ? new children.type(children.props, nextContext) : children;
+	    var child = isFunction(children.type) ? new children.type(children.props, nextContext) : children;
 
-	    var renderedResult = child.render ? child.render() : new DummyComponent(child.props, nextContext);
+	    var newContext = getNextContext(child, nextContext);
+
+	    var renderedResult = child.render ? child.render() : new DummyComponent(child.props, newContext);
 
 	    return {
 	        child: child,
-	        children: createTree(renderedResult, nextContext)
+	        children: createTree(renderedResult, newContext)
 	    };
 	}
 
 	function mountComponents(componentTree) {
+	    if (Array.isArray(componentTree)) componentTree.map(mountComponents);
 
-	    if (Array.isArray(componentTree)) {
-	        componentTree.map(mountComponents);
-	    }
 	    var child = componentTree.child;
 	    var children = componentTree.children;
 
-	    console.log('child', componentTree);
-	    if (child && child.componentWillMount instanceof Function) {
+
+	    if (child && isFunction(child.componentWillMount)) {
 	        child.componentWillMount();
 	    }
 
 	    /*need to add nextProps, nextState, and nextContext */if (children) {
 	        mountComponents(children);
 	    }
+
+	    if (child && isFunction(child.componentDidMount)) {
+	        child.componentDidMount();
+	    }
+	}
+
+	// function diffTrees(oldTree, newTree) {
+	//     // how do I do this...
+	//     console.log('diffTrees');
+	//     console.log(oldTree, newTree);
+	// }
+
+	/*need to add nextProps, nextState, and nextContext */function renderTree(treeObj, nextContext) {
+	    console.log('renderTree!', treeObj, nextContext);
+	    if (!treeObj) return null;
+	    if (Array.isArray(treeObj)) return treeObj.map(function (child) {
+	        return renderTree(child, nextContext);
+	    });
+
+	    var child = treeObj.child;
+	    var children = treeObj.children;
+
+	    var newContext = getNextContext(child, nextContext);
+	    var newChildren = child && isFunction(child.render) ? createTree(child.render()) : new DummyComponent(child.props, newContext);
+
+	    console.log('newChildren');
+	    console.log(children, newChildren);
+	    return {
+	        child: child,
+	        children: children
+	    };
 	}
 
 	var AkkadRender = function () {
 	    function AkkadRender() {
 	        (0, _classCallCheck3.default)(this, AkkadRender);
 	        this._children = null;
+	        this._componentTree = null;
 	    }
 
 	    (0, _createClass3.default)(AkkadRender, [{
@@ -5413,19 +5472,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render(newChildren, newContext) {
 	            // If this is the first run.
 	            if ((0, _is2.default)(this._children, null)) {
-	                console.log('first render', newChildren, newContext);
-	                // ImmutableChildren.map(child => child.componentWillMount && child.componentWillMount());
-	                // ImmutableChildren.map(child => child.render && child.render());
-	                console.time('createTree');
 	                var componentTree = createTree(newChildren, newContext);
 	                mountComponents(componentTree);
-	                console.timeEnd('createTree');
-	                console.log("componentTree", componentTree);
 	                this._children = newChildren;
+	                this._componentTree = componentTree;
+	                console.log(componentTree);
 	                return;
 	            }
-
-	            createTree(newChildren, newContext);
+	            renderTree(this._componentTree, newContext);
+	            // diffTrees(this._oldComponentTree, componentTree);
 
 	            // save children to compare with on next render cycle.
 	            this._children = newChildren;
@@ -5615,7 +5670,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Akkad).call(this));
 
+	        _this.setStateCallback = function () {
+	            _this.cb && _this.cb();
+	        };
+
+	        _this.setStateDoneTunnel = function (cb) {
+	            _this.cb = cb;
+	        };
+
 	        _this.stateManager = new _classes.StateManager();
+	        _this.akkadRender = new _classes.AkkadRender();
 	        return _this;
 	    }
 
@@ -5633,14 +5697,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _immutable2.default.fromJS(_this2.props.initState || {});
 	            }, // init function
 	            function (appState, actions) {
-	                return _this2.setState({ appState: appState, actions: actions });
+	                return _this2.setState({ appState: appState, actions: actions }, function () {
+	                    return _this2.setStateCallback(appState, actions);
+	                });
 	            } // called after action is returned.
 	            );
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            console.log('render Akkad');
 	            var stateManager = this.stateManager;
 	            var children = this.props.children;
 
@@ -5649,7 +5714,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _PropsToContext2.default,
 	                {
 	                    actions: stateManager.actions,
-	                    appState: stateManager.appState
+	                    appState: stateManager.appState,
+	                    setStateDoneTunnel: this.setStateDoneTunnel
 	                },
 	                children
 	            );
@@ -5688,31 +5754,31 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _CameraActions2 = _interopRequireDefault(_CameraActions);
 
-	var _LightActions = __webpack_require__(152);
+	var _LightActions = __webpack_require__(167);
 
 	var _LightActions2 = _interopRequireDefault(_LightActions);
 
-	var _SceneActions = __webpack_require__(153);
+	var _SceneActions = __webpack_require__(168);
 
 	var _SceneActions2 = _interopRequireDefault(_SceneActions);
 
-	var _ShapeActions = __webpack_require__(154);
+	var _ShapeActions = __webpack_require__(169);
 
 	var _ShapeActions2 = _interopRequireDefault(_ShapeActions);
 
-	var _MaterialActions = __webpack_require__(155);
+	var _MaterialActions = __webpack_require__(170);
 
 	var _MaterialActions2 = _interopRequireDefault(_MaterialActions);
 
-	var _AnimationActions = __webpack_require__(156);
+	var _AnimationActions = __webpack_require__(171);
 
 	var _AnimationActions2 = _interopRequireDefault(_AnimationActions);
 
-	var _TriggerActions = __webpack_require__(157);
+	var _TriggerActions = __webpack_require__(172);
 
 	var _TriggerActions2 = _interopRequireDefault(_TriggerActions);
 
-	var _MeshActions = __webpack_require__(158);
+	var _MeshActions = __webpack_require__(173);
 
 	var _MeshActions2 = _interopRequireDefault(_MeshActions);
 
@@ -5748,10 +5814,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _regenerator = __webpack_require__(159);
-
-	var _regenerator2 = _interopRequireDefault(_regenerator);
 
 	var _toConsumableArray2 = __webpack_require__(114);
 
@@ -5815,594 +5877,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports.default = {
-	    setCamera: _regenerator2.default.mark(function setCamera(state, actions, sceneID, entityID, config) {
-	        var canvas, scene, camera, cameraObj;
-	        return _regenerator2.default.wrap(function setCamera$(_context) {
-	            while (1) {
-	                switch (_context.prev = _context.next) {
-	                    case 0:
-	                        canvas = state().getIn(["entities", "canvas-" + sceneID, "entity"]);
-	                        scene = state().getIn(["entities", sceneID, "entity"]);
-	                        camera = cameraCreators[config.type](entityID, config, scene);
+	    setCamera: function setCamera(state, actions, sceneID, entityID, config) {
+	        var canvas = state().getIn(["entities", "canvas-" + sceneID, "entity"]);
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
 
+	        var camera = cameraCreators[config.type](entityID, config, scene);
 
-	                        camera.attachControl(canvas, false);
+	        camera.attachControl(canvas, false);
 
-	                        cameraObj = _immutable2.default.Map({
-	                            id: entityID,
-	                            entity: camera,
-	                            type: "camera"
-	                        });
-
-	                        console.log('set Camera!!');
-	                        _context.next = 8;
-	                        return state().setIn(["entities", entityID], cameraObj);
-
-	                    case 8:
-	                    case "end":
-	                        return _context.stop();
-	                }
-	            }
-	        }, setCamera, this);
-	    })
+	        var cameraObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: camera,
+	            type: "camera"
+	        });
+	        console.log('set Camera!!');
+	        return state().setIn(["entities", entityID], cameraObj);
+	    }
 	};
 
 /***/ },
 /* 152 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _toConsumableArray2 = __webpack_require__(114);
-
-	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var lightCreators = {
-	    hemispheric: function hemispheric(scene, entityID, props) {
-	        var _props$direction = props.direction;
-	        var direction = _props$direction === undefined ? [0, 1, 0] : _props$direction;
-
-
-	        return new _babylonjs2.default.HemisphericLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(direction))))(), scene);
-	    },
-	    point: function point(scene, entityID, props) {
-	        var _props$source = props.source;
-	        var source = _props$source === undefined ? [1, 10, 1] : _props$source;
-
-
-	        return new _babylonjs2.default.PointLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(source))))(), scene);
-	    },
-	    spot: function spot(scene, entityID, props) {
-	        var _props$position = props.position;
-	        var position = _props$position === undefined ? [0, 30, -10] : _props$position;
-	        var _props$direction2 = props.direction;
-	        var direction = _props$direction2 === undefined ? [0, -1, 0] : _props$direction2;
-	        var _props$angle = props.angle;
-	        var angle = _props$angle === undefined ? 0.8 : _props$angle;
-	        var _props$exponent = props.exponent;
-	        var exponent = _props$exponent === undefined ? 2 : _props$exponent;
-
-
-	        var spotLight = new _babylonjs2.default.SpotLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(position))))(), new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(direction))))(), angle, exponent, scene);
-
-	        return spotLight;
-	    },
-	    directional: function directional(scene, entityID, props) {
-	        var _props$direction3 = props.direction;
-	        var direction = _props$direction3 === undefined ? [0, -1, 0] : _props$direction3;
-
-
-	        return new _babylonjs2.default.DirectionalLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(direction))))(), scene);
-	    }
-	};
-
-	exports.default = {
-	    createLight: function createLight(state, actions, sceneID, entityID, props) {
-	        var type = props.type;
-
-	        var scene = state().getIn(["entities", sceneID, "entity"]);
-	        var light = lightCreators[type](scene, entityID, props);
-
-	        var lightObj = _immutable2.default.Map({
-	            id: entityID,
-	            entity: light,
-	            type: "light"
-	        });
-
-	        return state().setIn(["entities", entityID], lightObj);
-	    }
-	};
-
-/***/ },
-/* 153 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	    setScene: function setScene(state, actions, sceneID, canvas) {
-	        var canvasID = "canvas-" + sceneID;
-	        var engineID = "engine-" + sceneID;
-
-	        var engine = new _babylonjs2.default.Engine(canvas, true);
-	        var scene = new _babylonjs2.default.Scene(engine);
-
-	        var newState = state().setIn(["entities", canvasID], _immutable2.default.Map({
-	            id: canvasID,
-	            entity: canvas,
-	            type: "canvas"
-	        })).setIn(["entities", engineID], _immutable2.default.Map({
-	            id: engineID,
-	            entity: engine,
-	            type: "engine"
-	        })).setIn(["entities", sceneID], _immutable2.default.Map({
-	            id: sceneID,
-	            entity: scene,
-	            type: "scene"
-	        }));
-
-	        engine.runRenderLoop(function () {
-	            scene.render();
-	        });
-
-	        return newState;
-	    },
-	    disposeScene: function disposeScene(state, actions, sceneID) {
-	        var scene = state().getIn(["entities", sceneID, "entity"]);
-	        var engine = state().getIn(["entities", "engine-" + sceneID, "entity"]);
-
-	        scene.dispose();
-
-	        engine.stopRenderLoop();
-
-	        return state().deleteIn(["entities", sceneID]).deleteIn(["entities", "canvas-" + sceneID]).deleteIn(["entities", "engine-" + sceneID]);
-	    }
-	};
-
-/***/ },
-/* 154 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	var _Helpers = __webpack_require__(126);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var shapeCreators = {
-	    box: function box(scene, entityID, options) {
-	        var size = options.size;
-
-	        return new _babylonjs.Mesh.CreateBox(entityID, size, scene);
-	    },
-	    sphere: function sphere(scene, entityID, options) {
-	        var segments = options.segments;
-	        var diameter = options.diameter;
-
-	        return new _babylonjs.Mesh.CreateSphere(entityID, segments, diameter, scene);
-	    },
-	    ground: function ground(scene, entityID, options) {
-	        var width = options.width;
-	        var height = options.height;
-	        var subdivisions = options.subdivisions;
-
-	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene);
-	    },
-	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options, callback) {
-	        var heightMap = options.heightMap;
-	        var meshWidth = options.meshWidth;
-	        var meshHeight = options.meshHeight;
-	        var _options$subdivisions = options.subdivisions;
-	        var subdivisions = _options$subdivisions === undefined ? 250 : _options$subdivisions;
-	        var minHeight = options.minHeight;
-	        var maxHeight = options.maxHeight;
-
-
-	        return new _babylonjs.Mesh.CreateGroundFromHeightMap(entityID, heightMap, meshWidth, meshHeight, subdivisions, minHeight, maxHeight, scene, true, // updatable
-	        callback);
-	    },
-	    disc: function disc(scene, entityID, options) {
-	        var radius = options.radius;
-	        var tessellation = options.tessellation;
-	        var _options$updatable = options.updatable;
-	        var updatable = _options$updatable === undefined ? true : _options$updatable;
-	        var _options$sideOrientat = options.sideOrientation;
-	        var sideOrientation = _options$sideOrientat === undefined ? null : _options$sideOrientat;
-
-
-	        return new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
-	    },
-	    cylinder: function cylinder(scene, entityID, options) {
-	        var _options$height = options.height;
-	        var height = _options$height === undefined ? 1 : _options$height;
-	        var _options$diameterTop = options.diameterTop;
-	        var diameterTop = _options$diameterTop === undefined ? 1 : _options$diameterTop;
-	        var _options$diameterBott = options.diameterBottom;
-	        var diameterBottom = _options$diameterBott === undefined ? 1 : _options$diameterBott;
-	        var _options$tessellation = options.tessellation;
-	        var tessellation = _options$tessellation === undefined ? 30 : _options$tessellation;
-	        var _options$subdivisions2 = options.subdivisions;
-	        var subdivisions = _options$subdivisions2 === undefined ? 6 : _options$subdivisions2;
-	        var _options$updatable2 = options.updatable;
-	        var updatable = _options$updatable2 === undefined ? true : _options$updatable2;
-
-
-	        return new _babylonjs.Mesh.CreateCylinder(entityID, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable);
-	    },
-	    torus: function torus(scene, entityID, options) {
-	        var _options$diameter = options.diameter;
-	        var diameter = _options$diameter === undefined ? 1 : _options$diameter;
-	        var _options$thickness = options.thickness;
-	        var thickness = _options$thickness === undefined ? 1 : _options$thickness;
-	        var _options$tessellation2 = options.tessellation;
-	        var tessellation = _options$tessellation2 === undefined ? 10 : _options$tessellation2;
-	        var _options$updatable3 = options.updatable;
-	        var updatable = _options$updatable3 === undefined ? true : _options$updatable3;
-	        var _options$sideOrientat2 = options.sideOrientation;
-	        var sideOrientation = _options$sideOrientat2 === undefined ? 0 : _options$sideOrientat2;
-
-
-	        return new _babylonjs.Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
-	    },
-	    lines: function lines(scene, entityID, options) {
-	        var vectors = options.vectors;
-
-
-	        return new _babylonjs.Mesh.CreateLines(entityID, vectors, scene);
-	    },
-	    dashedLines: function dashedLines(scene, entityID, options) {
-	        var vectors = options.vectors;
-	        var dashSize = options.dashSize;
-	        var gapSize = options.gapSize;
-	        var dashNumber = options.dashNumber;
-
-
-	        return new _babylonjs.Mesh.CreateDashedLines(entityID, vectors, dashSize, gapSize, dashNumber, scene);
-	    }
-	};
-
-	var ShapeActions = {
-	    createShape: function createShape(state, actions, sceneID, entityID, props) {
-	        var type = props.type;
-
-
-	        if (type && shapeCreators[type]) {
-	            var scene = state().getIn(["entities", sceneID, "entity"]);
-	            var options = (0, _Helpers.convertShapeProps)(props);
-	            var shape = shapeCreators[type](scene, entityID, options, function () {/*action callback goes here.*/});
-
-	            var meshObj = _immutable2.default.Map({
-	                id: entityID,
-	                entity: shape,
-	                type: "mesh"
-	            });
-
-	            return state().setIn(["entities", entityID], meshObj);
-	        }
-
-	        return state();
-	    }
-	};
-
-	exports.default = ShapeActions;
-
-/***/ },
-/* 155 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var MaterialActions = {
-	    createMaterial: function createMaterial(state, actions, sceneID, entityID) {
-	        var scene = state().getIn(["entities", sceneID, "entity"]);
-
-	        var material = new _babylonjs2.default.StandardMaterial(entityID, scene);
-
-	        var materialObj = _immutable2.default.Map({
-	            id: entityID,
-	            entity: material,
-	            type: "material"
-	        });
-
-	        return state().setIn(["entities", entityID], materialObj);
-	    }
-	};
-
-	exports.default = MaterialActions;
-
-/***/ },
-/* 156 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _babylonjs2 = _interopRequireDefault(_babylonjs);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var valueTypeMap = {
-	    float: _babylonjs2.default.Animation.ANIMATIONTYPE_FLOAT,
-	    vector2: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR2,
-	    vector3: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR3,
-	    quaternion: _babylonjs2.default.Animation.ANIMATIONTYPE_QUATERNION,
-	    matrix: _babylonjs2.default.Animation.ANIMATIONTYPE_MATRIX,
-	    color: _babylonjs2.default.Animation.ANIMATIONTYPE_COLOR3
-	};
-
-	var loopModeMap = {
-	    relative: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_RELATIVE,
-	    cycle: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CYCLE,
-	    constant: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CONSTANT
-	};
-
-	var AnimationActions = {
-	    createAnimation: function createAnimation(state, actions, config) {
-	        var entityID = config.entityID;
-	        var meshProperty = config.meshProperty;
-	        var valueType = config.valueType;
-	        var loopMode = config.loopMode;
-	        var _config$fps = config.fps;
-	        var fps = _config$fps === undefined ? 30 : _config$fps;
-
-
-	        var animation = new _babylonjs2.default.Animation(entityID, // name
-	        meshProperty, // property type to animate
-	        fps, // fps
-	        valueTypeMap[valueType], // value type of animation
-	        loopModeMap[loopMode] // loop mode
-	        );
-
-	        var animationObj = _immutable2.default.Map({
-	            id: entityID,
-	            entity: animation,
-	            type: "animation"
-	        });
-
-	        return state().setIn(["entities", entityID], animationObj);
-	    }
-	};
-
-	exports.default = AnimationActions;
-
-/***/ },
-/* 157 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var triggerHandlers = {
-	    onClick: function onClick() {
-	        return _babylonjs.ActionManager.OnPickTrigger;
-	    },
-	    onLeftClick: function onLeftClick() {
-	        return _babylonjs.ActionManager.OnLeftPickTrigger;
-	    },
-	    onRightClick: function onRightClick() {
-	        return _babylonjs.ActionManager.OnRightPickTrigger;
-	    }, // need to disable menu pop up...
-	    onMouseOver: function onMouseOver() {
-	        return _babylonjs.ActionManager.OnPointerOverTrigger;
-	    },
-	    onMouseOut: function onMouseOut() {
-	        return _babylonjs.ActionManager.OnPointerOutTrigger;
-	    },
-	    onKeyDown: function onKeyDown() {
-	        return _babylonjs.ActionManager.OnKeyDownTrigger;
-	    },
-	    onKeyUp: function onKeyUp() {
-	        return _babylonjs.ActionManager.OnKeyUpTrigger;
-	    }
-	};
-
-	var TriggerActions = {
-	    createTriggers: function createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
-	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
-
-	        /* Create an Action Manager on Mesh if it doesn't already exist */
-	        if (!mesh.actionManager) {
-	            var scene = state().getIn(["entities", sceneID, "entity"]);
-	            mesh.actionManager = new _babylonjs.ActionManager(scene);
-	        }
-
-	        console.log("actionManager", mesh.actionManager);
-
-	        _immutable2.default.Map(triggers).filter(function (func, triggerName) {
-	            return triggerHandlers[triggerName];
-	        }).map(function (func, triggerName) {
-	            var trigger = triggerHandlers[triggerName]();
-	            var injectedFunc = function injectedFunc(evt) {
-	                return func(evt, targetEntityID, entityID);
-	            };
-
-	            return _immutable2.default.Map({
-	                targetEntityID: targetEntityID,
-	                triggerName: triggerName,
-	                id: entityID,
-	                entity: new _babylonjs.ExecuteCodeAction(trigger, injectedFunc),
-	                type: "trigger"
-	            });
-	        }).forEach(function (triggerObj) {
-	            mesh.actionManager.registerAction(triggerObj.get("entity"));
-	        });
-
-	        return state();
-	    },
-
-	    /**
-	    * For now this is just deleting the action manager. In the future this might need
-	    * to remove individual triggers from a mesh/scene.
-	    */
-	    disposeTriggers: function disposeTriggers(state, actions, targetEntityID) {
-	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
-
-	        if (mesh && mesh.actionManager) {
-	            mesh.actionManager.dispose();
-	        }
-
-	        return state();
-	    }
-	};
-
-	exports.default = TriggerActions;
-
-/***/ },
-/* 158 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _regenerator = __webpack_require__(159);
-
-	var _regenerator2 = _interopRequireDefault(_regenerator);
-
-	var _asyncToGenerator2 = __webpack_require__(174);
-
-	var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-	var _promise = __webpack_require__(163);
-
-	var _promise2 = _interopRequireDefault(_promise);
-
-	var _babylonjs = __webpack_require__(124);
-
-	var _immutable = __webpack_require__(127);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _importMesh = function _importMesh(path, fileName, scene) {
-	    var progressCallback = arguments.length <= 3 || arguments[3] === undefined ? function () {} : arguments[3];
-
-
-	    return new _promise2.default(function (resolve, reject) {
-	        _babylonjs.SceneLoader.ImportMesh("", path, fileName, scene, resolve, progressCallback, reject);
-	    });
-	};
-
-	var MeshActions = {
-	    importMesh: function importMesh(state, actions, path, fileName, sceneID, entityID) {
-	        var _this = this;
-
-	        return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-	            var scene, meshes, newState;
-	            return _regenerator2.default.wrap(function _callee$(_context) {
-	                while (1) {
-	                    switch (_context.prev = _context.next) {
-	                        case 0:
-	                            scene = state().getIn(["entities", sceneID, "entity"]);
-	                            _context.next = 3;
-	                            return _importMesh(path, fileName, scene);
-
-	                        case 3:
-	                            meshes = _context.sent;
-	                            newState = state();
-
-
-	                            meshes.forEach(function (mesh) {
-	                                var meshObj = _immutable2.default.Map({
-	                                    id: entityID,
-	                                    entity: mesh,
-	                                    type: "mesh"
-	                                });
-
-	                                newState = newState.setIn(["entities", entityID], meshObj);
-	                            });
-
-	                            return _context.abrupt("return", newState);
-
-	                        case 7:
-	                        case "end":
-	                            return _context.stop();
-	                    }
-	                }
-	            }, _callee, _this);
-	        }))();
-	    }
-	};
-
-	exports.default = MeshActions;
-
-/***/ },
-/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// This method of obtaining a reference to the global object needs to be
@@ -6423,7 +5917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Force reevalutation of runtime.js.
 	g.regeneratorRuntime = undefined;
 
-	module.exports = __webpack_require__(160);
+	module.exports = __webpack_require__(153);
 
 	if (hadRuntime) {
 	  // Restore the original runtime.
@@ -6442,12 +5936,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 160 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module, process) {"use strict";
 
-	var _promise = __webpack_require__(163);
+	var _promise = __webpack_require__(156);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
@@ -7097,10 +6591,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	// object, this seems to be the most reliable technique that does not
 	// use indirect eval (which violates Content Security Policy).
 	(typeof global === "undefined" ? "undefined" : (0, _typeof3.default)(global)) === "object" ? global : (typeof window === "undefined" ? "undefined" : (0, _typeof3.default)(window)) === "object" ? window : (typeof self === "undefined" ? "undefined" : (0, _typeof3.default)(self)) === "object" ? self : undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(161)(module), __webpack_require__(162)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(154)(module), __webpack_require__(155)))
 
 /***/ },
-/* 161 */
+/* 154 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -7116,7 +6610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 162 */
+/* 155 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -7213,23 +6707,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 163 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(164), __esModule: true };
+	module.exports = { "default": __webpack_require__(157), __esModule: true };
 
 /***/ },
-/* 164 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(85);
 	__webpack_require__(59);
 	__webpack_require__(71);
-	__webpack_require__(165);
+	__webpack_require__(158);
 	module.exports = __webpack_require__(8).Promise;
 
 /***/ },
-/* 165 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7241,12 +6735,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  , isObject           = __webpack_require__(14)
 	  , anObject           = __webpack_require__(13)
 	  , aFunction          = __webpack_require__(10)
-	  , anInstance         = __webpack_require__(166)
-	  , forOf              = __webpack_require__(167)
+	  , anInstance         = __webpack_require__(159)
+	  , forOf              = __webpack_require__(160)
 	  , setProto           = __webpack_require__(90).set
-	  , speciesConstructor = __webpack_require__(168)
-	  , task               = __webpack_require__(169).set
-	  , microtask          = __webpack_require__(171)
+	  , speciesConstructor = __webpack_require__(161)
+	  , task               = __webpack_require__(162).set
+	  , microtask          = __webpack_require__(164)
 	  , PROMISE            = 'Promise'
 	  , TypeError          = global.TypeError
 	  , process            = global.process
@@ -7438,7 +6932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
 	    this._n = false;          // <- notify
 	  };
-	  Internal.prototype = __webpack_require__(172)($Promise.prototype, {
+	  Internal.prototype = __webpack_require__(165)($Promise.prototype, {
 	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
 	    then: function then(onFulfilled, onRejected){
 	      var reaction    = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -7465,7 +6959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	$export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
 	__webpack_require__(69)($Promise, PROMISE);
-	__webpack_require__(173)(PROMISE);
+	__webpack_require__(166)(PROMISE);
 	Wrapper = __webpack_require__(8)[PROMISE];
 
 	// statics
@@ -7535,7 +7029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 166 */
+/* 159 */
 /***/ function(module, exports) {
 
 	module.exports = function(it, Constructor, name, forbiddenField){
@@ -7545,7 +7039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 167 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx         = __webpack_require__(9)
@@ -7569,7 +7063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 168 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.3.20 SpeciesConstructor(O, defaultConstructor)
@@ -7582,11 +7076,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 169 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx                = __webpack_require__(9)
-	  , invoke             = __webpack_require__(170)
+	  , invoke             = __webpack_require__(163)
 	  , html               = __webpack_require__(68)
 	  , cel                = __webpack_require__(18)
 	  , global             = __webpack_require__(7)
@@ -7662,7 +7156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 170 */
+/* 163 */
 /***/ function(module, exports) {
 
 	// fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -7683,11 +7177,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 171 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(7)
-	  , macrotask = __webpack_require__(169).set
+	  , macrotask = __webpack_require__(162).set
 	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
 	  , process   = global.process
 	  , Promise   = global.Promise
@@ -7746,7 +7240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 172 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var hide = __webpack_require__(11);
@@ -7758,7 +7252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 173 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7777,6 +7271,560 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _toConsumableArray2 = __webpack_require__(114);
+
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var lightCreators = {
+	    hemispheric: function hemispheric(scene, entityID, props) {
+	        var _props$direction = props.direction;
+	        var direction = _props$direction === undefined ? [0, 1, 0] : _props$direction;
+
+
+	        return new _babylonjs2.default.HemisphericLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(direction))))(), scene);
+	    },
+	    point: function point(scene, entityID, props) {
+	        var _props$source = props.source;
+	        var source = _props$source === undefined ? [1, 10, 1] : _props$source;
+
+
+	        return new _babylonjs2.default.PointLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(source))))(), scene);
+	    },
+	    spot: function spot(scene, entityID, props) {
+	        var _props$position = props.position;
+	        var position = _props$position === undefined ? [0, 30, -10] : _props$position;
+	        var _props$direction2 = props.direction;
+	        var direction = _props$direction2 === undefined ? [0, -1, 0] : _props$direction2;
+	        var _props$angle = props.angle;
+	        var angle = _props$angle === undefined ? 0.8 : _props$angle;
+	        var _props$exponent = props.exponent;
+	        var exponent = _props$exponent === undefined ? 2 : _props$exponent;
+
+
+	        var spotLight = new _babylonjs2.default.SpotLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(position))))(), new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(direction))))(), angle, exponent, scene);
+
+	        return spotLight;
+	    },
+	    directional: function directional(scene, entityID, props) {
+	        var _props$direction3 = props.direction;
+	        var direction = _props$direction3 === undefined ? [0, -1, 0] : _props$direction3;
+
+
+	        return new _babylonjs2.default.DirectionalLight(entityID, new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(direction))))(), scene);
+	    }
+	};
+
+	exports.default = {
+	    createLight: function createLight(state, actions, sceneID, entityID, props) {
+	        var type = props.type;
+
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+	        var light = lightCreators[type](scene, entityID, props);
+
+	        var lightObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: light,
+	            type: "light"
+	        });
+
+	        return state().setIn(["entities", entityID], lightObj);
+	    }
+	};
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    setScene: function setScene(state, actions, sceneID, canvas) {
+	        var canvasID = "canvas-" + sceneID;
+	        var engineID = "engine-" + sceneID;
+
+	        var engine = new _babylonjs2.default.Engine(canvas, true);
+	        var scene = new _babylonjs2.default.Scene(engine);
+
+	        var newState = state().setIn(["entities", canvasID], _immutable2.default.Map({
+	            id: canvasID,
+	            entity: canvas,
+	            type: "canvas"
+	        })).setIn(["entities", engineID], _immutable2.default.Map({
+	            id: engineID,
+	            entity: engine,
+	            type: "engine"
+	        })).setIn(["entities", sceneID], _immutable2.default.Map({
+	            id: sceneID,
+	            entity: scene,
+	            type: "scene"
+	        }));
+
+	        engine.runRenderLoop(function () {
+	            scene.render();
+	        });
+
+	        return newState;
+	    },
+	    disposeScene: function disposeScene(state, actions, sceneID) {
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+	        var engine = state().getIn(["entities", "engine-" + sceneID, "entity"]);
+
+	        scene.dispose();
+
+	        engine.stopRenderLoop();
+
+	        return state().deleteIn(["entities", sceneID]).deleteIn(["entities", "canvas-" + sceneID]).deleteIn(["entities", "engine-" + sceneID]);
+	    }
+	};
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	var _Helpers = __webpack_require__(126);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var shapeCreators = {
+	    box: function box(scene, entityID, options) {
+	        var size = options.size;
+
+	        return new _babylonjs.Mesh.CreateBox(entityID, size, scene);
+	    },
+	    sphere: function sphere(scene, entityID, options) {
+	        var segments = options.segments;
+	        var diameter = options.diameter;
+
+	        return new _babylonjs.Mesh.CreateSphere(entityID, segments, diameter, scene);
+	    },
+	    ground: function ground(scene, entityID, options) {
+	        var width = options.width;
+	        var height = options.height;
+	        var subdivisions = options.subdivisions;
+
+	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene);
+	    },
+	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options, callback) {
+	        var heightMap = options.heightMap;
+	        var meshWidth = options.meshWidth;
+	        var meshHeight = options.meshHeight;
+	        var _options$subdivisions = options.subdivisions;
+	        var subdivisions = _options$subdivisions === undefined ? 250 : _options$subdivisions;
+	        var minHeight = options.minHeight;
+	        var maxHeight = options.maxHeight;
+
+
+	        return new _babylonjs.Mesh.CreateGroundFromHeightMap(entityID, heightMap, meshWidth, meshHeight, subdivisions, minHeight, maxHeight, scene, true, // updatable
+	        callback);
+	    },
+	    disc: function disc(scene, entityID, options) {
+	        var radius = options.radius;
+	        var tessellation = options.tessellation;
+	        var _options$updatable = options.updatable;
+	        var updatable = _options$updatable === undefined ? true : _options$updatable;
+	        var _options$sideOrientat = options.sideOrientation;
+	        var sideOrientation = _options$sideOrientat === undefined ? null : _options$sideOrientat;
+
+
+	        return new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
+	    },
+	    cylinder: function cylinder(scene, entityID, options) {
+	        var _options$height = options.height;
+	        var height = _options$height === undefined ? 1 : _options$height;
+	        var _options$diameterTop = options.diameterTop;
+	        var diameterTop = _options$diameterTop === undefined ? 1 : _options$diameterTop;
+	        var _options$diameterBott = options.diameterBottom;
+	        var diameterBottom = _options$diameterBott === undefined ? 1 : _options$diameterBott;
+	        var _options$tessellation = options.tessellation;
+	        var tessellation = _options$tessellation === undefined ? 30 : _options$tessellation;
+	        var _options$subdivisions2 = options.subdivisions;
+	        var subdivisions = _options$subdivisions2 === undefined ? 6 : _options$subdivisions2;
+	        var _options$updatable2 = options.updatable;
+	        var updatable = _options$updatable2 === undefined ? true : _options$updatable2;
+
+
+	        return new _babylonjs.Mesh.CreateCylinder(entityID, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable);
+	    },
+	    torus: function torus(scene, entityID, options) {
+	        var _options$diameter = options.diameter;
+	        var diameter = _options$diameter === undefined ? 1 : _options$diameter;
+	        var _options$thickness = options.thickness;
+	        var thickness = _options$thickness === undefined ? 1 : _options$thickness;
+	        var _options$tessellation2 = options.tessellation;
+	        var tessellation = _options$tessellation2 === undefined ? 10 : _options$tessellation2;
+	        var _options$updatable3 = options.updatable;
+	        var updatable = _options$updatable3 === undefined ? true : _options$updatable3;
+	        var _options$sideOrientat2 = options.sideOrientation;
+	        var sideOrientation = _options$sideOrientat2 === undefined ? 0 : _options$sideOrientat2;
+
+
+	        return new _babylonjs.Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
+	    },
+	    lines: function lines(scene, entityID, options) {
+	        var vectors = options.vectors;
+
+
+	        return new _babylonjs.Mesh.CreateLines(entityID, vectors, scene);
+	    },
+	    dashedLines: function dashedLines(scene, entityID, options) {
+	        var vectors = options.vectors;
+	        var dashSize = options.dashSize;
+	        var gapSize = options.gapSize;
+	        var dashNumber = options.dashNumber;
+
+
+	        return new _babylonjs.Mesh.CreateDashedLines(entityID, vectors, dashSize, gapSize, dashNumber, scene);
+	    }
+	};
+
+	var ShapeActions = {
+	    createShape: function createShape(state, actions, sceneID, entityID, props) {
+	        var type = props.type;
+
+
+	        if (type && shapeCreators[type]) {
+	            var scene = state().getIn(["entities", sceneID, "entity"]);
+	            var options = (0, _Helpers.convertShapeProps)(props);
+	            var shape = shapeCreators[type](scene, entityID, options, function () {/*action callback goes here.*/});
+
+	            var meshObj = _immutable2.default.Map({
+	                id: entityID,
+	                entity: shape,
+	                type: "mesh"
+	            });
+
+	            return state().setIn(["entities", entityID], meshObj);
+	        }
+
+	        return state();
+	    }
+	};
+
+	exports.default = ShapeActions;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var MaterialActions = {
+	    createMaterial: function createMaterial(state, actions, sceneID, entityID) {
+	        var scene = state().getIn(["entities", sceneID, "entity"]);
+
+	        var material = new _babylonjs2.default.StandardMaterial(entityID, scene);
+
+	        var materialObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: material,
+	            type: "material"
+	        });
+
+	        return state().setIn(["entities", entityID], materialObj);
+	    }
+	};
+
+	exports.default = MaterialActions;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var valueTypeMap = {
+	    float: _babylonjs2.default.Animation.ANIMATIONTYPE_FLOAT,
+	    vector2: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR2,
+	    vector3: _babylonjs2.default.Animation.ANIMATIONTYPE_VECTOR3,
+	    quaternion: _babylonjs2.default.Animation.ANIMATIONTYPE_QUATERNION,
+	    matrix: _babylonjs2.default.Animation.ANIMATIONTYPE_MATRIX,
+	    color: _babylonjs2.default.Animation.ANIMATIONTYPE_COLOR3
+	};
+
+	var loopModeMap = {
+	    relative: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_RELATIVE,
+	    cycle: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CYCLE,
+	    constant: _babylonjs2.default.Animation.ANIMATIONLOOPMODE_CONSTANT
+	};
+
+	var AnimationActions = {
+	    createAnimation: function createAnimation(state, actions, config) {
+	        var entityID = config.entityID;
+	        var meshProperty = config.meshProperty;
+	        var valueType = config.valueType;
+	        var loopMode = config.loopMode;
+	        var _config$fps = config.fps;
+	        var fps = _config$fps === undefined ? 30 : _config$fps;
+
+
+	        var animation = new _babylonjs2.default.Animation(entityID, // name
+	        meshProperty, // property type to animate
+	        fps, // fps
+	        valueTypeMap[valueType], // value type of animation
+	        loopModeMap[loopMode] // loop mode
+	        );
+
+	        var animationObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: animation,
+	            type: "animation"
+	        });
+
+	        return state().setIn(["entities", entityID], animationObj);
+	    }
+	};
+
+	exports.default = AnimationActions;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var triggerHandlers = {
+	    onClick: function onClick() {
+	        return _babylonjs.ActionManager.OnPickTrigger;
+	    },
+	    onLeftClick: function onLeftClick() {
+	        return _babylonjs.ActionManager.OnLeftPickTrigger;
+	    },
+	    onRightClick: function onRightClick() {
+	        return _babylonjs.ActionManager.OnRightPickTrigger;
+	    }, // need to disable menu pop up...
+	    onMouseOver: function onMouseOver() {
+	        return _babylonjs.ActionManager.OnPointerOverTrigger;
+	    },
+	    onMouseOut: function onMouseOut() {
+	        return _babylonjs.ActionManager.OnPointerOutTrigger;
+	    },
+	    onKeyDown: function onKeyDown() {
+	        return _babylonjs.ActionManager.OnKeyDownTrigger;
+	    },
+	    onKeyUp: function onKeyUp() {
+	        return _babylonjs.ActionManager.OnKeyUpTrigger;
+	    }
+	};
+
+	var TriggerActions = {
+	    createTriggers: function createTriggers(state, actions, sceneID, targetEntityID, entityID, triggers) {
+	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
+
+	        /* Create an Action Manager on Mesh if it doesn't already exist */
+	        if (!mesh.actionManager) {
+	            var scene = state().getIn(["entities", sceneID, "entity"]);
+	            mesh.actionManager = new _babylonjs.ActionManager(scene);
+	        }
+
+	        console.log("actionManager", mesh.actionManager);
+
+	        _immutable2.default.Map(triggers).filter(function (func, triggerName) {
+	            return triggerHandlers[triggerName];
+	        }).map(function (func, triggerName) {
+	            var trigger = triggerHandlers[triggerName]();
+	            var injectedFunc = function injectedFunc(evt) {
+	                return func(evt, targetEntityID, entityID);
+	            };
+
+	            return _immutable2.default.Map({
+	                targetEntityID: targetEntityID,
+	                triggerName: triggerName,
+	                id: entityID,
+	                entity: new _babylonjs.ExecuteCodeAction(trigger, injectedFunc),
+	                type: "trigger"
+	            });
+	        }).forEach(function (triggerObj) {
+	            mesh.actionManager.registerAction(triggerObj.get("entity"));
+	        });
+
+	        return state();
+	    },
+
+	    /**
+	    * For now this is just deleting the action manager. In the future this might need
+	    * to remove individual triggers from a mesh/scene.
+	    */
+	    disposeTriggers: function disposeTriggers(state, actions, targetEntityID) {
+	        var mesh = state().getIn(["entities", targetEntityID, "entity"]);
+
+	        if (mesh && mesh.actionManager) {
+	            mesh.actionManager.dispose();
+	        }
+
+	        return state();
+	    }
+	};
+
+	exports.default = TriggerActions;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _regenerator = __webpack_require__(152);
+
+	var _regenerator2 = _interopRequireDefault(_regenerator);
+
+	var _asyncToGenerator2 = __webpack_require__(174);
+
+	var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+	var _promise = __webpack_require__(156);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	var _babylonjs = __webpack_require__(124);
+
+	var _immutable = __webpack_require__(127);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _importMesh = function _importMesh(path, fileName, scene) {
+	    var progressCallback = arguments.length <= 3 || arguments[3] === undefined ? function () {} : arguments[3];
+
+
+	    return new _promise2.default(function (resolve, reject) {
+	        _babylonjs.SceneLoader.ImportMesh("", path, fileName, scene, resolve, progressCallback, reject);
+	    });
+	};
+
+	var MeshActions = {
+	    importMesh: function importMesh(state, actions, path, fileName, sceneID, entityID) {
+	        var _this = this;
+
+	        return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+	            var scene, meshes, newState;
+	            return _regenerator2.default.wrap(function _callee$(_context) {
+	                while (1) {
+	                    switch (_context.prev = _context.next) {
+	                        case 0:
+	                            scene = state().getIn(["entities", sceneID, "entity"]);
+	                            _context.next = 3;
+	                            return _importMesh(path, fileName, scene);
+
+	                        case 3:
+	                            meshes = _context.sent;
+	                            newState = state();
+
+
+	                            meshes.forEach(function (mesh) {
+	                                var meshObj = _immutable2.default.Map({
+	                                    id: entityID,
+	                                    entity: mesh,
+	                                    type: "mesh"
+	                                });
+
+	                                newState = newState.setIn(["entities", entityID], meshObj);
+	                            });
+
+	                            return _context.abrupt("return", newState);
+
+	                        case 7:
+	                        case "end":
+	                            return _context.stop();
+	                    }
+	                }
+	            }, _callee, _this);
+	        }))();
+	    }
+	};
+
+	exports.default = MeshActions;
+
+/***/ },
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -7784,7 +7832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.__esModule = true;
 
-	var _promise = __webpack_require__(163);
+	var _promise = __webpack_require__(156);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
@@ -7916,10 +7964,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _props = this.props;
 	            var actions = _props.actions;
 	            var appState = _props.appState;
+	            var setStateDoneTunnel = _props.setStateDoneTunnel;
 
 	            return {
 	                actions: actions,
-	                appState: appState
+	                appState: appState,
+	                setStateDoneTunnel: setStateDoneTunnel
 	            };
 	        }
 	    }, {
@@ -7937,11 +7987,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	PropsToContext.propTypes = {
 	    actions: _react.PropTypes.object,
-	    appState: _react.PropTypes.object
+	    appState: _react.PropTypes.object,
+	    setStateDoneTunnel: _react.PropTypes.func
 	};
 	PropsToContext.childContextTypes = {
 	    actions: _react.PropTypes.object,
-	    appState: _react.PropTypes.object
+	    appState: _react.PropTypes.object,
+	    setStateDoneTunnel: _react.PropTypes.func
 	};
 	exports.default = PropsToContext;
 
