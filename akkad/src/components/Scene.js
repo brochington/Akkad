@@ -17,7 +17,7 @@ class ShellComponent extends React.Component {
 
     render() {
         console.log('will render!!');
-
+        console.log(this, this.props);
         return (
             <span>
                 {this.props.children}
@@ -57,7 +57,7 @@ class Scene extends React.Component {
     }
 
     componentWillMount() {
-        this.context.setStateDoneTunnel(this.callAkkadRender);
+        // this.context.setStateDoneTunnel(this.callAkkadRender);
     }
 
     componentDidMount() {
@@ -74,28 +74,28 @@ class Scene extends React.Component {
     }
 
     callAkkadRender = () => {
-        const {appState} = this.context;
-        const {children} = this.props;
-        const hasScene = appState.hasIn(["entities", this.id]);
-        const passedContext = {
-            sceneID: this.id,
-            entityID: this.id,
-            ...this.context
-        };
-        if (hasScene) {
-            this.akkadRender.render(<ShellComponent>{children}</ShellComponent>, passedContext);
-        }
+        // const {appState} = this.context;
+        // const {children} = this.props;
+        // const hasScene = appState.hasIn(["entities", this.id]);
+        // const passedContext = {
+        //     sceneID: this.id,
+        //     entityID: this.id,
+        //     ...this.context
+        // };
+        // if (hasScene) {
+        //     this.akkadRender.render(<ShellComponent>{children}</ShellComponent>, passedContext);
+        // }
 
     }
 
     render() {
-        // const {appState} = this.context;
-        const {styles} = this.props;
-        // const hasScene = appState.hasIn(["entities", this.id]);
+        const {appState} = this.context;
+        const {styles, children} = this.props;
+        const hasScene = appState.hasIn(["entities", this.id]);
 
         // Note: because every scene will need a camera and light,
         //       I'll make the assumption that this will be always be an array.
-        console.log('scene context', this.context);
+        // console.log('scene context', this.context);
 
 
         // if (hasScene) {
@@ -111,7 +111,7 @@ class Scene extends React.Component {
                     style={styles}
                 />
                 <div>
-                    {/*{hasScene && children}*/}
+                    {hasScene && children}
                 </div>
             </div>
         );
