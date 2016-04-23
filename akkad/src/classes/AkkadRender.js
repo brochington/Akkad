@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import Immutable from 'immutable';
 // import React from 'react';
 import instantiateReactComponent from 'react/lib/instantiateReactComponent';

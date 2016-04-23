@@ -32,3 +32,6 @@ node_modules
 
 # Distro folder
 dist
+
+# jsdoc generated docs. Use "npm run docs" to generate docs.
+akkad/out

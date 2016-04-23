@@ -13,6 +13,13 @@ class Gravity extends AbstractSystemComponent {
         vector: PropTypes.arrayOf(PropTypes.number).isRequired
     }
 
+    updateGravity = (value, context) => {
+        const {appState, entityID} = context;
+        const entity = appState.getIn(["entities", entityID, "entity"]);
+
+        entity.gravity = value;
+    }
+
     shouldComponentUpdate(nextProps) {
         const newVector = nextProps.vector;
         const oldVector = this.props.vector;
@@ -26,19 +33,21 @@ class Gravity extends AbstractSystemComponent {
         return false;
     }
 
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (this.propsChanged(nextProps)){
+            const val = new Babylon.Vector3(...nextProps.vector);
+            this.updatePosition(val, nextContext);
+        }
+    }
+
     componentDidMount() {
-        const {appState, entityID} = this.context;
-        const entity = appState.getIn(["entities", entityID, "entity"]);
         const {vector} = this.props;
 
-        entity.gravity = new Babylon.Vector3(...vector);
+        this.updateGravity(new Babylon.Vector3(...vector), this.context);
     }
 
     componentWillUnmount() {
-        const {appState, entityID} = this.context;
-        const entity = appState.getIn(["entities", entityID, "entity"]);
-
-        entity.gravity = null;
+        this.updateGravity(null, this.context);
     }
 }
 
