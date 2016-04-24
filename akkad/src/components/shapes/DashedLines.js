@@ -9,7 +9,7 @@ class DashedLines extends React.Component {
         dashSize: PropTypes.number,
         gapSize: PropTypes.number,
         dashNumber: PropTypes.number
-    }
+    };
 
     render() {
         const {
@@ -22,7 +22,7 @@ class DashedLines extends React.Component {
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="dashedLines"
                     vectors={vectors}
                     dashSize={dashSize}

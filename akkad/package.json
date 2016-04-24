@@ -20,7 +20,7 @@
     "rmrf": "rm -rf ./node_modules",
     "setup:build": "npm run link && npm run build",
     "setup:watch": "npm run link && npm run watch",
-    "docs": "./node_modules/.bin/jsdoc -c conf.json"
+    "docs": "rm -rf ./out && ./node_modules/.bin/jsdoc -c conf.json"
   },
   "dependencies": {
     "babylonjs": "^2.2.0",

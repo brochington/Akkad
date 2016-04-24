@@ -10,7 +10,7 @@ class Sphere extends AkkadAbstractComponent {
         diameterX: PropTypes.number,
         diameterY: PropTypes.number,
         diameterZ: PropTypes.number
-    }
+    };
 
     componentWillMount() {
         console.log("componentWillMount, duder!!");

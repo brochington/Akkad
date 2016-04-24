@@ -2,5 +2,5 @@
     "source": {
         "include": ["src/components/shapes"]
     },
-    "plugins": ["jsdoc/babelize"]
+    "plugins": ["jsdoc/propTypes", "jsdoc/babelize"]
 }

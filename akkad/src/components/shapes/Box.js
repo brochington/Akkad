@@ -4,24 +4,27 @@ import EntityLoaded from "../EntityLoaded";
 import {RenderShape} from "../systems";
 import AkkadAbstractComponent from '../AkkadAbstractComponent';
 
-/** Class representing a Box */
+/**
+* Adds a Box to the Scene
+* @extends AkkadAbstractComponent
+*/
 class Box extends AkkadAbstractComponent {
     /**
-    * contextTypes
-    *
+    * @name contextTypes
+    * @property {object} contextTypes
+    * @property {object} contextTypes.appState
+    * @property {object} contextTypes.actions
     */
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object
-    }
+    };
 
     static propTypes = {
         height: PropTypes.number,
         width: PropTypes.number
-    }
-    /**
-    * @return {function} the render function output
-    */
+    };
+
     render() {
         const {
             size = 1,
