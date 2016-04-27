@@ -3,7 +3,10 @@ Akkad
 
 [![Join the chat at https://gitter.im/brochington/Akkad](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/brochington/Akkad?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+
 `npm install --save akkad`
+
+requires npm >= 5.0
 
 #### Docs:
 
@@ -21,7 +24,7 @@ Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to al
 ### Features
 
 - Full power of React meets WebGL and Babylon
-- Embedd multiple interactive "scenes" directly in your React based site.
+- Embed multiple interactive "scenes" directly in your React based site.
 - Uses a redux-like state cycle
 - Defined method of extention via Entities and Systems.
 
@@ -81,6 +84,7 @@ From the project root:
 $ cd akkad
 $ npm run setup:watch
 $ cd ../example
+$ npm run setup:dev // only needed the first time.
 $ npm run start:dev
 ```
 
