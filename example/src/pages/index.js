@@ -7,6 +7,7 @@ import TriggersPage from "./TriggersPage";
 import ClickTheBox from "./ClickTheBox";
 import HeightMapPage from "./HeightMapPage";
 import WebVRPage from "./WebVRPage";
+import PhysicsPage from './PhysicsPage';
 
 export default {
     Landing,
@@ -17,5 +18,6 @@ export default {
     TriggersPage,
     ClickTheBox,
     HeightMapPage,
-    WebVRPage
+    WebVRPage,
+    PhysicsPage
 };

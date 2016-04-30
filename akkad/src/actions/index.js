@@ -8,6 +8,7 @@ import animationActions from "./AnimationActions";
 import triggerActions from "./TriggerActions";
 import meshActions from "./MeshActions";
 import particlesActions from "./ParticlesActions";
+import physicsActions from './PhysicsActions';
 
 export default {
     ...appActions,
@@ -19,5 +20,6 @@ export default {
     ...animationActions,
     ...triggerActions,
     ...meshActions,
-    ...particlesActions
+    ...particlesActions,
+    ...physicsActions
 };

@@ -7,6 +7,7 @@ class AbstractSystemComponent extends React.Component {
         super(props, context);
 
         this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
+        this._propsChanged = true;
     }
 
     static abstractType = "AbstractSystemComponent";
@@ -60,7 +61,8 @@ class AbstractSystemComponent extends React.Component {
         //         break;
         //     }
         // }
-        return !_.isEqual(nextProps, this.props);
+        this._propsChanged = !_.isEqual(nextProps, this.props);
+        return this._propsChanged;
     }
     /* eslint-enable */
 

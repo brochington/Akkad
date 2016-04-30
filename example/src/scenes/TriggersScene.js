@@ -31,7 +31,6 @@ class TriggersScene extends Component {
 
     render() {
         const {testKeyDown} = this.context.actions;
-        console.log(this.context.appState.toJS());
         return (
             <div>
                 <div>

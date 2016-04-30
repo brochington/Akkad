@@ -19,6 +19,8 @@ import importGravity from "./Gravity";
 import importApplyGravity from "./ApplyGravity";
 import importCheckCollisions from "./CheckCollisions";
 import importCollisionsEnabled from "./CollisionsEnabled";
+import importPhysics from './Physics';
+import importPhysicsState from './PhysicsState';
 
 // Components mostly used internally
 import importGenericProperty from "./GenericProperty";
@@ -47,7 +49,9 @@ export default {
     CollisionsEnabled: importCollisionsEnabled,
     GenericProperty: importGenericProperty,
     SetEntityAsProperty: importSetEntityAsProperty,
-    CallMethodOnEntity: importCallMethodOnEntity
+    CallMethodOnEntity: importCallMethodOnEntity,
+    Physics: importPhysics,
+    PhysicsState: importPhysicsState
 };
 
 export const RenderShape = importRenderShape;
@@ -72,3 +76,5 @@ export const CollisionsEnable = importCollisionsEnabled;
 export const GenericProperty = importGenericProperty;
 export const SetEntityAsProperty = importSetEntityAsProperty;
 export const CallMethodOnEntity = importCallMethodOnEntity;
+export const Physics = importPhysics;
+export const PhysicsState = importPhysicsState;
