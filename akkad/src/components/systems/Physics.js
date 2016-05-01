@@ -15,10 +15,20 @@ class Physics extends AbstractSystemComponent {
 
     componentWillMount() {
         const {entityID: sceneID, actions} = this.context;
-        const {gravity, targets} = this.props;
+        const {gravity} = this.props;
 
-        actions._internal.enablePhysicsOnScene(sceneID, gravity, targets);
+        actions._internal.enablePhysicsOnScene(sceneID, gravity);
 
+    }
+
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (this.propsChanged(nextProps)){
+            const {entityID: sceneID, actions} = nextContext;
+            const {gravity} = nextProps;
+            // this.setPhysicsState(nextProps, nextContext);
+            // actions._internal.setPhysicsState(entityID, nextProps);
+            actions._internal.enablePhysicsOnScene(sceneID, gravity);
+        }
     }
 }
 

@@ -27,13 +27,13 @@ class PhysicsScene extends Component {
                 <CollisionsEnabled />
                 <Physics gravity={[0, -10, 0]} />
                 <ArcRotateCamera
-                    initialPosition={[-11, 6, -13]}
-                    target={[0, 1, 0]}
+                    position={[-14, 6, -13]}
+                    target={[0, -3, 0]}
                 />
                 <HemisphericLight />
                 <Box>
                     <CheckCollisions />
-                    <Position vector={[0, 5, 0]} />
+                    <Position vector={[0, 2, 0]} />
                     <Rotate
                         axis={[1, 1.7, 0]}
                         amount={60}

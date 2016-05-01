@@ -20,7 +20,7 @@ class HeightMapScene extends Component {
         return (
             <Scene>
                 <ArcRotateCamera
-                    initialPosition={[0, 40, -5]}
+                    position={[0, 40, -5]}
                     target={[10, 20, 5]}
                 />
                 <HemisphericLight />

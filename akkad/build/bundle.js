@@ -18475,6 +18475,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
+	var _extends2 = __webpack_require__(2);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
 	var _getPrototypeOf = __webpack_require__(46);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -18520,7 +18524,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var sceneID = _context.sceneID;
 	            var setCamera = actions._internal.setCamera;
 
-	            setCamera(sceneID, entityID, this.props);
+	            setCamera(sceneID, entityID, (0, _extends3.default)({}, this.props, { initialPosition: this.props.position }));
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            if (this.propsChanged(nextProps)) {
+	                // update the camera position here. Maybe add support for animations?
+	                var actions = nextContext.actions;
+	                var entityID = nextContext.entityID;
+
+
+	                actions._internal.updateCameraPosition(entityID, nextProps.position);
+	            }
 	        }
 
 	        //TODO: Add a componentWillUnmount() to detach camera.
@@ -18531,7 +18547,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	RenderCamera.propTypes = {
 	    target: _react.PropTypes.array,
-	    type: _react.PropTypes.string.isRequired
+	    type: _react.PropTypes.string.isRequired,
+	    position: _react.PropTypes.arrayOf(_react.PropTypes.number)
 	};
 	RenderCamera.contextTypes = {
 	    sceneID: _react.PropTypes.string.isRequired,
@@ -20730,12 +20747,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _context = this.context;
 	            var sceneID = _context.entityID;
 	            var actions = _context.actions;
-	            var _props = this.props;
-	            var gravity = _props.gravity;
-	            var targets = _props.targets;
+	            var gravity = this.props.gravity;
 
 
-	            actions._internal.enablePhysicsOnScene(sceneID, gravity, targets);
+	            actions._internal.enablePhysicsOnScene(sceneID, gravity);
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            if (this.propsChanged(nextProps)) {
+	                var sceneID = nextContext.entityID;
+	                var actions = nextContext.actions;
+	                var gravity = nextProps.gravity;
+	                // this.setPhysicsState(nextProps, nextContext);
+	                // actions._internal.setPhysicsState(entityID, nextProps);
+
+	                actions._internal.enablePhysicsOnScene(sceneID, gravity);
+	            }
 	        }
 	    }]);
 	    return Physics;
@@ -41264,13 +41292,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
+	var _Helpers = __webpack_require__(128);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var cameraCreators = {
 	    free: function free(entityID, config, scene) {
-	        var initialPosition = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.initialPosition))))();
+	        var position = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.position))))();
 
-	        var camera = new _babylonjs2.default.FreeCamera(entityID, initialPosition, scene);
+	        var camera = new _babylonjs2.default.FreeCamera(entityID, position, scene);
 
 	        if (config.target) {
 	            var target = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.target))))();
@@ -41286,23 +41316,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var beta = _config$beta === undefined ? 0 : _config$beta;
 	        var _config$radius = config.radius;
 	        var radius = _config$radius === undefined ? 0 : _config$radius;
-	        var initialPosition = config.initialPosition;
+	        var position = config.position;
 
 
 	        var target = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.target))))();
 
 	        var camera = new _babylonjs2.default.ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
 
-	        if (initialPosition) {
-	            camera.setPosition(new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(initialPosition))))());
+	        if (position) {
+	            camera.setPosition(new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(position))))());
 	        }
 
 	        return camera;
 	    },
 	    webVRFree: function webVRFree(entityID, config, scene) {
-	        var initialPosition = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.initialPosition))))();
+	        var position = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.position))))();
 
-	        var camera = new _babylonjs2.default.WebVRFreeCamera(entityID, initialPosition, scene);
+	        var camera = new _babylonjs2.default.WebVRFreeCamera(entityID, position, scene);
 
 	        if (config.target) {
 	            var target = new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(config.target))))();
@@ -41327,8 +41357,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            entity: camera,
 	            type: "camera"
 	        });
-	        console.log('set Camera!!');
+
 	        return state().setIn(["entities", entityID], cameraObj);
+	    },
+	    updateCameraPosition: function updateCameraPosition(state, actions, cameraID, position) {
+	        if ((0, _Helpers.hasEntity)(state(), cameraID)) {
+	            var camera = (0, _Helpers.getEntity)(state(), cameraID);
+
+	            camera.setPosition(new (Function.prototype.bind.apply(_babylonjs2.default.Vector3, [null].concat((0, _toConsumableArray3.default)(position))))());
+	        }
+
+	        return state();
 	    }
 	};
 
@@ -43238,7 +43277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -43247,6 +43286,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _toConsumableArray2 = __webpack_require__(116);
 
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+	var _immutable = __webpack_require__(129);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
 
 	var _Helpers = __webpack_require__(128);
 
@@ -43260,7 +43303,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//eslint-disable-line
+	// Importing here to make a global var, as needed by Babylon.
+
+
+	var shapeImposters = {
+	    box: function box() {
+	        var opts = arguments.length <= 0 || arguments[0] === undefined ? { mass: 4, friction: 0.1, restitution: 0.999 } : arguments[0];
+	        return [_babylonjs.PhysicsEngine.BoxImpostor, opts];
+	    },
+	    sphere: function sphere() {
+	        var opts = arguments.length <= 0 || arguments[0] === undefined ? { mass: 4 } : arguments[0];
+	        return [_babylonjs.PhysicsEngine.SphereImpostor, opts];
+	    },
+	    ground: function ground() {
+	        var opts = arguments.length <= 0 || arguments[0] === undefined ? { mass: 0, restitution: 0.001, friction: 0.1 } : arguments[0];
+	        return [_babylonjs.PhysicsEngine.BoxImpostor, opts];
+	    }
+	}; //eslint-disable-line
+
 
 	var physicsActions = {
 	    enablePhysicsOnScene: function enablePhysicsOnScene(state, actions, sceneID, gravity) {
@@ -43276,11 +43336,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return state();
+	    },
+	    setPhysicsState: function setPhysicsState(state, actions, entityID, opts) {
+	        if ((0, _Helpers.hasEntity)(state(), entityID)) {
+	            var entityObj = state().getIn(['entities', entityID], _immutable2.default.Map());
+	            var shapeType = entityObj.get('shape', null);
+
+	            if (shapeType && shapeImposters[shapeType]) {
+	                var _entityObj$get;
+
+	                (_entityObj$get = entityObj.get('entity')).setPhysicsState.apply(_entityObj$get, (0, _toConsumableArray3.default)(shapeImposters[shapeType](opts)));
+	            }
+	        }
+
+	        return state();
 	    }
 	};
-	// Importing here to make a global var, as needed by Babylon.
-	// import Immutable from "immutable";
-
 
 	exports.default = physicsActions;
 
@@ -53747,7 +53818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var _props = this.props;
 	            var target = _props.target;
-	            var initialPosition = _props.initialPosition;
+	            var position = _props.position;
 	            var children = _props.children;
 
 
@@ -53757,7 +53828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _react2.default.createElement(_systems.RenderCamera, {
 	                    type: "free",
 	                    target: target,
-	                    initialPosition: initialPosition
+	                    position: position
 	                }),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
@@ -53771,7 +53842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_AkkadAbstractComponent2.default);
 
 	FreeCamera.propTypes = {
-	    initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
+	    position: PropTypes.arrayOf(PropTypes.number).isRequired,
 	    target: PropTypes.arrayOf(PropTypes.number).isRequired
 	};
 	FreeCamera.contextTypes = {
@@ -53835,7 +53906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var _props = this.props;
 	            var target = _props.target;
-	            var initialPosition = _props.initialPosition;
+	            var position = _props.position;
 
 	            return _react2.default.createElement(
 	                _Entity2.default,
@@ -53843,7 +53914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _react2.default.createElement(_systems.RenderCamera, {
 	                    type: "arcRotate",
 	                    target: target,
-	                    initialPosition: initialPosition
+	                    position: position
 	                })
 	            );
 	        }
@@ -53853,7 +53924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	ArcRotateCamera.propTypes = {
 	    target: _react.PropTypes.arrayOf(_react.PropTypes.number).isRequired,
-	    initialPosition: _react.PropTypes.arrayOf(_react.PropTypes.number)
+	    position: _react.PropTypes.arrayOf(_react.PropTypes.number)
 	};
 	ArcRotateCamera.contextTypes = {
 	    appState: _react.PropTypes.object,
@@ -53926,7 +53997,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render() {
 	            var _props = this.props;
 	            var target = _props.target;
-	            var initialPosition = _props.initialPosition;
+	            var position = _props.position;
 	            var children = _props.children;
 
 
@@ -53936,7 +54007,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _react2.default.createElement(_systems.RenderCamera, {
 	                    type: "webVRFree",
 	                    target: target,
-	                    initialPosition: initialPosition
+	                    position: position
 	                }),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
@@ -53950,7 +54021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_AkkadAbstractComponent2.default);
 
 	WebVRFreeCamera.propTypes = {
-	    initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
+	    position: PropTypes.arrayOf(PropTypes.number).isRequired,
 	    target: PropTypes.arrayOf(PropTypes.number).isRequired
 	};
 	WebVRFreeCamera.contextTypes = {
@@ -54923,10 +54994,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _toConsumableArray2 = __webpack_require__(116);
-
-	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 	var _getPrototypeOf = __webpack_require__(46);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -54949,82 +55016,46 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react = __webpack_require__(94);
 
-	var _immutable = __webpack_require__(129);
-
-	var _immutable2 = _interopRequireDefault(_immutable);
-
-	var _babylonjs = __webpack_require__(126);
-
 	var _AbstractSystemComponent = __webpack_require__(99);
 
 	var _AbstractSystemComponent2 = _interopRequireDefault(_AbstractSystemComponent);
 
-	var _Helpers = __webpack_require__(128);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var shapeImposters = {
-	    box: function box() {
-	        var opts = arguments.length <= 0 || arguments[0] === undefined ? { mass: 4, friction: 0.1, restitution: 0.999 } : arguments[0];
-	        return [_babylonjs.PhysicsEngine.BoxImpostor, opts];
-	    },
-	    sphere: function sphere() {
-	        var opts = arguments.length <= 0 || arguments[0] === undefined ? { mass: 4 } : arguments[0];
-	        return [_babylonjs.PhysicsEngine.SphereImpostor, opts];
-	    },
-	    ground: function ground() {
-	        var opts = arguments.length <= 0 || arguments[0] === undefined ? { mass: 0, restitution: 0.001, friction: 0.1 } : arguments[0];
-	        return [_babylonjs.PhysicsEngine.BoxImpostor, opts];
-	    }
-	};
+	// import {hasEntity} from "../../classes/Helpers";
 
 	var PhysicsState = function (_AbstractSystemCompon) {
 	    (0, _inherits3.default)(PhysicsState, _AbstractSystemCompon);
 
 	    function PhysicsState() {
-	        var _Object$getPrototypeO;
-
-	        var _temp, _this, _ret;
-
 	        (0, _classCallCheck3.default)(this, PhysicsState);
-
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(PhysicsState)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.setPhysicsState = function (props, context) {
-	            var entityID = context.entityID;
-	            var appState = context.appState;
-
-
-	            if ((0, _Helpers.hasEntity)(appState, entityID)) {
-	                var entityObj = appState.getIn(['entities', entityID], _immutable2.default.Map());
-	                var shapeType = entityObj.get('shape', null);
-
-	                if (shapeType && shapeImposters[shapeType]) {
-	                    var _entityObj$get;
-
-	                    (_entityObj$get = entityObj.get('entity')).setPhysicsState.apply(_entityObj$get, (0, _toConsumableArray3.default)(shapeImposters[shapeType](props)));
-	                }
-	            }
-	        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(PhysicsState).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(PhysicsState, [{
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            this.setPhysicsState(this.props, this.context);
+	            var _context = this.context;
+	            var actions = _context.actions;
+	            var entityID = _context.entityID;
+
+	            actions._internal.setPhysicsState(entityID, this.props);
 	        }
 	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
 	            if (this.propsChanged(nextProps)) {
-	                this.setPhysicsState(nextProps, nextContext);
+	                var actions = nextContext.actions;
+	                var entityID = nextContext.entityID;
+
+	                actions._internal.setPhysicsState(entityID, nextProps);
 	            }
 	        }
 	    }]);
 	    return PhysicsState;
 	}(_AbstractSystemComponent2.default);
+	// import Immutable from 'immutable';
+
 
 	PhysicsState.contextTypes = {
 	    entityID: _react.PropTypes.string,

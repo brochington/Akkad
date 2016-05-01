@@ -1,14 +1,7 @@
 import {PropTypes} from "react";
-import Immutable from 'immutable';
-import {PhysicsEngine} from "babylonjs";
+// import Immutable from 'immutable';
 import AbstractSystemComponent from "../AbstractSystemComponent";
-import {hasEntity} from "../../classes/Helpers";
-
-const shapeImposters = {
-    box: (opts = {mass: 4, friction: 0.1, restitution: 0.999}) => [PhysicsEngine.BoxImpostor, opts],
-    sphere: (opts = {mass: 4}) => [PhysicsEngine.SphereImpostor, opts],
-    ground: (opts = {mass: 0, restitution: 0.001, friction: 0.1}) => [PhysicsEngine.BoxImpostor, opts]
-};
+// import {hasEntity} from "../../classes/Helpers";
 
 class PhysicsState extends AbstractSystemComponent {
     static contextTypes = {
@@ -23,26 +16,15 @@ class PhysicsState extends AbstractSystemComponent {
         restitution: PropTypes.number
     };
 
-    setPhysicsState = (props, context) => {
-        const {entityID, appState} = context;
-
-        if (hasEntity(appState, entityID)) {
-            const entityObj = appState.getIn(['entities', entityID], Immutable.Map());
-            const shapeType = entityObj.get('shape', null);
-
-            if (shapeType && shapeImposters[shapeType]) {
-                entityObj.get('entity').setPhysicsState(...shapeImposters[shapeType](props));
-            }
-        }
-    }
-
     componentDidMount() {
-        this.setPhysicsState(this.props, this.context);
+        const {actions, entityID} = this.context;
+        actions._internal.setPhysicsState(entityID, this.props);
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (this.propsChanged(nextProps)){
-            this.setPhysicsState(nextProps, nextContext);
+            const {actions, entityID} = nextContext;
+            actions._internal.setPhysicsState(entityID, nextProps);
         }
     }
 }

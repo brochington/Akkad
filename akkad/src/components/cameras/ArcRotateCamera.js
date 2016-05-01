@@ -5,7 +5,7 @@ import Entity from "../Entity";
 class ArcRotateCamera extends React.Component {
     static propTypes = {
         target: PropTypes.arrayOf(PropTypes.number).isRequired,
-        initialPosition: PropTypes.arrayOf(PropTypes.number)
+        position: PropTypes.arrayOf(PropTypes.number)
     }
 
     static contextTypes = {
@@ -14,13 +14,13 @@ class ArcRotateCamera extends React.Component {
     }
 
     render() {
-        const {target, initialPosition} = this.props;
+        const {target, position} = this.props;
         return (
             <Entity>
-                <RenderCamera 
+                <RenderCamera
                     type="arcRotate"
                     target={target}
-                    initialPosition={initialPosition}
+                    position={position}
                 />
             </Entity>
         );

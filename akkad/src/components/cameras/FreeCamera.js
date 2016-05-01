@@ -8,7 +8,7 @@ const {PropTypes} = React;
 
 class FreeCamera extends AkkadAbstractComponent {
     static propTypes = {
-        initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
+        position: PropTypes.arrayOf(PropTypes.number).isRequired,
         target: PropTypes.arrayOf(PropTypes.number).isRequired
     }
 
@@ -18,14 +18,14 @@ class FreeCamera extends AkkadAbstractComponent {
     }
 
     render() {
-        const {target, initialPosition, children} = this.props;
+        const {target, position, children} = this.props;
 
         return (
             <Entity>
-                <RenderCamera 
+                <RenderCamera
                     type="free"
                     target={target}
-                    initialPosition={initialPosition}
+                    position={position}
                 />
                 <EntityLoaded>
                     {children}
