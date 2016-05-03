@@ -7,7 +7,7 @@ class Cylinder extends React.Component {
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object
-    }
+    };
 
     static propTypes = {
         height: PropTypes.number,
@@ -15,7 +15,7 @@ class Cylinder extends React.Component {
         diameterBottom: PropTypes.number,
         tessellation: PropTypes.number,
         subdivisions: PropTypes.any
-    }
+    };
 
     render() {
         const {
@@ -29,7 +29,7 @@ class Cylinder extends React.Component {
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="cylinder"
                     heigh={height}
                     diameterTop={diameterTop}

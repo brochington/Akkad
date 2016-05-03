@@ -11,7 +11,7 @@ class Ground extends React.Component {
         subdivisions: PropTypes.number,
         minHeight: PropTypes.number,
         maxHeight: PropTypes.number
-    }
+    };
 
     render() {
         const {
@@ -26,7 +26,7 @@ class Ground extends React.Component {
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="groundFromHeightMap"
                     meshHeight={meshHeight}
                     meshWidth={meshWidth}

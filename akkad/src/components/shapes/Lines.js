@@ -6,13 +6,13 @@ import {RenderShape} from "../systems";
 class Lines extends React.Component {
     static propTypes = {
         vectors: PropTypes.arrayOf(PropTypes.array)
-    }
+    };
 
     render() {
         const {vectors = [], children} = this.props;
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="lines"
                     vectors={vectors}
                 />

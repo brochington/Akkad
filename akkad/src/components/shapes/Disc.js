@@ -7,13 +7,13 @@ class Disc extends React.Component {
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object
-    }
+    };
 
     static propTypes = {
         radius: PropTypes.number,
         tessellation: PropTypes.number,
         sideOrientation: PropTypes.number
-    }
+    };
 
     render() {
         const {
@@ -25,7 +25,7 @@ class Disc extends React.Component {
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="disc"
                     radius={radius}
                     tessellation={tessellation}

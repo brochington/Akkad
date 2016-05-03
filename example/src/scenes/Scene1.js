@@ -19,7 +19,7 @@ class Scene1 extends Component {
         return (
             <Scene>
                 <ArcRotateCamera
-                    initialPosition={[3, 4, -5]}
+                    position={[3, 4, -5]}
                     target={[0, 1, 0]}
                 />
                 <HemisphericLight />

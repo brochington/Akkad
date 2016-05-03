@@ -1,0 +1,6 @@
+{
+    "source": {
+        "include": ["src/components/shapes"]
+    },
+    "plugins": ["jsdoc/propTypes", "jsdoc/babelize"]
+}

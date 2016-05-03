@@ -5,6 +5,7 @@ import Entity from "../Entity";
 class ArcRotateCamera extends React.Component {
     static propTypes = {
         target: PropTypes.arrayOf(PropTypes.number).isRequired,
+        position: PropTypes.arrayOf(PropTypes.number),
         initialPosition: PropTypes.arrayOf(PropTypes.number)
     }
 
@@ -13,14 +14,20 @@ class ArcRotateCamera extends React.Component {
         actions: PropTypes.object
     }
 
+    componentDidMount() {
+        if (this.props.initialPosition) {
+            console.warn(`<ArcRotateCamera />: initialPosition prop is deprecated, please use "position" instead`);
+        }
+    }
+
     render() {
-        const {target, initialPosition} = this.props;
+        const {target, position} = this.props;
         return (
             <Entity>
-                <RenderCamera 
+                <RenderCamera
                     type="arcRotate"
                     target={target}
-                    initialPosition={initialPosition}
+                    position={position}
                 />
             </Entity>
         );

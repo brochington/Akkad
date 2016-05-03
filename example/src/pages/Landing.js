@@ -1,30 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from "react-router";
 import {Akkad} from "akkad";
-import triggerActions from "../actions/triggerActions";
-import Scene1 from "../scenes/Scene1";
-
-class TestComponent extends Component {
-    constructor() {
-        super();
-        this.id = Math.random() * 100000;
-    }
-    componentWillMount() {
-        console.log("componentWillMount", this.id, this.props.myID);
-    }
-
-    componentDidMount() {
-        console.log('componentDidMount', this.id, this.props.myID);
-    }
-
-    render() {
-        return (
-            <div>
-             {this.props.children}
-            </div>
-        )
-    }
-};
 
 class Landing extends Component {
     render() {
@@ -59,14 +35,14 @@ class Landing extends Component {
                     <li>
                         <Link to="/webvr">Web VR</Link>
                     </li>
+                    <li>
+                        <Link to="/physics">Physics</Link>
+                    </li>
+                    <li>
+                        <Link to="/dynamic-textures">Dynamic Textures</Link>
+                    </li>
                 </ul>
                 {children}
-                {/*<TestComponent myID="1">
-                    <TestComponent myID="2">
-                        <TestComponent myID="3"/>
-                    </TestComponent>
-                </TestComponent>
-                <TestComponent myID="4"/>*/}
             </div>
         );
     }

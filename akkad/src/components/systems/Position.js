@@ -35,7 +35,9 @@ class Position extends AbstractSystemComponent {
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        this.updatePosition(nextProps, nextContext);
+        if (this.propsChanged(nextProps)){
+            this.updatePosition(nextProps, nextContext);
+        }
     }
 
     componentWillMount() {

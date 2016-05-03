@@ -7,7 +7,7 @@ class Torus extends React.Component {
     static contextTypes = {
         appState: PropTypes.object,
         actions: PropTypes.object
-    }
+    };
 
     static propTypes = {
         diameter: PropTypes.number,
@@ -15,7 +15,7 @@ class Torus extends React.Component {
         tessellation: PropTypes.number,
         updatable: PropTypes.bool,
         sideOrientation: PropTypes.number
-    }
+    };
 
     render() {
         const {
@@ -29,7 +29,7 @@ class Torus extends React.Component {
 
         return (
             <Entity>
-                <RenderShape 
+                <RenderShape
                     type="torus"
                     diameter={diameter}
                     thickness={thickness}

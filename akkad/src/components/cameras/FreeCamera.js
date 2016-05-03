@@ -8,8 +8,9 @@ const {PropTypes} = React;
 
 class FreeCamera extends AkkadAbstractComponent {
     static propTypes = {
-        initialPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
-        target: PropTypes.arrayOf(PropTypes.number).isRequired
+        position: PropTypes.arrayOf(PropTypes.number).isRequired,
+        target: PropTypes.arrayOf(PropTypes.number).isRequired,
+        initialPosition: PropTypes.arrayOf(PropTypes.number)
     }
 
     static contextTypes = {
@@ -17,15 +18,21 @@ class FreeCamera extends AkkadAbstractComponent {
         actions: PropTypes.object
     }
 
+    componentDidMount() {
+        if (this.props.initialPosition) {
+            console.warn(`<FreeCamera />: initialPosition prop is deprecated, please use "position" instead`);
+        }
+    }
+
     render() {
-        const {target, initialPosition, children} = this.props;
+        const {target, position, children} = this.props;
 
         return (
             <Entity>
-                <RenderCamera 
+                <RenderCamera
                     type="free"
                     target={target}
-                    initialPosition={initialPosition}
+                    position={position}
                 />
                 <EntityLoaded>
                     {children}

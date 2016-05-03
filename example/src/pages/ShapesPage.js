@@ -35,7 +35,7 @@ class ShapesPage extends Component {
                         <CollisionsEnabled />
                         <Gravity vector={[0, -0.9, 0]} />
                         <FreeCamera
-                            initialPosition={[0, 0, 10]}
+                            position={[0, 0, 10]}
                             target={[0, 0, 0]}
                         >
                             <CheckCollisions />

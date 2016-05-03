@@ -17,7 +17,7 @@ class MeshPage extends Component {
                 <Akkad>
                     <Scene>
                         <ArcRotateCamera
-                            initialPosition={[0, 0, 100]}
+                            position={[0, 0, 100]}
                             target={[0, 0, 0]}
                         />
                         <HemisphericLight />

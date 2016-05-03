@@ -27,7 +27,7 @@ class App extends Component {
             <Akkad>
                 <Scene>
                     <ArcRotateCamera
-                        initialPosition={[3, 4, -5]}
+                        position={[3, 4, -5]}
                         target={[0, 1, 0]}
                     />
                     <HemisphericLight />
@@ -41,7 +41,7 @@ class App extends Component {
 export default App;
 ```
 
-Above is the Akkad version of Hello World, which will display a 3D rendered cube that can be spun around in every which way. There are a few important things to note about the components used: 
+Above is the Akkad version of Hello World, which will display a 3D rendered cube that can be spun around in every which way. There are a few important things to note about the components used:
 
 - `<Akkad>`: The "master" component. Every Akkad application starts here. If you forget it, then things won't work :\. The Akkad component sets up the application state that is used for everything contained within it. This is super cool, because you can use Scene's state with normal React DOM changes. This allows you to create things like overlays (think FPS HUD's), use a DOM text input field to change text inside of your Scene, and all kinds of cool things. Visit the Triggers Demo in the example application to see how this is done.
 
@@ -82,7 +82,7 @@ export class App extends Component {
             <Akkad>
                 <Scene>
                     <ArcRotateCamera
-                        initialPosition={[3, 4, -5]}
+                        position={[3, 4, -5]}
                         target={[0, 1, 0]}
                     />
                     <HemisphericLight />

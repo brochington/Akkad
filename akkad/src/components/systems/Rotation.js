@@ -3,11 +3,17 @@ import Babylon from "babylonjs";
 import AbstractSystemComponent from "../AbstractSystemComponent";
 import {hasEntity, getEntity} from "../../classes/Helpers";
 
-class Rotate extends AbstractSystemComponent {
+class Rotation extends AbstractSystemComponent {
     static propTypes = {
-        axis: PropTypes.arrayOf(PropTypes.number).isRequired,
-        amount: PropTypes.number.isRequired,
-        space: PropTypes.string.isRequired
+        x: PropTypes.number,
+        y: PropTypes.number,
+        z: PropTypes.number
+    }
+
+    static defaultProps = {
+        x: 0,
+        y: 0,
+        z: 0
     }
 
     static contextTypes = {
@@ -16,14 +22,11 @@ class Rotate extends AbstractSystemComponent {
         actions: PropTypes.object
     }
 
-    updateRotation = (props, context) => {
+    updateRotation = (axis, context) => {
         const {entityID, appState} = context;
-        const {amount} = props;
-        const axis = new Babylon.Vector3(...props.axis);
-        const space = Babylon.Space[props.space];
 
         if (hasEntity(appState, entityID)) {
-            getEntity(appState, entityID).rotate(axis, amount, space);
+            getEntity(appState, entityID).rotation = new Babylon.Vector3(...axis);
         }
     }
 
@@ -38,12 +41,8 @@ class Rotate extends AbstractSystemComponent {
     }
 
     componentWillUnmount() {
-        this.updateRotation({
-            axis: [0, 0, 0],
-            amount: 0,
-            space: "LOCAL"
-        }, this.context);
+        this.updateRotation({x: 0, y: 0, z: 0}, this.context);
     }
 }
 
-export default Rotate;
+export default Rotation;

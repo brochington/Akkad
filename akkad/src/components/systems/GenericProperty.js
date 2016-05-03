@@ -14,7 +14,7 @@ class GenericProperty extends AbstractSystemComponent {
         offVal: PropTypes.any
     }
 
-    shouldComponentUpdate(nextProps) {
+    valChanged = (nextProps) => {
         if (
             nextProps.onVal !== this.props.onVal ||
             nextProps.offVal !== this.props.offVal
@@ -23,6 +23,10 @@ class GenericProperty extends AbstractSystemComponent {
         }
 
         return false;
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.valChanged(nextProps);
     }
 
     updatePropertyValue = (val) => {
@@ -40,10 +44,11 @@ class GenericProperty extends AbstractSystemComponent {
         this.updatePropertyValue(onVal);
     }
 
-    componentWillUpdate() {
-        const {onVal} = this.props;
-
-        this.updatePropertyValue(onVal);
+    componentWillUpdate(nextProps) {
+        if (this.valChanged(nextProps)) {
+            const {onVal} = this.props;
+            this.updatePropertyValue(onVal);
+        }
     }
 
     componentWillUnmount() {

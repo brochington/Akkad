@@ -1,11 +1,12 @@
 import Babylon from "babylonjs";
 import Immutable from "immutable";
+import {hasEntity, getEntity} from '../classes/Helpers';
 
 const cameraCreators = {
     free(entityID, config, scene) {
-        const initialPosition = new Babylon.Vector3(...config.initialPosition);
+        const position = new Babylon.Vector3(...config.position);
 
-        const camera = new Babylon.FreeCamera(entityID, initialPosition, scene);
+        const camera = new Babylon.FreeCamera(entityID, position, scene);
 
         if(config.target) {
             const target = new Babylon.Vector3(...config.target);
@@ -20,24 +21,24 @@ const cameraCreators = {
             alpha = 0,
             beta = 0,
             radius = 0,
-            initialPosition
+            position
         } = config;
 
         const target = new Babylon.Vector3(...config.target);
 
         const camera = new Babylon.ArcRotateCamera(entityID, alpha, beta, radius, target, scene);
 
-        if (initialPosition) {
-            camera.setPosition(new Babylon.Vector3(...initialPosition));
+        if (position) {
+            camera.setPosition(new Babylon.Vector3(...position));
         }
 
         return camera;
     },
 
     webVRFree(entityID, config, scene) {
-        const initialPosition = new Babylon.Vector3(...config.initialPosition);
+        const position = new Babylon.Vector3(...config.position);
 
-        const camera = new Babylon.WebVRFreeCamera(entityID, initialPosition, scene);
+        const camera = new Babylon.WebVRFreeCamera(entityID, position, scene);
 
         if(config.target) {
             const target = new Babylon.Vector3(...config.target);
@@ -62,7 +63,17 @@ export default {
             entity: camera,
             type: "camera"
         });
-        console.log('set Camera!!');
+
         return state().setIn(["entities", entityID], cameraObj);
+    },
+
+    updateCameraPosition(state, actions, cameraID, position) {
+        if (hasEntity(state(), cameraID)) {
+            const camera = getEntity(state(), cameraID);
+
+            camera.setPosition(new Babylon.Vector3(...position));
+        }
+
+        return state();
     }
 };
