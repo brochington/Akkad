@@ -9,6 +9,7 @@ import triggerActions from "./TriggerActions";
 import meshActions from "./MeshActions";
 import particlesActions from "./ParticlesActions";
 import physicsActions from './PhysicsActions';
+import dynamicTextureActions from './DynamicTextureActions';
 
 export default {
     ...appActions,
@@ -21,5 +22,6 @@ export default {
     ...triggerActions,
     ...meshActions,
     ...particlesActions,
-    ...physicsActions
+    ...physicsActions,
+    ...dynamicTextureActions
 };

@@ -1957,7 +1957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.PhysicsState = exports.Physics = exports.CallMethodOnEntity = exports.SetEntityAsProperty = exports.GenericProperty = exports.CollisionsEnable = exports.CheckCollisions = exports.ApplyGravity = exports.Gravity = exports.Texture = exports.Color = exports.Wireframe = exports.Rotate = exports.Position = exports.AnimateMesh = exports.Mesh = exports.Trigger = exports.RenderParticles = exports.RenderMesh = exports.RenderAnimation = exports.RenderMaterial = exports.RenderCamera = exports.RenderLight = exports.RenderShape = undefined;
+	exports.DynamicTexture = exports.PhysicsState = exports.Physics = exports.CallMethodOnEntity = exports.SetEntityAsProperty = exports.GenericProperty = exports.CollisionsEnable = exports.CheckCollisions = exports.ApplyGravity = exports.Gravity = exports.Texture = exports.Color = exports.Wireframe = exports.Rotate = exports.Position = exports.AnimateMesh = exports.Mesh = exports.Trigger = exports.RenderParticles = exports.RenderMesh = exports.RenderAnimation = exports.RenderMaterial = exports.RenderCamera = exports.RenderLight = exports.RenderShape = undefined;
 
 	var _RenderShape = __webpack_require__(98);
 
@@ -2043,6 +2043,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _PhysicsState2 = _interopRequireDefault(_PhysicsState);
 
+	var _DynamicTexture = __webpack_require__(356);
+
+	var _DynamicTexture2 = _interopRequireDefault(_DynamicTexture);
+
 	var _GenericProperty = __webpack_require__(139);
 
 	var _GenericProperty2 = _interopRequireDefault(_GenericProperty);
@@ -2081,7 +2085,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    SetEntityAsProperty: _SetEntityAsProperty2.default,
 	    CallMethodOnEntity: _CallMethodOnEntity2.default,
 	    Physics: _Physics2.default,
-	    PhysicsState: _PhysicsState2.default
+	    PhysicsState: _PhysicsState2.default,
+	    DynamicTexture: _DynamicTexture2.default
 	};
 
 	// Components mostly used internally
@@ -2110,6 +2115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CallMethodOnEntity = exports.CallMethodOnEntity = _CallMethodOnEntity2.default;
 	var Physics = exports.Physics = _Physics2.default;
 	var PhysicsState = exports.PhysicsState = _PhysicsState2.default;
+	var DynamicTexture = exports.DynamicTexture = _DynamicTexture2.default;
 
 /***/ },
 /* 98 */
@@ -2158,18 +2164,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    (0, _createClass3.default)(RenderShape, [{
-	        key: "shouldComponentUpdate",
-	        value: function shouldComponentUpdate(nextProps) {
-	            for (var prop in nextProps) {
-	                if (nextProps[prop] !== this.props[prop]) {
-	                    return true;
-	                }
-	            }
-
-	            return false;
-	        }
-	    }, {
 	        key: "componentWillMount",
+
+
+	        // shouldComponentUpdate(nextProps) {
+	        //     console.log('should this update?', nextProps);
+	        //     for (let prop in nextProps) {
+	        //         if (nextProps[prop] !== this.props[prop]) {
+	        //             return true;
+	        //         }
+	        //     }
+	        //     console.log('through');
+	        //     return false;
+	        // }
+
 	        value: function componentWillMount() {
 	            var _context = this.context;
 	            var sceneID = _context.sceneID;
@@ -2179,6 +2187,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	            createShape(sceneID, entityID, this.props);
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            if (this.propsChanged(nextProps)) {
+	                var entityID = nextContext.entityID;
+	                var actions = nextContext.actions;
+	                var updateShape = actions._internal.updateShape;
+
+
+	                updateShape(entityID, nextProps);
+	            }
 	        }
 	    }, {
 	        key: "componentWillUnmount",
@@ -2261,36 +2281,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            //
 	            // return areSame;
 
-	            // if (Object.keys(nextProps).length !== Object.keys(this.props).length) return false;
-	            //
-	            // for (let propKey in this.props) {
-	            //     const nextPropVal = nextProps[propKey];
-	            //     const currentPropVal = this.props[propKey]
-	            //
-	            //     switch (typeof nextPropVal) {
-	            //         case "number":
-	            //             if (nextPropVal !== currentPropVal) return false;
-	            //         break;
-	            //         case "string":
-	            //             if (nextPropVal !== currentPropVal) return false;
-	            //         break;
-	            //         case "boolean":
-	            //             if (nextPropVal !== currentPropVal) return false;
-	            //         break;
-	            //         case "undefined":
-	            //             if (!Object.is(currentPropVal, undefined)) return false;
-	            //         break;
-	            //         case "object":
-	            //             if (Array.isArray(nextPropVal)) {
-	            //                 if (nextPropVal.length !== currentPropVal.length) return false;
-	            //
-	            //                 for (let i = 0, l = nextPropVal.length; i<l; i ++) {
-	            //                     if (nextPropVal[i] !== currentPropVal[i]) return false;
-	            //                 }
-	            //             }
-	            //         break;
-	            //     }
-	            // }
 	            _this._propsChanged = !_lodash2.default.isEqual(nextProps, _this.props);
 	            return _this._propsChanged;
 	        };
@@ -41336,9 +41326,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _PhysicsActions2 = _interopRequireDefault(_PhysicsActions);
 
+	var _DynamicTextureActions = __webpack_require__(357);
+
+	var _DynamicTextureActions2 = _interopRequireDefault(_DynamicTextureActions);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = (0, _extends3.default)({}, _appActions2.default, _CameraActions2.default, _LightActions2.default, _SceneActions2.default, _ShapeActions2.default, _MaterialActions2.default, _AnimationActions2.default, _TriggerActions2.default, _MeshActions2.default, _ParticlesActions2.default, _PhysicsActions2.default);
+	exports.default = (0, _extends3.default)({}, _appActions2.default, _CameraActions2.default, _LightActions2.default, _SceneActions2.default, _ShapeActions2.default, _MaterialActions2.default, _AnimationActions2.default, _TriggerActions2.default, _MeshActions2.default, _ParticlesActions2.default, _PhysicsActions2.default, _DynamicTextureActions2.default);
 
 /***/ },
 /* 307 */
@@ -41619,21 +41613,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	var shapeCreators = {
 	    box: function box(scene, entityID, options) {
 	        var size = options.size;
+	        var updatable = options.updatable;
 
-	        return new _babylonjs.Mesh.CreateBox(entityID, size, scene);
+	        console.log("updatable", updatable);
+	        return new _babylonjs.Mesh.CreateBox(entityID, size, scene, updatable);
 	    },
 	    sphere: function sphere(scene, entityID, options) {
 	        var segments = options.segments;
 	        var diameter = options.diameter;
+	        var updatable = options.updatable;
 
-	        return new _babylonjs.Mesh.CreateSphere(entityID, segments, diameter, scene);
+	        return new _babylonjs.Mesh.CreateSphere(entityID, segments, diameter, scene, updatable);
 	    },
 	    ground: function ground(scene, entityID, options) {
 	        var width = options.width;
 	        var height = options.height;
 	        var subdivisions = options.subdivisions;
+	        var updatable = options.updatable;
 
-	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene);
+	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene, updatable);
 	    },
 	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options, callback) {
 	        var heightMap = options.heightMap;
@@ -41708,6 +41706,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
+	var shapeUpdaters = {
+	    box: function box(_box, props) {
+	        // TODO: find out what property to update.
+	        console.log('props', props);
+	    }
+	};
+
 	var ShapeActions = {
 	    createShape: function createShape(state, actions, sceneID, entityID, props) {
 	        var type = props.type;
@@ -41726,6 +41731,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            return state().setIn(["entities", entityID], meshObj);
+	        }
+
+	        return state();
+	    },
+	    updateShape: function updateShape(state, actions, entityID, props) {
+	        var type = props.type;
+
+
+	        if (type && shapeUpdaters[type] && (0, _Helpers.hasEntity)(state(), entityID)) {
+	            var shape = (0, _Helpers.getEntity)(state(), entityID);
+	            shapeUpdaters[type](shape, props);
 	        }
 
 	        return state();
@@ -54386,6 +54402,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _props = this.props;
 	            var _props$size = _props.size;
 	            var size = _props$size === undefined ? 1 : _props$size;
+	            var _props$updatable = _props.updatable;
+	            var updatable = _props$updatable === undefined ? false : _props$updatable;
 	            var children = _props.children;
 
 
@@ -54394,7 +54412,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                null,
 	                _react2.default.createElement(_systems.RenderShape, {
 	                    type: "box",
-	                    size: size
+	                    size: size,
+	                    updatable: updatable || false
 	                }),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
@@ -55092,6 +55111,108 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dashNumber: _react.PropTypes.number
 	};
 	exports.default = DashedLines;
+
+/***/ },
+/* 356 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(46);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(50);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(51);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(55);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(86);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(94);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Entity = __webpack_require__(109);
+
+	var _Entity2 = _interopRequireDefault(_Entity);
+
+	var _EntityLoaded = __webpack_require__(111);
+
+	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
+
+	var _RenderMesh = __webpack_require__(106);
+
+	var _RenderMesh2 = _interopRequireDefault(_RenderMesh);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var DynamicTexture = function (_React$Component) {
+	    (0, _inherits3.default)(DynamicTexture, _React$Component);
+
+	    function DynamicTexture() {
+	        (0, _classCallCheck3.default)(this, DynamicTexture);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(DynamicTexture).apply(this, arguments));
+	    }
+
+	    (0, _createClass3.default)(DynamicTexture, [{
+	        key: "render",
+	        value: function render() {
+	            var entityID = this.context.entityID;
+	            var _props = this.props;
+	            var path = _props.path;
+	            var fileName = _props.fileName;
+	            var children = _props.children;
+
+
+	            return _react2.default.createElement(
+	                _Entity2.default,
+	                null,
+	                _react2.default.createElement(_RenderMesh2.default, {
+	                    targetEntityID: entityID,
+	                    path: path,
+	                    fileName: fileName
+	                }),
+	                _react2.default.createElement(
+	                    _EntityLoaded2.default,
+	                    null,
+	                    children
+	                )
+	            );
+	        }
+	    }]);
+	    return DynamicTexture;
+	}(_react2.default.Component);
+
+	DynamicTexture.contextTypes = {
+	    entityID: _react.PropTypes.string,
+	    appState: _react.PropTypes.object,
+	    actions: _react.PropTypes.object
+	};
+	DynamicTexture.propTypes = {
+	    path: _react.PropTypes.string,
+	    fileName: _react.PropTypes.string
+	};
+	exports.default = DynamicTexture;
+
+/***/ },
+/* 357 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ])

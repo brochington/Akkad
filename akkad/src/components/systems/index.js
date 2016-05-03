@@ -21,6 +21,7 @@ import importCheckCollisions from "./CheckCollisions";
 import importCollisionsEnabled from "./CollisionsEnabled";
 import importPhysics from './Physics';
 import importPhysicsState from './PhysicsState';
+import importDynamicTexture from './DynamicTexture';
 
 // Components mostly used internally
 import importGenericProperty from "./GenericProperty";
@@ -51,7 +52,8 @@ export default {
     SetEntityAsProperty: importSetEntityAsProperty,
     CallMethodOnEntity: importCallMethodOnEntity,
     Physics: importPhysics,
-    PhysicsState: importPhysicsState
+    PhysicsState: importPhysicsState,
+    DynamicTexture: importDynamicTexture
 };
 
 export const RenderShape = importRenderShape;
@@ -78,3 +80,4 @@ export const SetEntityAsProperty = importSetEntityAsProperty;
 export const CallMethodOnEntity = importCallMethodOnEntity;
 export const Physics = importPhysics;
 export const PhysicsState = importPhysicsState;
+export const DynamicTexture = importDynamicTexture;

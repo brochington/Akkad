@@ -9,21 +9,31 @@ class RenderShape extends AbstractSystemComponent {
         appState: PropTypes.object.isRequired
     }
 
-    shouldComponentUpdate(nextProps) {
-        for (let prop in nextProps) {
-            if (nextProps[prop] !== this.props[prop]) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     console.log('should this update?', nextProps);
+    //     for (let prop in nextProps) {
+    //         if (nextProps[prop] !== this.props[prop]) {
+    //             return true;
+    //         }
+    //     }
+    //     console.log('through');
+    //     return false;
+    // }
 
     componentWillMount() {
         const {sceneID, entityID, actions} = this.context;
         const {createShape} = actions._internal;
 
         createShape(sceneID, entityID, this.props);
+    }
+
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (this.propsChanged(nextProps)) {
+            const {entityID, actions} = nextContext;
+            const {updateShape} = actions._internal;
+
+            updateShape(entityID, nextProps);
+        }
     }
 
     componentWillUnmount() {

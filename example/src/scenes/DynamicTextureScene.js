@@ -25,35 +25,27 @@ class DynamicTextureScene extends Component {
         return (
             <Scene>
                 <CollisionsEnabled />
-                <Physics gravity={[0, -10, 0]} />
                 <ArcRotateCamera
-                    position={[-14, 6, -13]}
+                    position={[-20, 10, 3]}
                     target={[0, -3, 0]}
                 />
                 <HemisphericLight />
-                <Box>
+                <Box updatable size={5} >
                     <CheckCollisions />
-                    <Position vector={[0, 2, 0]} />
-                    <Rotate
-                        axis={[1, 1.9, 1]}
-                        amount={60}
-                        space="LOCAL"
-                    />
+                    <Position vector={[0, 3, 0]} />
                     <Material>
                         <Color color={[0.2, 0.5, 0.9]} />
                     </Material>
-                    <PhysicsState mass={3} />
                 </Box>
                 <Ground
                     height={300}
                     width={300}
                 >
                     <CheckCollisions />
-                    <Position vector={[0, -10, 0]} />
+                    <Position vector={[0, 0, 0]} />
                     <Material>
                         <Color color={[0, 1, 1]} />
                     </Material>
-                    <PhysicsState mass={0} />
                 </Ground>
             </Scene>
         );

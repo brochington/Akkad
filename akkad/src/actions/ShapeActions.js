@@ -1,21 +1,22 @@
 import {Mesh} from "babylonjs";
 import Immutable from "immutable";
-import {convertShapeProps} from "../classes/Helpers";
+import {convertShapeProps, hasEntity, getEntity} from "../classes/Helpers";
 
 const shapeCreators = {
     box(scene, entityID, options) {
-        const {size} = options;
-        return new Mesh.CreateBox(entityID, size, scene);
+        const {size, updatable} = options;
+        console.log("updatable", updatable);
+        return new Mesh.CreateBox(entityID, size, scene, updatable);
     },
 
     sphere(scene, entityID, options) {
-        const {segments, diameter} = options;
-        return new Mesh.CreateSphere(entityID, segments, diameter, scene);
+        const {segments, diameter, updatable} = options;
+        return new Mesh.CreateSphere(entityID, segments, diameter, scene, updatable);
     },
 
     ground(scene, entityID, options) {
-        const {width, height, subdivisions} = options;
-        return new Mesh.CreateGround(entityID, width, height, subdivisions, scene);
+        const {width, height, subdivisions, updatable} = options;
+        return new Mesh.CreateGround(entityID, width, height, subdivisions, scene, updatable);
     },
 
     groundFromHeightMap(scene, entityID, options, callback) {
@@ -100,6 +101,13 @@ const shapeCreators = {
     }
 };
 
+const shapeUpdaters = {
+    box(box, props) {
+        // TODO: find out what property to update.
+        console.log('props', props);
+    }
+};
+
 const ShapeActions = {
     createShape(state, actions, sceneID, entityID, props) {
         const {type} = props;
@@ -117,6 +125,17 @@ const ShapeActions = {
             });
 
             return state().setIn(["entities", entityID], meshObj);
+        }
+
+        return state();
+    },
+
+    updateShape(state, actions, entityID, props) {
+        const {type} = props;
+
+        if (type && shapeUpdaters[type] && hasEntity(state(), entityID)) {
+            const shape = getEntity(state(), entityID);
+            shapeUpdaters[type](shape, props);
         }
 
         return state();

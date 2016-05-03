@@ -30,37 +30,6 @@ class AbstractSystemComponent extends React.Component {
         //
         // return areSame;
 
-
-        // if (Object.keys(nextProps).length !== Object.keys(this.props).length) return false;
-        //
-        // for (let propKey in this.props) {
-        //     const nextPropVal = nextProps[propKey];
-        //     const currentPropVal = this.props[propKey]
-        //
-        //     switch (typeof nextPropVal) {
-        //         case "number":
-        //             if (nextPropVal !== currentPropVal) return false;
-        //         break;
-        //         case "string":
-        //             if (nextPropVal !== currentPropVal) return false;
-        //         break;
-        //         case "boolean":
-        //             if (nextPropVal !== currentPropVal) return false;
-        //         break;
-        //         case "undefined":
-        //             if (!Object.is(currentPropVal, undefined)) return false;
-        //         break;
-        //         case "object":
-        //             if (Array.isArray(nextPropVal)) {
-        //                 if (nextPropVal.length !== currentPropVal.length) return false;
-        //
-        //                 for (let i = 0, l = nextPropVal.length; i<l; i ++) {
-        //                     if (nextPropVal[i] !== currentPropVal[i]) return false;
-        //                 }
-        //             }
-        //         break;
-        //     }
-        // }
         this._propsChanged = !_.isEqual(nextProps, this.props);
         return this._propsChanged;
     }
