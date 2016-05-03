@@ -15,7 +15,7 @@ const {
     PhysicsState
 } = systems;
 
-class PhysicsScene extends Component {
+class DynamicTextureScene extends Component {
     static contextTypes = {
         actions: PropTypes.object,
         appState: PropTypes.object
@@ -60,4 +60,4 @@ class PhysicsScene extends Component {
     }
 }
 
-export default PhysicsScene;
+export default DynamicTextureScene;

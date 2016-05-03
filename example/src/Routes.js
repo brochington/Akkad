@@ -12,7 +12,8 @@ const {
     ClickTheBox,
     HeightMapPage,
     WebVRPage,
-    PhysicsPage
+    PhysicsPage,
+    DynamicTexturePage
 } = pages;
 
 const Routes = (
@@ -27,6 +28,7 @@ const Routes = (
             <Route path="heightmap" component={HeightMapPage} />
             <Route path="webvr" component={WebVRPage} />
             <Route path="physics" component={PhysicsPage} />
+            <Route path="dynamic-textures" component={DynamicTexturePage} />
         </Route>
     </Router>
 );

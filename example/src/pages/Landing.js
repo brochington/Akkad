@@ -36,7 +36,10 @@ class Landing extends Component {
                         <Link to="/webvr">Web VR</Link>
                     </li>
                     <li>
-                        <Link to="/physics">physics</Link>
+                        <Link to="/physics">Physics</Link>
+                    </li>
+                    <li>
+                        <Link to="/dynamic-textures">Dynamic Textures</Link>
                     </li>
                 </ul>
                 {children}
