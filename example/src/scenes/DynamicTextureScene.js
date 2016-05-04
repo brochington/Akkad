@@ -1,6 +1,15 @@
 import React, {Component, PropTypes} from 'react';
 import Immutable, {fromJS} from 'immutable';
-import {Akkad, Scene, Material, cameras, lights, shapes, systems} from 'akkad';
+import {
+    Akkad,
+    Scene,
+    Material,
+    cameras,
+    lights,
+    shapes,
+    systems,
+    dynamicTextureSystems
+} from 'akkad';
 
 const {ArcRotateCamera} = cameras;
 const {HemisphericLight} = lights;
@@ -12,8 +21,14 @@ const {
     Color,
     CheckCollisions,
     CollisionsEnabled,
-    PhysicsState
+    PhysicsState,
+    DynamicTexture,
 } = systems;
+
+const {
+    FillStyle,
+    FillRect
+} = dynamicTextureSystems;
 
 class DynamicTextureScene extends Component {
     static contextTypes = {
@@ -21,12 +36,26 @@ class DynamicTextureScene extends Component {
         appState: PropTypes.object
     }
 
+    saveContext = (context) => {
+        this._context = context;
+    };
+
+    saveSize = (size) => {
+        this.size = size;
+    };
+
     render() {
+        if (this._context) {
+            const context = this._context;
+            context.fillStyle = "#123456";
+            context.fillRect(0, 0, 300, 300);
+        }
+
         return (
             <Scene>
                 <CollisionsEnabled />
                 <ArcRotateCamera
-                    position={[-20, 10, 3]}
+                    position={[-20, 11, 3]}
                     target={[0, -3, 0]}
                 />
                 <HemisphericLight />
@@ -34,8 +63,12 @@ class DynamicTextureScene extends Component {
                     <CheckCollisions />
                     <Position vector={[0, 3, 0]} />
                     <Material>
-                        <Color color={[0.2, 0.5, 0.9]} />
+                        <DynamicTexture
+                            getContext={this.saveContext}
+                            getSize={this.saveSize}
+                        />
                     </Material>
+
                 </Box>
                 <Ground
                     height={300}

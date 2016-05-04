@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Particles = exports.BasicAnimation = exports.Akkad = exports.EntityLoaded = exports.Entity = exports.Material = exports.Scene = exports.Engine = exports.shapes = exports.meshes = exports.cameras = exports.lights = exports.systems = undefined;
+	exports.Particles = exports.BasicAnimation = exports.Akkad = exports.EntityLoaded = exports.Entity = exports.Material = exports.Scene = exports.Engine = exports.dynamicTextureSystems = exports.shapes = exports.meshes = exports.cameras = exports.lights = exports.systems = undefined;
 
 	var _extends2 = __webpack_require__(2);
 
@@ -79,6 +79,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _systems = __webpack_require__(97);
 
 	var _systems2 = _interopRequireDefault(_systems);
+
+	var _dynamicTextureSystems = __webpack_require__(359);
+
+	var _dynamicTextureSystems2 = _interopRequireDefault(_dynamicTextureSystems);
 
 	var _lights = __webpack_require__(338);
 
@@ -103,13 +107,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    lights: _lights2.default,
 	    cameras: _cameras2.default,
 	    meshes: _meshes2.default,
-	    shapes: _shapes2.default
+	    shapes: _shapes2.default,
+	    dynamicTextureSystems: _dynamicTextureSystems2.default
 	});
 	var systems = exports.systems = _systems2.default;
 	var lights = exports.lights = _lights2.default;
 	var cameras = exports.cameras = _cameras2.default;
 	var meshes = exports.meshes = _meshes2.default;
 	var shapes = exports.shapes = _shapes2.default;
+	var dynamicTextureSystems = exports.dynamicTextureSystems = _dynamicTextureSystems2.default;
 
 	var Engine = exports.Engine = _components2.default.Engine;
 	var Scene = exports.Scene = _components2.default.Scene;
@@ -20897,9 +20903,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
 
-	var _RenderMesh = __webpack_require__(106);
+	var _RenderDynamicTexture = __webpack_require__(358);
 
-	var _RenderMesh2 = _interopRequireDefault(_RenderMesh);
+	var _RenderDynamicTexture2 = _interopRequireDefault(_RenderDynamicTexture);
+
+	var _SetEntityAsProperty = __webpack_require__(141);
+
+	var _SetEntityAsProperty2 = _interopRequireDefault(_SetEntityAsProperty);
+
+	var _dynamicTextureSystems = __webpack_require__(359);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20915,23 +20927,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "render",
 	        value: function render() {
 	            var entityID = this.context.entityID;
-	            var _props = this.props;
-	            var path = _props.path;
-	            var fileName = _props.fileName;
-	            var children = _props.children;
+	            var children = this.props.children;
 
 
 	            return _react2.default.createElement(
 	                _Entity2.default,
 	                null,
-	                _react2.default.createElement(_RenderMesh2.default, {
-	                    targetEntityID: entityID,
-	                    path: path,
-	                    fileName: fileName
-	                }),
+	                _react2.default.createElement(_RenderDynamicTexture2.default, null),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
 	                    null,
+	                    _react2.default.createElement(_SetEntityAsProperty2.default, {
+	                        targetEntityID: entityID,
+	                        propertyName: "diffuseTexture"
+	                    }),
+	                    _react2.default.createElement(_dynamicTextureSystems.GetContext, { callback: this.props.getContext }),
 	                    children
 	                )
 	            );
@@ -20946,8 +20956,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    actions: _react.PropTypes.object
 	};
 	DynamicTexture.propTypes = {
-	    path: _react.PropTypes.string,
-	    fileName: _react.PropTypes.string
+	    getContext: _react.PropTypes.func,
+	    getSize: _react.PropTypes.func
+	};
+	DynamicTexture.defaultProps = {
+	    getContext: function getContext() {},
+	    getSize: function getSize() {}
 	};
 	exports.default = DynamicTexture;
 
@@ -53160,9 +53174,43 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 334 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _immutable = __webpack_require__(129);
+
+	var _immutable2 = _interopRequireDefault(_immutable);
+
+	var _babylonjs = __webpack_require__(126);
+
+	var _babylonjs2 = _interopRequireDefault(_babylonjs);
+
+	var _Helpers = __webpack_require__(128);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var dynamicTextureActions = {
+	    createDynamicTexture: function createDynamicTexture(state, actions, entityID, sceneID) {
+	        var scene = (0, _Helpers.getEntity)(state(), sceneID);
+	        var options = 512; // Not really sure what this does...
+	        var dynamicTexture = new _babylonjs2.default.DynamicTexture(entityID, options, scene, true);
+
+	        var dynamicTextureObj = _immutable2.default.Map({
+	            id: entityID,
+	            entity: dynamicTexture,
+	            type: "dynamicTexture"
+	        });
+
+	        return state().setIn(["entities", entityID], dynamicTextureObj);
+	    }
+	};
+
+	exports.default = dynamicTextureActions;
 
 /***/ },
 /* 335 */
@@ -55213,6 +55261,306 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dashNumber: _react.PropTypes.number
 	};
 	exports.default = DashedLines;
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(46);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(50);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(51);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(55);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(86);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(94);
+
+	var _AbstractSystemComponent = __webpack_require__(99);
+
+	var _AbstractSystemComponent2 = _interopRequireDefault(_AbstractSystemComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RenderDynamicTexture = function (_AbstractSystemCompon) {
+	    (0, _inherits3.default)(RenderDynamicTexture, _AbstractSystemCompon);
+
+	    function RenderDynamicTexture() {
+	        (0, _classCallCheck3.default)(this, RenderDynamicTexture);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderDynamicTexture).apply(this, arguments));
+	    }
+
+	    (0, _createClass3.default)(RenderDynamicTexture, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            var _context = this.context;
+	            var sceneID = _context.sceneID;
+	            var actions = _context.actions;
+	            var entityID = _context.entityID;
+	            var createDynamicTexture = actions._internal.createDynamicTexture;
+
+
+	            createDynamicTexture(entityID, sceneID);
+	        }
+	    }]);
+	    return RenderDynamicTexture;
+	}(_AbstractSystemComponent2.default);
+
+	RenderDynamicTexture.contextTypes = {
+	    sceneID: _react.PropTypes.string.isRequired,
+	    entityID: _react.PropTypes.string,
+	    appState: _react.PropTypes.object,
+	    actions: _react.PropTypes.object
+	};
+	exports.default = RenderDynamicTexture;
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.GetContext = exports.RillRect = exports.FillStyle = undefined;
+
+	var _FillStyle = __webpack_require__(360);
+
+	var _FillStyle2 = _interopRequireDefault(_FillStyle);
+
+	var _FillRect = __webpack_require__(361);
+
+	var _FillRect2 = _interopRequireDefault(_FillRect);
+
+	var _GetContext = __webpack_require__(362);
+
+	var _GetContext2 = _interopRequireDefault(_GetContext);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    FillStyle: _FillStyle2.default,
+	    FillRect: _FillRect2.default,
+	    GetContext: _GetContext2.default
+	};
+	var FillStyle = exports.FillStyle = _FillStyle2.default;
+	var RillRect = exports.RillRect = _FillRect2.default;
+	var GetContext = exports.GetContext = _GetContext2.default;
+
+/***/ },
+/* 360 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(46);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(50);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(51);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(55);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(86);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _AbstractSystemComponent = __webpack_require__(99);
+
+	var _AbstractSystemComponent2 = _interopRequireDefault(_AbstractSystemComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FillStyle = function (_AbstractSystemCompon) {
+	    (0, _inherits3.default)(FillStyle, _AbstractSystemCompon);
+
+	    function FillStyle() {
+	        (0, _classCallCheck3.default)(this, FillStyle);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(FillStyle).apply(this, arguments));
+	    }
+
+	    (0, _createClass3.default)(FillStyle, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            console.log("FillStyle will mount");
+	        }
+	    }]);
+	    return FillStyle;
+	}(_AbstractSystemComponent2.default); // import {PropTypes} from "react";
+	// import Babylon from "babylonjs";
+
+
+	exports.default = FillStyle;
+
+/***/ },
+/* 361 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(46);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(50);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(51);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(55);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(86);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _AbstractSystemComponent = __webpack_require__(99);
+
+	var _AbstractSystemComponent2 = _interopRequireDefault(_AbstractSystemComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FillRect = function (_AbstractSystemCompon) {
+	    (0, _inherits3.default)(FillRect, _AbstractSystemCompon);
+
+	    function FillRect() {
+	        (0, _classCallCheck3.default)(this, FillRect);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(FillRect).apply(this, arguments));
+	    }
+
+	    (0, _createClass3.default)(FillRect, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            console.log("FillRect will mount");
+	        }
+	    }]);
+	    return FillRect;
+	}(_AbstractSystemComponent2.default);
+
+	exports.default = FillRect;
+
+/***/ },
+/* 362 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(46);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(50);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(51);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(55);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(86);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(94);
+
+	var _AbstractSystemComponent = __webpack_require__(99);
+
+	var _AbstractSystemComponent2 = _interopRequireDefault(_AbstractSystemComponent);
+
+	var _Helpers = __webpack_require__(128);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var GetContext = function (_AbstractSystemCompon) {
+	    (0, _inherits3.default)(GetContext, _AbstractSystemCompon);
+
+	    function GetContext() {
+	        (0, _classCallCheck3.default)(this, GetContext);
+	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GetContext).apply(this, arguments));
+	    }
+
+	    (0, _createClass3.default)(GetContext, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            var _context = this.context;
+	            var appState = _context.appState;
+	            var entityID = _context.entityID;
+
+	            var dynamicTexture = (0, _Helpers.getEntity)(appState, entityID);
+	            this.props.callback(dynamicTexture._context);
+	        }
+	    }, {
+	        key: "componentWillUpdate",
+	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
+	            var appState = nextContext.appState;
+	            var entityID = nextContext.entityID;
+
+	            var dynamicTexture = (0, _Helpers.getEntity)(appState, entityID);
+	            dynamicTexture.update();
+	        }
+	    }]);
+	    return GetContext;
+	}(_AbstractSystemComponent2.default);
+
+	GetContext.contextTypes = {
+	    entityID: _react.PropTypes.string,
+	    appState: _react.PropTypes.object,
+	    actions: _react.PropTypes.object
+	};
+	GetContext.propTypes = {
+	    callback: _react.PropTypes.func
+	};
+	GetContext.defaultProps = {
+	    callback: function callback() {}
+	};
+	exports.default = GetContext;
 
 /***/ }
 /******/ ])

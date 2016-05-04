@@ -1,5 +1,6 @@
 import components from "./components";
 import importSystems from "./components/systems";
+import importDynamicTextureSystems from './components/systems/dynamicTextureSystems';
 
 import importLights from "./components/lights";
 import importCameras from "./components/cameras";
@@ -12,7 +13,8 @@ export default {
     lights: importLights,
     cameras: importCameras,
     meshes: importMeshes,
-    shapes: importShapes
+    shapes: importShapes,
+    dynamicTextureSystems: importDynamicTextureSystems
 };
 
 export const systems = importSystems;
@@ -20,6 +22,7 @@ export const lights = importLights;
 export const cameras = importCameras;
 export const meshes = importMeshes;
 export const shapes = importShapes;
+export const dynamicTextureSystems = importDynamicTextureSystems;
 
 export const Engine = components.Engine;
 export const Scene  = components.Scene;

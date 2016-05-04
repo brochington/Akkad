@@ -1,7 +1,9 @@
 import React, {PropTypes} from "react";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
-import RenderMesh from "./RenderMesh";
+import RenderDynamicTexture from "./RenderDynamicTexture";
+import SetEntityAsProperty from './SetEntityAsProperty';
+import {GetContext} from './dynamicTextureSystems';
 
 class DynamicTexture extends React.Component {
     static contextTypes = {
@@ -11,22 +13,28 @@ class DynamicTexture extends React.Component {
     }
 
     static propTypes = {
-        path: PropTypes.string,
-        fileName: PropTypes.string
+        getContext: PropTypes.func,
+        getSize: PropTypes.func
+    }
+
+    static defaultProps = {
+        getContext: () => {},
+        getSize: () => {}
     }
 
     render() {
         const {entityID} = this.context;
-        const {path, fileName, children} = this.props;
+        const {children} = this.props;
 
         return (
             <Entity>
-                <RenderMesh
-                    targetEntityID={entityID}
-                    path={path}
-                    fileName={fileName}
-                />
+                <RenderDynamicTexture />
                 <EntityLoaded>
+                    <SetEntityAsProperty
+                        targetEntityID={entityID}
+                        propertyName="diffuseTexture"
+                    />
+                    <GetContext callback={this.props.getContext} />
                     {children}
                 </EntityLoaded>
             </Entity>
