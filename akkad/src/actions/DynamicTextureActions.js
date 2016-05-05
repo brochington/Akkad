@@ -16,6 +16,6 @@ const dynamicTextureActions = {
 
         return state().setIn(["entities", entityID], dynamicTextureObj);
     }
-}
+};
 
 export default dynamicTextureActions;

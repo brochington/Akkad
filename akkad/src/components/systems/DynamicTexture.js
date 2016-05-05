@@ -3,7 +3,7 @@ import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import RenderDynamicTexture from "./RenderDynamicTexture";
 import SetEntityAsProperty from './SetEntityAsProperty';
-import {GetContext} from './dynamicTextureSystems';
+import {GetCanvasContext, CanvasContextToContext} from './dynamicTextureSystems';
 
 class DynamicTexture extends React.Component {
     static contextTypes = {
@@ -13,13 +13,13 @@ class DynamicTexture extends React.Component {
     }
 
     static propTypes = {
-        getContext: PropTypes.func,
-        getSize: PropTypes.func
+        getCanvasContext: PropTypes.func,
+        getCanvasSize: PropTypes.func
     }
 
     static defaultProps = {
-        getContext: () => {},
-        getSize: () => {}
+        getCanvasContext: () => {},
+        getCanvasSize: () => {}
     }
 
     render() {
@@ -34,8 +34,10 @@ class DynamicTexture extends React.Component {
                         targetEntityID={entityID}
                         propertyName="diffuseTexture"
                     />
-                    <GetContext callback={this.props.getContext} />
-                    {children}
+                    <GetCanvasContext callback={this.props.getCanvasContext} />
+                    <CanvasContextToContext>
+                        {children}
+                    </CanvasContextToContext>
                 </EntityLoaded>
             </Entity>
         );

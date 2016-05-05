@@ -2,7 +2,7 @@ import {PropTypes} from "react";
 import AbstractSystemComponent from "../../AbstractSystemComponent";
 import {getEntity} from "../../../classes/Helpers";
 
-class GetContext extends AbstractSystemComponent {
+class GetCanvasContext extends AbstractSystemComponent {
     static contextTypes = {
         entityID: PropTypes.string,
         appState: PropTypes.object,
@@ -30,4 +30,4 @@ class GetContext extends AbstractSystemComponent {
     }
 }
 
-export default GetContext;
+export default GetCanvasContext;

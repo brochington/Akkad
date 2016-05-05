@@ -46,16 +46,16 @@ class DynamicTextureScene extends Component {
 
     render() {
         if (this._context) {
-            const context = this._context;
-            context.fillStyle = "#123456";
-            context.fillRect(0, 0, 300, 300);
+            // const context = this._context;
+            // context.fillStyle = "#123456";
+            // context.fillRect(0, 0, 300, 300);
         }
 
         return (
             <Scene>
                 <CollisionsEnabled />
                 <ArcRotateCamera
-                    position={[-20, 11, 3]}
+                    position={[-20, 10, 4]}
                     target={[0, -3, 0]}
                 />
                 <HemisphericLight />
@@ -64,9 +64,12 @@ class DynamicTextureScene extends Component {
                     <Position vector={[0, 3, 0]} />
                     <Material>
                         <DynamicTexture
-                            getContext={this.saveContext}
-                            getSize={this.saveSize}
-                        />
+                            getCanvasContext={this.saveContext}
+                            getCanvasSize={this.saveSize}
+                        >
+                            <FillStyle color="orange" />
+                            <FillRect />
+                        </DynamicTexture>
                     </Material>
 
                 </Box>

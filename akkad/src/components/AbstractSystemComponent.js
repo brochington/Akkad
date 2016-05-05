@@ -14,7 +14,8 @@ class AbstractSystemComponent extends React.Component {
 
     static contextTypes = {
         appState: React.PropTypes.object,
-        actions: React.PropTypes.object
+        actions: React.PropTypes.object,
+        entityID: React.PropTypes.string
     }
 
     /**
