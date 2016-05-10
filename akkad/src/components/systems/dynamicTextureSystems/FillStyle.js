@@ -13,10 +13,10 @@ class FillStyle extends AbstractSystemComponent {
     updateDynamicTexture = (context) => {
         const {canvasContext, appState, entityID} = context;
         const dynamicTexture = getEntity(appState, entityID);
-        canvasContext.fillStyle = "#345612";
-        // canvasContext.fillRect(0, 0, 400, 400);
-
+        canvasContext.fillStyle = this.props.color;
+        console.time('update');
         dynamicTexture.update();
+        console.timeEnd('update');
     }
 
     componentWillMount() {

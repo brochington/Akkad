@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
 import AbstractSystemComponent from "../../AbstractSystemComponent";
-import {hasEntity, getEntity} from "../../../classes/Helpers";
+import {getEntity} from "../../../classes/Helpers";
 
 class CanvasContextToContext extends AbstractSystemComponent {
     // static contextTypes = {

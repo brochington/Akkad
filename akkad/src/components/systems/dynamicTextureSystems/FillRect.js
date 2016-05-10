@@ -1,29 +1,36 @@
-import React, {PropTypes} from "react";
+import {PropTypes} from "react";
 import AbstractSystemComponent from "../../AbstractSystemComponent";
 import {getEntity} from "../../../classes/Helpers";
 
 class FillRect extends AbstractSystemComponent {
+    static propTypes = {
+        x: PropTypes.number,
+        y: PropTypes.number,
+        width: PropTypes.number,
+        height: PropTypes.number
+    }
     static contextTypes = {
-        appState: React.PropTypes.object,
-        actions: React.PropTypes.object,
-        entityID: React.PropTypes.string,
+        appState: PropTypes.object,
+        actions: PropTypes.object,
+        entityID: PropTypes.string,
         canvasContext: PropTypes.object
     }
 
-    updateDynamicTexture = (context) => {
+    updateDynamicTexture = (props, context) => {
         const {canvasContext, appState, entityID} = context;
+        const {x, y, width, height} = props;
         const dynamicTexture = getEntity(appState, entityID);
-        canvasContext.fillRect(0, 0, 400, 400);
+        canvasContext.fillRect(x, y, width, height);
 
         dynamicTexture.update();
     }
 
     componentWillMount() {
-        this.updateDynamicTexture(this.context);
+        this.updateDynamicTexture(this.props, this.context);
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        this.updateDynamicTexture(nextContext);
+        this.updateDynamicTexture(nextProps, nextContext);
     }
 }
 

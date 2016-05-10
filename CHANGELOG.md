@@ -1,5 +1,11 @@
 ## Changelog
 
+1.3.0
+
+#### New Features
+
+- Adding `<DynamicTexture />` component, which exposes a canvas context as a texture. Now you can draw anything you can on a canvas to a surface texture. Much more work on this to come.
+
 1.2.0
 
 #### New Features

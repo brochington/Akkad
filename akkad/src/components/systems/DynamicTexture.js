@@ -3,7 +3,11 @@ import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import RenderDynamicTexture from "./RenderDynamicTexture";
 import SetEntityAsProperty from './SetEntityAsProperty';
-import {GetCanvasContext, CanvasContextToContext} from './dynamicTextureSystems';
+import {
+    GetCanvasContext,
+    CanvasContextToContext,
+    RasterizeMarkup
+} from './dynamicTextureSystems';
 
 class DynamicTexture extends React.Component {
     static contextTypes = {
@@ -36,7 +40,9 @@ class DynamicTexture extends React.Component {
                     />
                     <GetCanvasContext callback={this.props.getCanvasContext} />
                     <CanvasContextToContext>
-                        {children}
+                        <RasterizeMarkup>
+                            {children}
+                        </RasterizeMarkup>
                     </CanvasContextToContext>
                 </EntityLoaded>
             </Entity>

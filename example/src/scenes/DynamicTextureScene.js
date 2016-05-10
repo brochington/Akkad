@@ -67,8 +67,9 @@ class DynamicTextureScene extends Component {
                             getCanvasContext={this.saveContext}
                             getCanvasSize={this.saveSize}
                         >
-                            <FillStyle color="orange" />
-                            <FillRect />
+                            <div>Hello There man!</div>
+                            {/*<FillStyle color="orange" />*/}
+                            {/*<FillRect x={50} y={50} width={450} height={450}/>*/}
                         </DynamicTexture>
                     </Material>
 
