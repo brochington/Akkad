@@ -6,6 +6,8 @@ Akkad
 
 `npm install --save akkad`
 
+To get an Akkad project started quickly, check out the [Akkad boilerplate](https://github.com/brochington/akkad-boilerplate).
+
 requires npm >= 5.0
 
 #### Docs:
@@ -37,7 +39,8 @@ Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to al
 - Collisions
 - Particles
 - Basic triggers like onClick
-- Add things like overlays with React generated DOM
+- Overlays with React generated DOM
+- Draw textures on elements with the Canvas API.
 - Lot's more to come!
 
 ## Example
@@ -73,7 +76,6 @@ export default App;
 ```
 
 Please check out the example project included for more.
-
 
 ### Development
 
