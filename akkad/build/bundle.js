@@ -21257,28 +21257,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(FillStyle)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateDynamicTexture = function (context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(FillStyle)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
 	            var canvasContext = context.canvasContext;
 	            var appState = context.appState;
 	            var entityID = context.entityID;
 
 	            var dynamicTexture = (0, _Helpers.getEntity)(appState, entityID);
-	            canvasContext.fillStyle = _this.props.color;
-	            console.time('update');
+	            canvasContext.fillStyle = props.color;
+
 	            dynamicTexture.update();
-	            console.timeEnd('update');
 	        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
 	    }
 
 	    (0, _createClass3.default)(FillStyle, [{
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
-	            this.updateDynamicTexture(this.context);
+	            this.updateDynamicTexture(this.props, this.context);
 	        }
 	    }, {
 	        key: "componentWillUpdate",
 	        value: function componentWillUpdate(nextProps, nextState, nextContext) {
-	            this.updateDynamicTexture(nextContext);
+	            this.updateDynamicTexture(nextProps, nextContext);
 	        }
 	    }]);
 	    return FillStyle;
