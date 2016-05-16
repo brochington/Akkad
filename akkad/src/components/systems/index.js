@@ -12,6 +12,7 @@ import importMesh from "./Mesh";
 import importAnimateMesh from "./AnimateMesh";
 import importPosition from "./Position";
 import importRotate from "./Rotate";
+import importRotation from './Rotation';
 import importWireframe from "./Wireframe";
 import importTexture from "./Texture";
 import importColor from "./Color";
@@ -41,6 +42,7 @@ export default {
     AnimateMesh: importAnimateMesh,
     Position: importPosition,
     Rotate: importRotate,
+    Rotation: importRotation,
     Wireframe: importWireframe,
     Color: importColor,
     Texture: importTexture,
@@ -68,6 +70,7 @@ export const Mesh = importMesh;
 export const AnimateMesh = importAnimateMesh;
 export const Position = importPosition;
 export const Rotate = importRotate;
+export const Rotation = importRotation;
 export const Wireframe = importWireframe;
 export const Color = importColor;
 export const Texture = importTexture;

@@ -7,13 +7,15 @@ class Rotation extends AbstractSystemComponent {
     static propTypes = {
         x: PropTypes.number,
         y: PropTypes.number,
-        z: PropTypes.number
+        z: PropTypes.number,
+        axis: PropTypes.arrayOf(PropTypes.number)
     }
 
     static defaultProps = {
         x: 0,
         y: 0,
-        z: 0
+        z: 0,
+        axis: null
     }
 
     static contextTypes = {
@@ -22,11 +24,14 @@ class Rotation extends AbstractSystemComponent {
         actions: PropTypes.object
     }
 
-    updateRotation = (axis, context) => {
+    updateRotation = (props, context) => {
+        const {x, y, z, axis} = props;
         const {entityID, appState} = context;
 
+        const newAxis = axis ? axis : [x, y, z];
+
         if (hasEntity(appState, entityID)) {
-            getEntity(appState, entityID).rotation = new Babylon.Vector3(...axis);
+            getEntity(appState, entityID).rotation = new Babylon.Vector3(...newAxis);
         }
     }
 

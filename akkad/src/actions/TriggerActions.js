@@ -21,7 +21,7 @@ const TriggerActions = {
             mesh.actionManager = new ActionManager(scene);
         }
 
-        console.log("actionManager", mesh.actionManager);
+        // console.log("actionManager", mesh.actionManager);
 
         Immutable.Map(triggers)
                     .filter((func, triggerName) => triggerHandlers[triggerName])

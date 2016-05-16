@@ -13,7 +13,6 @@ class CollisionsEnabled extends AbstractSystemComponent {
     }
 
     componentWillMount() {
-        console.log('collisionsEnabled will Mount', this.context);
         const {appState, entityID} = this.context;
         const entity = appState.getIn(["entities", entityID, "entity"]);
 

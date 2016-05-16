@@ -1,12 +1,12 @@
-import {Mesh} from "babylonjs";
+import {Mesh, MeshBuilder} from "babylonjs";
 import Immutable from "immutable";
 import {convertShapeProps, hasEntity, getEntity} from "../classes/Helpers";
 
 const shapeCreators = {
     box(scene, entityID, options) {
-        const {size, updatable} = options;
-        console.log("updatable", updatable);
-        return new Mesh.CreateBox(entityID, size, scene, updatable);
+        // const {size, updatable} = options;
+        return new MeshBuilder.CreateBox(entityID, options, scene);
+        // return new Mesh.CreateBox(entityID, size, scene, updatable);
     },
 
     sphere(scene, entityID, options) {

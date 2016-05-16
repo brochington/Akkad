@@ -21,6 +21,7 @@ class Box extends AkkadAbstractComponent {
     };
 
     static propTypes = {
+        size: PropTypes.number,
         height: PropTypes.number,
         width: PropTypes.number
     };
@@ -28,6 +29,8 @@ class Box extends AkkadAbstractComponent {
     render() {
         const {
             size = 1,
+            height = 1,
+            width = 1,
             updatable = false,
             children
         } = this.props;
@@ -37,6 +40,8 @@ class Box extends AkkadAbstractComponent {
                 <RenderShape
                     type="box"
                     size={size}
+                    height={height}
+                    width={width}
                     updatable={updatable || false}
                 />
                 <EntityLoaded>

@@ -1,5 +1,16 @@
 ## Changelog
 
+1.3.1
+
+#### New Features
+
+- Adding `<Rotation />` system, for static rotations of elements.
+
+#### updates
+
+- `<Box />` now has a height and width prop.
+- Remove a bunch on console.logs.
+
 1.3.0
 
 #### New Features
