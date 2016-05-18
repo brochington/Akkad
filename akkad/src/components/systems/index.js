@@ -5,6 +5,7 @@ import importRenderMaterial from "./RenderMaterial";
 import importRenderAnimation from "./RenderAnimation";
 import importRenderMesh from "./RenderMesh";
 import importRenderParticles from "./RenderParticles";
+import importRenderSubMesh from './RenderSubMesh';
 
 import importTrigger from "./Trigger";
 import importMesh from "./Mesh";
@@ -23,6 +24,8 @@ import importCollisionsEnabled from "./CollisionsEnabled";
 import importPhysics from './Physics';
 import importPhysicsState from './PhysicsState';
 import importDynamicTexture from './DynamicTexture';
+import importSubMesh from './SubMesh';
+
 
 // Components mostly used internally
 import importGenericProperty from "./GenericProperty";
@@ -37,6 +40,7 @@ export default {
     RenderAnimation: importRenderAnimation,
     RenderMesh: importRenderMesh,
     RenderParticles: importRenderParticles,
+    RenderSubMesh: importRenderSubMesh,
     Trigger: importTrigger,
     Mesh: importMesh,
     AnimateMesh: importAnimateMesh,
@@ -55,7 +59,8 @@ export default {
     CallMethodOnEntity: importCallMethodOnEntity,
     Physics: importPhysics,
     PhysicsState: importPhysicsState,
-    DynamicTexture: importDynamicTexture
+    DynamicTexture: importDynamicTexture,
+    SubMesh: importSubMesh
 };
 
 export const RenderShape = importRenderShape;
@@ -65,6 +70,7 @@ export const RenderMaterial = importRenderMaterial;
 export const RenderAnimation = importRenderAnimation;
 export const RenderMesh = importRenderMesh;
 export const RenderParticles = importRenderParticles;
+export const RenderSubMesh = importRenderSubMesh;
 export const Trigger =importTrigger;
 export const Mesh = importMesh;
 export const AnimateMesh = importAnimateMesh;
@@ -84,3 +90,4 @@ export const CallMethodOnEntity = importCallMethodOnEntity;
 export const Physics = importPhysics;
 export const PhysicsState = importPhysicsState;
 export const DynamicTexture = importDynamicTexture;
+export const SubMesh = importSubMesh;

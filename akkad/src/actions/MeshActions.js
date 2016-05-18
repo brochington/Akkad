@@ -1,5 +1,6 @@
-import {SceneLoader} from "babylonjs";
+import {SceneLoader, SubMesh} from "babylonjs";
 import Immutable from "immutable";
+import {getEntity} from "../classes/Helpers";
 
 const importMesh = (path, fileName, scene, progressCallback = () => {}) => {
 
@@ -34,6 +35,28 @@ const MeshActions = {
 
 
         return newState;
+    },
+
+    createSubMesh(state, actions, meshID, entityID) {
+        const mesh = getEntity(state(), meshID);
+        // const subMesh = getEntity(state(), entityID);
+        const subMesh = new SubMesh(2, 0, 24, 0, 24, mesh);
+
+        // console.log('creating a submesh....', verticesCount, subMesh);
+        if (!Array.isArray(mesh.subMeshes)) {
+            mesh.subMeshes = [];
+        }
+
+        const subMeshObj = Immutable.Map({
+            id: entityID,
+            targetEntityID: meshID,
+            entity: subMesh,
+            type: "subMesh"
+        });
+        mesh.subMeshes.push(subMesh);
+        return state().setIn(["entities", entityID], subMeshObj);
+
+
     }
 };
 
