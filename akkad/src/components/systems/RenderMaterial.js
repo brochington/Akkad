@@ -5,6 +5,8 @@ class RenderMaterial extends AbstractSystemComponent {
     static contextTypes = {
         sceneID: PropTypes.string.isRequired,
         entityID: PropTypes.string,
+        meshID: PropTypes.string,
+        inMultiMaterial: PropTypes.bool,
         appState: PropTypes.object,
         actions: PropTypes.object
     }

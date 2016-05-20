@@ -23,7 +23,7 @@ class SetEntityAsProperty extends React.Component {
         if (reverse) {
             entityToSet[propertyName] = targetEntity;
         } else {
-            targetEntity[propertyName] = entityToSet;    
+            targetEntity[propertyName] = entityToSet;
         }
     }
 
@@ -36,7 +36,7 @@ class SetEntityAsProperty extends React.Component {
         if (reverse) {
             entityToSet[propertyName] = null;
         } else {
-            targetEntity[propertyName] = null;    
+            targetEntity[propertyName] = null;
         }
     }
 

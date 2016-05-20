@@ -37,15 +37,28 @@ const MeshActions = {
         return newState;
     },
 
-    createSubMesh(state, actions, meshID, entityID) {
+    createSubMesh(state, actions, meshID, entityID, options) {
         const mesh = getEntity(state(), meshID);
-        // const subMesh = getEntity(state(), entityID);
-        const subMesh = new SubMesh(2, 0, 24, 0, 24, mesh);
+        const {
+            materialIndex,
+            verticesStart,
+            indexStart,
+            indexCount
+        } = options;
 
-        // console.log('creating a submesh....', verticesCount, subMesh);
-        if (!Array.isArray(mesh.subMeshes)) {
-            mesh.subMeshes = [];
-        }
+        // filter out all default submeshes if declaring your own.
+        mesh.subMeshes = mesh.subMeshes.filter(sm => sm._isAkkadSubMesh);
+
+        const subMesh = new SubMesh(
+            materialIndex,
+            verticesStart,
+            mesh.getTotalVertices(),
+            indexStart,
+            indexCount,
+            mesh
+        );
+        // Used to flad submeshes made by akkad
+        subMesh._isAkkadSubMesh = true;
 
         const subMeshObj = Immutable.Map({
             id: entityID,
@@ -53,10 +66,8 @@ const MeshActions = {
             entity: subMesh,
             type: "subMesh"
         });
-        mesh.subMeshes.push(subMesh);
+
         return state().setIn(["entities", entityID], subMeshObj);
-
-
     }
 };
 

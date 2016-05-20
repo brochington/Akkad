@@ -25,12 +25,14 @@ import importPhysics from './Physics';
 import importPhysicsState from './PhysicsState';
 import importDynamicTexture from './DynamicTexture';
 import importSubMesh from './SubMesh';
+import importMultiMaterial from './MultiMaterial';
 
 
 // Components mostly used internally
 import importGenericProperty from "./GenericProperty";
 import importSetEntityAsProperty from "./SetEntityAsProperty";
 import importCallMethodOnEntity from "./CallMethodOnEntity";
+import importPushEntityOnProperty from './PushEntityOnProperty';
 
 export default {
     RenderShape: importRenderShape,
@@ -57,10 +59,12 @@ export default {
     GenericProperty: importGenericProperty,
     SetEntityAsProperty: importSetEntityAsProperty,
     CallMethodOnEntity: importCallMethodOnEntity,
+    PushEntityOnProperty: importPushEntityOnProperty,
     Physics: importPhysics,
     PhysicsState: importPhysicsState,
     DynamicTexture: importDynamicTexture,
-    SubMesh: importSubMesh
+    SubMesh: importSubMesh,
+    MultiMaterial: importMultiMaterial
 };
 
 export const RenderShape = importRenderShape;
@@ -87,7 +91,9 @@ export const CollisionsEnable = importCollisionsEnabled;
 export const GenericProperty = importGenericProperty;
 export const SetEntityAsProperty = importSetEntityAsProperty;
 export const CallMethodOnEntity = importCallMethodOnEntity;
+export const PushEntityOnProperty = importPushEntityOnProperty;
 export const Physics = importPhysics;
 export const PhysicsState = importPhysicsState;
 export const DynamicTexture = importDynamicTexture;
 export const SubMesh = importSubMesh;
+export const MultiMaterial = importMultiMaterial;

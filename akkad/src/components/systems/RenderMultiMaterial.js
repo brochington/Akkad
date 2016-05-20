@@ -1,7 +1,7 @@
 import {PropTypes} from "react";
 import AbstractSystemComponent from "../AbstractSystemComponent";
 
-class RenderSubMesh extends AbstractSystemComponent {
+class RenderMultiMaterial extends AbstractSystemComponent {
     static propTypes = {
         targetEntityID: PropTypes.string
     };
@@ -14,12 +14,12 @@ class RenderSubMesh extends AbstractSystemComponent {
     };
 
     componentWillMount() {
-        const {actions, entityID} = this.context;
-        const {targetEntityID} = this.props;
-        const {createSubMesh} = actions._internal;
+        const {actions, entityID, sceneID} = this.context;
+        // const {targetEntityID} = this.props;
+        const {createMultiMaterial} = actions._internal;
 
-        createSubMesh(targetEntityID, entityID, this.props.options);
+        createMultiMaterial(entityID, sceneID);
     }
 }
 
-export default RenderSubMesh;
+export default RenderMultiMaterial;
