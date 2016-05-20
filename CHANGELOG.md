@@ -1,5 +1,12 @@
 ## Changelog
 
+1.3.2
+
+#### New Features
+
+- Adding basic support for `<MultiMaterial />` and `<SubMesh />`.
+- Starting a basic Jenga-style demo at https://github.com/brochington/akkad-jenga
+
 1.3.1
 
 #### New Features

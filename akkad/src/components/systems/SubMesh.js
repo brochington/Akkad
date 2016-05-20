@@ -10,13 +10,6 @@ class SubMesh extends AbstractSystemComponent {
         verticesStart: PropTypes.number
 
     }
-    componentDidMount() {
-        console.log('Got a SubMesh!!');
-    }
-
-    componentWillUpdate() {
-
-    }
 
     render() {
         const {entityID} = this.context;

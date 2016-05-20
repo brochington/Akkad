@@ -22249,14 +22249,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    (0, _createClass3.default)(SubMesh, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            console.log('Got a SubMesh!!');
-	        }
-	    }, {
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate() {}
-	    }, {
 	        key: "render",
 	        value: function render() {
 	            var entityID = this.context.entityID;
