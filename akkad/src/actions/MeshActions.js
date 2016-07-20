@@ -19,22 +19,39 @@ const importMesh = (path, fileName, scene, progressCallback = () => {}) => {
 
 const MeshActions = {
     async importMesh(state, actions, path, fileName, sceneID, entityID) {
+        if (!fileName) {
+            fileName = path.split('/').pop();
+            path = path.slice(0, path.lastIndexOf('/')) + '/';
+        }
+
         const scene = state().getIn(["entities", sceneID, "entity"]);
         const meshes = await importMesh(path, fileName, scene);
+        console.log('meshes!', meshes);
         let newState = state();
 
-        meshes.forEach(mesh => {
+        meshes.forEach((mesh, i) => {
             const meshObj = Immutable.Map({
-                id: entityID,
+                id: `${entityID}-${i}`,
                 entity: mesh,
-                type: "mesh"
+                type: "mesh",
+                parentMesh: entityID
             });
 
-            newState = newState.setIn(["entities", entityID], meshObj);
+            newState = newState.setIn(["entities", `${entityID}-${i}`], meshObj);
         });
 
 
         return newState;
+    },
+
+    destroyMesh(state, actions, entityID) {
+
+        state()
+            .get('entities')
+            .filter(m => m.get('parentMesh', null) === entityID)
+            .forEach(m => m.get('entity').dispose());
+
+        return state().update('entities', e => e.filter(m => m.get('parentMesh', null) !== entityID));
     },
 
     createSubMesh(state, actions, meshID, entityID, options) {

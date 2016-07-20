@@ -8,7 +8,7 @@ class Trigger extends React.Component {
     static contextTypes = {
         entityID: PropTypes.string,
         sceneID: PropTypes.string,
-        appState: PropTypes.object, 
+        appState: PropTypes.object,
         actions: PropTypes.object
     }
 
@@ -24,10 +24,10 @@ class Trigger extends React.Component {
     render() {
         const {entityID, sceneID} = this.context;
         const {children} = this.props;
-        
+
         return (
             <Entity>
-                <RenderTrigger 
+                <RenderTrigger
                     targetEntityID={entityID}
                     sceneID={sceneID}
                     triggers={this.props}

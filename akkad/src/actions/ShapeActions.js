@@ -139,6 +139,14 @@ const ShapeActions = {
         }
 
         return state();
+    },
+
+    destroyShape(state, actions, entityID) {
+        if (hasEntity(state(), entityID)) {
+            getEntity(state(), entityID).dispose();
+        }
+
+        return state().deleteIn(["entities", entityID]);
     }
 };
 

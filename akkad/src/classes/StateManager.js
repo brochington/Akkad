@@ -64,7 +64,6 @@ class StateManager {
     /* injects state and actions as args into actions that are called. */
     actionWrapper(name, func, ...args) {
         // call the action function with correct args.
-        // console.log("action: ", name);
         const newState = func(() => this[_state], this[_wrappedActions], ...args);
 
         this.handleActionReturnTypes(newState);

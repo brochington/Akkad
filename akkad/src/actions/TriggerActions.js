@@ -8,7 +8,8 @@ const triggerHandlers = {
     onMouseOver: () => ActionManager.OnPointerOverTrigger,
     onMouseOut: () => ActionManager.OnPointerOutTrigger,
     onKeyDown: () => ActionManager.OnKeyDownTrigger,
-    onKeyUp: () => ActionManager.OnKeyUpTrigger
+    onKeyUp: () => ActionManager.OnKeyUpTrigger,
+    onEveryFrame: () => ActionManager.OnEveryFrameTrigger
 };
 
 const TriggerActions = {
@@ -18,6 +19,7 @@ const TriggerActions = {
         /* Create an Action Manager on Mesh if it doesn't already exist */
         if (!mesh.actionManager) {
             const scene = state().getIn(["entities", sceneID, "entity"]);
+
             mesh.actionManager = new ActionManager(scene);
         }
 

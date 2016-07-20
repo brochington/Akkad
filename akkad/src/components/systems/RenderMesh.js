@@ -12,7 +12,7 @@ class RenderMesh extends AbstractSystemComponent {
     static propTypes = {
         targetEntityID: PropTypes.string.isRequired,
         path: PropTypes.string.isRequired,
-        fileName: PropTypes.string.isRequired
+        fileName: PropTypes.string
     }
 
     componentDidMount() {
@@ -25,9 +25,9 @@ class RenderMesh extends AbstractSystemComponent {
 
     componentWillUnmount() {
         const {actions, entityID} = this.context;
-        const {disposeEntity} = actions._internal;
+        const {destroyMesh} = actions._internal;
 
-        disposeEntity(entityID);
+        destroyMesh(entityID);
     }
 
 }

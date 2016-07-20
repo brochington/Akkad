@@ -28,19 +28,28 @@ class RenderShape extends AbstractSystemComponent {
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        if (this.propsChanged(nextProps)) {
-            const {entityID, actions} = nextContext;
-            const {updateShape} = actions._internal;
+        const {sceneID, entityID, actions, appState} = nextContext;
+        const {updateShape, createShape} = actions._internal;
 
-            updateShape(entityID, nextProps);
+        if (this.propsChanged(nextProps)) {
+
+            if (!appState.hasIn(['entities', entityID])) {
+                createShape(sceneID, entityID, nextProps);
+            } else {
+                updateShape(entityID, nextProps);
+            }
+        }
+
+        if (!appState.hasIn(['entities', entityID])) {
+            createShape(sceneID, entityID, nextProps);
         }
     }
 
     componentWillUnmount() {
         const {actions, entityID} = this.context;
-        const {disposeEntity} = actions._internal;
+        const {destroyShape} = actions._internal;
 
-        disposeEntity(entityID);
+        destroyShape(entityID);
     }
 }
 
