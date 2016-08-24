@@ -23,16 +23,17 @@ class Sphere extends AkkadAbstractComponent {
     render() {
         const {
             segments,
-            diameter = 2,
+            diameterX,
+            diameterY,
+            diameterZ,
             children
         } = this.props;
-
         return (
             <Entity>
                 <RenderShape
                     type="sphere"
                     segments={segments}
-                    diameter={diameter}
+                    diameter={Math.sqrt(diameterX**2 + diameterY**2 + diameterZ**2)}
                 />
                 <EntityLoaded>
                     {children}
