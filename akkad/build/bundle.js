@@ -20732,6 +20732,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
+	            console.log('ksjdhfksjdhfk');
 	            this.entityHasWireframe(true);
 	        }
 	    }, {
