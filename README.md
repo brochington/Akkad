@@ -3,12 +3,7 @@ Akkad
 
 [![Join the chat at https://gitter.im/brochington/Akkad](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/brochington/Akkad?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-
 `npm install --save akkad`
-
-To get an Akkad project started quickly, check out the [Akkad boilerplate](https://github.com/brochington/akkad-boilerplate).
-
-requires npm >= 5.0
 
 #### Docs:
 
@@ -20,13 +15,12 @@ requires npm >= 5.0
 
 [State tutorial](https://github.com/brochington/Akkad/blob/master/docs/tutorials/state.md)
 
-
 Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to allow any developer familiar with React the ability to create 3D scenes and games.
 
 ### Features
 
 - Full power of React meets WebGL and Babylon
-- Embed multiple interactive "scenes" directly in your React based site.
+- Embedd multiple interactive "scenes" directly in your React based site.
 - Uses a redux-like state cycle
 - Defined method of extention via Entities and Systems.
 
@@ -39,8 +33,7 @@ Akkad is a React Webgl target that uses the Babylon.js library. Its aim is to al
 - Collisions
 - Particles
 - Basic triggers like onClick
-- Overlays with React generated DOM
-- Draw textures on elements with the Canvas API.
+- Add things like overlays with React generated DOM
 - Lot's more to come!
 
 ## Example
@@ -77,17 +70,24 @@ export default App;
 
 Please check out the example project included for more.
 
+
 ### Development
 
 Akkad includes an example project for quick testing and development work. To use the example project:
 
-From the project root:
+link the akkad library in the example app. From the project root:
 ```
 $ cd akkad
-$ npm run setup:watch
+$ npm link
 $ cd ../example
-$ npm run setup:dev // only needed the first time.
-$ npm run start:dev
+$ npm link akkad
+$ npm start
+```
+
+In another terminal tab, navigate back to project root. Start up Akkad watch compilation:
+```
+$ cd akkad
+$ npm run watch
 ```
 
 This will allow you to make changes to Akkad live while you are running the example app.
