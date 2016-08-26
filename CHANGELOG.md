@@ -1,5 +1,40 @@
 ## Changelog
 
+1.4.0
+
+### New Features
+
+- MeshBuilder is now used for all basic shapes, which brings the total number of shapes up. Total list of current shapes:
+
+```
+'Box',
+'Sphere',
+'IcoSphere',
+'Ribbon',
+'Cylinder',
+'Torus',
+'TorusKnot',
+'LineSystem',
+'Lines',
+'DashedLines',
+'Lathe',
+'Ground',
+'TiledGround',
+'Tube',
+'Polyhedron',
+'GroundFromHeightMap'
+```
+
+props for each Shape component match the properties on the options object that are past to each `MeshBuilder.Create<Shape>` method. For more info, including these properties, see http://doc.babylonjs.com/classes/2.4/MeshBuilder
+
+#### Breaking changes
+
+- Lines and DashedLines have had the `vectors` property renamed to `points` to more closely match MeshBuilder API, and now takes an array of Vector3 instances.
+
+#### updates
+- Update to Babylon 2.4.0
+
+
 1.3.2
 
 #### New Features

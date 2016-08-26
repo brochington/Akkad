@@ -1,27 +1,28 @@
 import React, {PropTypes} from "react";
+import {omit} from "lodash";
 import Entity from "../Entity";
 import EntityLoaded from "../EntityLoaded";
 import {RenderShape} from "../systems";
+import AkkadAbstractComponent from '../AkkadAbstractComponent';
 
-class Lines extends React.Component {
+class ShapeFactory extends AkkadAbstractComponent {
     static propTypes = {
-        vectors: PropTypes.arrayOf(PropTypes.array)
-    };
+        type: PropTypes.string.isRequired
+    }
 
     render() {
-        const {vectors = [], children} = this.props;
         return (
             <Entity>
                 <RenderShape
-                    type="lines"
-                    vectors={vectors}
+                    type={this.props.type}
+                    {...omit(this.props, ['children'])}
                 />
                 <EntityLoaded>
-                    {children}
+                    {this.props.children}
                 </EntityLoaded>
             </Entity>
         );
     }
 }
 
-export default Lines;
+export default ShapeFactory;

@@ -770,7 +770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Engine(props) {
 	        (0, _classCallCheck3.default)(this, Engine);
 
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Engine).call(this, props));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (Engine.__proto__ || (0, _getPrototypeOf2.default)(Engine)).call(this, props));
 
 	        var reactid = props.reactid;
 
@@ -2233,7 +2233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderShape() {
 	        (0, _classCallCheck3.default)(this, RenderShape);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderShape).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderShape.__proto__ || (0, _getPrototypeOf2.default)(RenderShape)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderShape, [{
@@ -2357,7 +2357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function AbstractSystemComponent(props, context) {
 	        (0, _classCallCheck3.default)(this, AbstractSystemComponent);
 
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(AbstractSystemComponent).call(this, props, context));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (AbstractSystemComponent.__proto__ || (0, _getPrototypeOf2.default)(AbstractSystemComponent)).call(this, props, context));
 
 	        _this.propsChanged = function (nextProps) {
 	            // const InextProps = Immutable.Map(nextProps);
@@ -19207,7 +19207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderLight() {
 	        (0, _classCallCheck3.default)(this, RenderLight);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderLight).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderLight.__proto__ || (0, _getPrototypeOf2.default)(RenderLight)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderLight, [{
@@ -19295,7 +19295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderCamera() {
 	        (0, _classCallCheck3.default)(this, RenderCamera);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderCamera).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderCamera.__proto__ || (0, _getPrototypeOf2.default)(RenderCamera)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderCamera, [{
@@ -19384,7 +19384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderMaterial() {
 	        (0, _classCallCheck3.default)(this, RenderMaterial);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderMaterial).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderMaterial.__proto__ || (0, _getPrototypeOf2.default)(RenderMaterial)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderMaterial, [{
@@ -19460,7 +19460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderAnimation() {
 	        (0, _classCallCheck3.default)(this, RenderAnimation);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderAnimation).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderAnimation.__proto__ || (0, _getPrototypeOf2.default)(RenderAnimation)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderAnimation, [{
@@ -19549,7 +19549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderMesh() {
 	        (0, _classCallCheck3.default)(this, RenderMesh);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderMesh).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderMesh.__proto__ || (0, _getPrototypeOf2.default)(RenderMesh)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderMesh, [{
@@ -19638,7 +19638,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderParticles() {
 	        (0, _classCallCheck3.default)(this, RenderParticles);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderParticles).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderParticles.__proto__ || (0, _getPrototypeOf2.default)(RenderParticles)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderParticles, [{
@@ -19726,7 +19726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderSubMesh() {
 	        (0, _classCallCheck3.default)(this, RenderSubMesh);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderSubMesh).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderSubMesh.__proto__ || (0, _getPrototypeOf2.default)(RenderSubMesh)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderSubMesh, [{
@@ -19809,7 +19809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Trigger() {
 	        (0, _classCallCheck3.default)(this, Trigger);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Trigger).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Trigger.__proto__ || (0, _getPrototypeOf2.default)(Trigger)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Trigger, [{
@@ -19899,7 +19899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Entity() {
 	        (0, _classCallCheck3.default)(this, Entity);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Entity).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Entity.__proto__ || (0, _getPrototypeOf2.default)(Entity)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Entity, [{
@@ -19985,7 +19985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function AkkadAbstractComponent(props, context) {
 	        (0, _classCallCheck3.default)(this, AkkadAbstractComponent);
 
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(AkkadAbstractComponent).call(this, props, context));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (AkkadAbstractComponent.__proto__ || (0, _getPrototypeOf2.default)(AkkadAbstractComponent)).call(this, props, context));
 
 	        _this.id = Math.floor((1 + Math.random()) * 10000000000).toString(16);
 	        return _this;
@@ -20051,7 +20051,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function EntityLoaded() {
 	        (0, _classCallCheck3.default)(this, EntityLoaded);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(EntityLoaded).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (EntityLoaded.__proto__ || (0, _getPrototypeOf2.default)(EntityLoaded)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(EntityLoaded, [{
@@ -20135,7 +20135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderTrigger() {
 	        (0, _classCallCheck3.default)(this, RenderTrigger);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderTrigger).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderTrigger.__proto__ || (0, _getPrototypeOf2.default)(RenderTrigger)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderTrigger, [{
@@ -20232,7 +20232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Mesh() {
 	        (0, _classCallCheck3.default)(this, Mesh);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Mesh).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Mesh.__proto__ || (0, _getPrototypeOf2.default)(Mesh)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Mesh, [{
@@ -20318,7 +20318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function AnimateMesh() {
 	        (0, _classCallCheck3.default)(this, AnimateMesh);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(AnimateMesh).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (AnimateMesh.__proto__ || (0, _getPrototypeOf2.default)(AnimateMesh)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(AnimateMesh, [{
@@ -20423,7 +20423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(Position, _AbstractSystemCompon);
 
 	    function Position() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -20433,7 +20433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(Position)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updatePosition = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Position.__proto__ || (0, _getPrototypeOf2.default)(Position)).call.apply(_ref, [this].concat(args))), _this), _this.updatePosition = function (props, context) {
 	            var appState = context.appState;
 	            var entityID = context.entityID;
 	            var vector = props.vector;
@@ -20735,7 +20735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(Rotate, _AbstractSystemCompon);
 
 	    function Rotate() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -20745,7 +20745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(Rotate)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateRotation = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Rotate.__proto__ || (0, _getPrototypeOf2.default)(Rotate)).call.apply(_ref, [this].concat(args))), _this), _this.updateRotation = function (props, context) {
 	            var entityID = context.entityID;
 	            var appState = context.appState;
 	            var amount = props.amount;
@@ -20923,7 +20923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(Rotation, _AbstractSystemCompon);
 
 	    function Rotation() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -20933,7 +20933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(Rotation)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateRotation = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Rotation.__proto__ || (0, _getPrototypeOf2.default)(Rotation)).call.apply(_ref, [this].concat(args))), _this), _this.updateRotation = function (props, context) {
 	            var x = props.x;
 	            var y = props.y;
 	            var z = props.z;
@@ -21032,7 +21032,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(Wireframe, _AbstractSystemCompon);
 
 	    function Wireframe() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -21042,7 +21042,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(Wireframe)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.entityHasWireframe = function (val) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Wireframe.__proto__ || (0, _getPrototypeOf2.default)(Wireframe)).call.apply(_ref, [this].concat(args))), _this), _this.entityHasWireframe = function (val) {
 	            var _this$context = _this.context;
 	            var appState = _this$context.appState;
 	            var entityID = _this$context.entityID;
@@ -21061,7 +21061,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "componentWillMount",
 	        value: function componentWillMount() {
-	            console.log('ksjdhfksjdhfk');
 	            this.entityHasWireframe(true);
 	        }
 	    }, {
@@ -21127,7 +21126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Texture() {
 	        (0, _classCallCheck3.default)(this, Texture);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Texture).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Texture.__proto__ || (0, _getPrototypeOf2.default)(Texture)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Texture, [{
@@ -21234,7 +21233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(Color, _AbstractSystemCompon);
 
 	    function Color() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -21244,7 +21243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(Color)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateColor = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Color.__proto__ || (0, _getPrototypeOf2.default)(Color)).call.apply(_ref, [this].concat(args))), _this), _this.updateColor = function (props, context) {
 	            var appState = context.appState;
 	            var entityID = context.entityID;
 	            var color = props.color;
@@ -21376,7 +21375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(Gravity, _AbstractSystemCompon);
 
 	    function Gravity() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -21386,7 +21385,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(Gravity)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateGravity = function (value, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Gravity.__proto__ || (0, _getPrototypeOf2.default)(Gravity)).call.apply(_ref, [this].concat(args))), _this), _this.updateGravity = function (value, context) {
 	            var appState = context.appState;
 	            var entityID = context.entityID;
 
@@ -21488,7 +21487,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function ApplyGravity() {
 	        (0, _classCallCheck3.default)(this, ApplyGravity);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ApplyGravity).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (ApplyGravity.__proto__ || (0, _getPrototypeOf2.default)(ApplyGravity)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(ApplyGravity, [{
@@ -21572,7 +21571,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function CheckCollisions() {
 	        (0, _classCallCheck3.default)(this, CheckCollisions);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(CheckCollisions).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (CheckCollisions.__proto__ || (0, _getPrototypeOf2.default)(CheckCollisions)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(CheckCollisions, [{
@@ -21656,7 +21655,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function CollisionsEnabled() {
 	        (0, _classCallCheck3.default)(this, CollisionsEnabled);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(CollisionsEnabled).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (CollisionsEnabled.__proto__ || (0, _getPrototypeOf2.default)(CollisionsEnabled)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(CollisionsEnabled, [{
@@ -21740,7 +21739,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Physics() {
 	        (0, _classCallCheck3.default)(this, Physics);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Physics).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Physics.__proto__ || (0, _getPrototypeOf2.default)(Physics)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Physics, [{
@@ -21827,7 +21826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function PhysicsState() {
 	        (0, _classCallCheck3.default)(this, PhysicsState);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(PhysicsState).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (PhysicsState.__proto__ || (0, _getPrototypeOf2.default)(PhysicsState)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(PhysicsState, [{
@@ -21926,7 +21925,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function DynamicTexture() {
 	        (0, _classCallCheck3.default)(this, DynamicTexture);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(DynamicTexture).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (DynamicTexture.__proto__ || (0, _getPrototypeOf2.default)(DynamicTexture)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(DynamicTexture, [{
@@ -22022,7 +22021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderDynamicTexture() {
 	        (0, _classCallCheck3.default)(this, RenderDynamicTexture);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderDynamicTexture).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderDynamicTexture.__proto__ || (0, _getPrototypeOf2.default)(RenderDynamicTexture)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderDynamicTexture, [{
@@ -22091,7 +22090,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function SetEntityAsProperty() {
 	        (0, _classCallCheck3.default)(this, SetEntityAsProperty);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(SetEntityAsProperty).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (SetEntityAsProperty.__proto__ || (0, _getPrototypeOf2.default)(SetEntityAsProperty)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(SetEntityAsProperty, [{
@@ -22251,7 +22250,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(FillStyle, _AbstractSystemCompon);
 
 	    function FillStyle() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -22261,7 +22260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(FillStyle)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = FillStyle.__proto__ || (0, _getPrototypeOf2.default)(FillStyle)).call.apply(_ref, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
 	            var canvasContext = context.canvasContext;
 	            var appState = context.appState;
 	            var entityID = context.entityID;
@@ -22339,7 +22338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(FillRect, _AbstractSystemCompon);
 
 	    function FillRect() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -22349,7 +22348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(FillRect)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = FillRect.__proto__ || (0, _getPrototypeOf2.default)(FillRect)).call.apply(_ref, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
 	            var canvasContext = context.canvasContext;
 	            var appState = context.appState;
 	            var entityID = context.entityID;
@@ -22438,7 +22437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function GetCanvasContext() {
 	        (0, _classCallCheck3.default)(this, GetCanvasContext);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GetCanvasContext).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (GetCanvasContext.__proto__ || (0, _getPrototypeOf2.default)(GetCanvasContext)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(GetCanvasContext, [{
@@ -22524,7 +22523,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function CanvasContextToContext() {
 	        (0, _classCallCheck3.default)(this, CanvasContextToContext);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(CanvasContextToContext).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (CanvasContextToContext.__proto__ || (0, _getPrototypeOf2.default)(CanvasContextToContext)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(CanvasContextToContext, [{
@@ -22625,7 +22624,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(RasterizeMarkup, _AbstractSystemCompon);
 
 	    function RasterizeMarkup() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -22635,7 +22634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(RasterizeMarkup)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = RasterizeMarkup.__proto__ || (0, _getPrototypeOf2.default)(RasterizeMarkup)).call.apply(_ref, [this].concat(args))), _this), _this.updateDynamicTexture = function (props, context) {
 	            console.log('updateDynamicTexture!!!!');
 	            var canvasContext = context.canvasContext;
 	            var appState = context.appState;
@@ -22750,7 +22749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function SubMesh() {
 	        (0, _classCallCheck3.default)(this, SubMesh);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(SubMesh).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (SubMesh.__proto__ || (0, _getPrototypeOf2.default)(SubMesh)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(SubMesh, [{
@@ -22857,7 +22856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function MultiMaterial() {
 	        (0, _classCallCheck3.default)(this, MultiMaterial);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(MultiMaterial).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (MultiMaterial.__proto__ || (0, _getPrototypeOf2.default)(MultiMaterial)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(MultiMaterial, [{
@@ -22939,7 +22938,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function RenderMultiMaterial() {
 	        (0, _classCallCheck3.default)(this, RenderMultiMaterial);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RenderMultiMaterial).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (RenderMultiMaterial.__proto__ || (0, _getPrototypeOf2.default)(RenderMultiMaterial)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(RenderMultiMaterial, [{
@@ -23013,7 +23012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _inherits3.default)(GenericProperty, _AbstractSystemCompon);
 
 	    function GenericProperty() {
-	        var _Object$getPrototypeO;
+	        var _ref;
 
 	        var _temp, _this, _ret;
 
@@ -23023,7 +23022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_Object$getPrototypeO = (0, _getPrototypeOf2.default)(GenericProperty)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.valChanged = function (nextProps) {
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = GenericProperty.__proto__ || (0, _getPrototypeOf2.default)(GenericProperty)).call.apply(_ref, [this].concat(args))), _this), _this.valChanged = function (nextProps) {
 	            if (nextProps.onVal !== _this.props.onVal || nextProps.offVal !== _this.props.offVal) {
 	                return true;
 	            }
@@ -23135,7 +23134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function CallMethodOnEntity() {
 	        (0, _classCallCheck3.default)(this, CallMethodOnEntity);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(CallMethodOnEntity).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (CallMethodOnEntity.__proto__ || (0, _getPrototypeOf2.default)(CallMethodOnEntity)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(CallMethodOnEntity, [{
@@ -23219,7 +23218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function PushEntityOnProperty() {
 	        (0, _classCallCheck3.default)(this, PushEntityOnProperty);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(PushEntityOnProperty).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (PushEntityOnProperty.__proto__ || (0, _getPrototypeOf2.default)(PushEntityOnProperty)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(PushEntityOnProperty, [{
@@ -23333,7 +23332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Scene() {
 	        (0, _classCallCheck3.default)(this, Scene);
 
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Scene).call(this));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (Scene.__proto__ || (0, _getPrototypeOf2.default)(Scene)).call(this));
 
 	        _this.callAkkadRender = function () {
 	            // const {appState} = this.context;
@@ -43764,7 +43763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Material() {
 	        (0, _classCallCheck3.default)(this, Material);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Material).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Material.__proto__ || (0, _getPrototypeOf2.default)(Material)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Material, [{
@@ -43870,7 +43869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Akkad() {
 	        (0, _classCallCheck3.default)(this, Akkad);
 
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Akkad).call(this));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (Akkad.__proto__ || (0, _getPrototypeOf2.default)(Akkad)).call(this));
 
 	        _this.setStateCallback = function () {
 	            _this.cb && _this.cb();
@@ -44277,96 +44276,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var shapeCreators = {
-	    box: function box(scene, entityID, options) {
-	        // const {size, updatable} = options;
+	    Box: function Box(scene, entityID, options) {
 	        return new _babylonjs.MeshBuilder.CreateBox(entityID, options, scene);
-	        // return new Mesh.CreateBox(entityID, size, scene, updatable);
 	    },
-	    sphere: function sphere(scene, entityID, options) {
-	        var segments = options.segments;
-	        var diameter = options.diameter;
-	        var updatable = options.updatable;
-
-	        return new _babylonjs.Mesh.CreateSphere(entityID, segments, diameter, scene, updatable);
+	    Sphere: function Sphere(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateSphere(entityID, options, scene);
 	    },
-	    ground: function ground(scene, entityID, options) {
-	        var width = options.width;
-	        var height = options.height;
-	        var subdivisions = options.subdivisions;
-	        var updatable = options.updatable;
-
-	        return new _babylonjs.Mesh.CreateGround(entityID, width, height, subdivisions, scene, updatable);
+	    IcoSphere: function IcoSphere(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateIcoSphere(entityID, options, scene);
 	    },
-	    groundFromHeightMap: function groundFromHeightMap(scene, entityID, options, callback) {
-	        var heightMap = options.heightMap;
-	        var meshWidth = options.meshWidth;
-	        var meshHeight = options.meshHeight;
-	        var _options$subdivisions = options.subdivisions;
-	        var subdivisions = _options$subdivisions === undefined ? 250 : _options$subdivisions;
-	        var minHeight = options.minHeight;
-	        var maxHeight = options.maxHeight;
-
-
-	        return new _babylonjs.Mesh.CreateGroundFromHeightMap(entityID, heightMap, meshWidth, meshHeight, subdivisions, minHeight, maxHeight, scene, true, // updatable
-	        callback);
+	    Ribbon: function Ribbon(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateRibbon(entityID, options, scene);
 	    },
-	    disc: function disc(scene, entityID, options) {
-	        var radius = options.radius;
-	        var tessellation = options.tessellation;
-	        var _options$updatable = options.updatable;
-	        var updatable = _options$updatable === undefined ? true : _options$updatable;
-	        var _options$sideOrientat = options.sideOrientation;
-	        var sideOrientation = _options$sideOrientat === undefined ? null : _options$sideOrientat;
-
-
-	        return new _babylonjs.Mesh.CreateDisc(entityID, radius, tessellation, scene, updatable, sideOrientation);
+	    Cylinder: function Cylinder(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateCylinder(entityID, options, scene);
 	    },
-	    cylinder: function cylinder(scene, entityID, options) {
-	        var _options$height = options.height;
-	        var height = _options$height === undefined ? 1 : _options$height;
-	        var _options$diameterTop = options.diameterTop;
-	        var diameterTop = _options$diameterTop === undefined ? 1 : _options$diameterTop;
-	        var _options$diameterBott = options.diameterBottom;
-	        var diameterBottom = _options$diameterBott === undefined ? 1 : _options$diameterBott;
-	        var _options$tessellation = options.tessellation;
-	        var tessellation = _options$tessellation === undefined ? 30 : _options$tessellation;
-	        var _options$subdivisions2 = options.subdivisions;
-	        var subdivisions = _options$subdivisions2 === undefined ? 6 : _options$subdivisions2;
-	        var _options$updatable2 = options.updatable;
-	        var updatable = _options$updatable2 === undefined ? true : _options$updatable2;
-
-
-	        return new _babylonjs.Mesh.CreateCylinder(entityID, height, diameterTop, diameterBottom, tessellation, subdivisions, scene, updatable);
+	    Torus: function Torus(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateTorus(entityID, options, scene);
 	    },
-	    torus: function torus(scene, entityID, options) {
-	        var _options$diameter = options.diameter;
-	        var diameter = _options$diameter === undefined ? 1 : _options$diameter;
-	        var _options$thickness = options.thickness;
-	        var thickness = _options$thickness === undefined ? 1 : _options$thickness;
-	        var _options$tessellation2 = options.tessellation;
-	        var tessellation = _options$tessellation2 === undefined ? 10 : _options$tessellation2;
-	        var _options$updatable3 = options.updatable;
-	        var updatable = _options$updatable3 === undefined ? true : _options$updatable3;
-	        var _options$sideOrientat2 = options.sideOrientation;
-	        var sideOrientation = _options$sideOrientat2 === undefined ? 0 : _options$sideOrientat2;
-
-
-	        return new _babylonjs.Mesh.CreateTorus(entityID, diameter, thickness, tessellation, scene, updatable, sideOrientation);
+	    TorusKnot: function TorusKnot(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateTorusKnot(entityID, options, scene);
 	    },
-	    lines: function lines(scene, entityID, options) {
-	        var vectors = options.vectors;
-
-
-	        return new _babylonjs.Mesh.CreateLines(entityID, vectors, scene);
+	    LineSystem: function LineSystem(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateLineSystem(entityID, options, scene);
 	    },
-	    dashedLines: function dashedLines(scene, entityID, options) {
-	        var vectors = options.vectors;
-	        var dashSize = options.dashSize;
-	        var gapSize = options.gapSize;
-	        var dashNumber = options.dashNumber;
-
-
-	        return new _babylonjs.Mesh.CreateDashedLines(entityID, vectors, dashSize, gapSize, dashNumber, scene);
+	    Lines: function Lines(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateLines(entityID, options, scene);
+	    },
+	    DashedLines: function DashedLines(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateDashedLines(entityID, options, scene);
+	    },
+	    Lathe: function Lathe(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateLathe(entityID, options, scene);
+	    },
+	    Ground: function Ground(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateGround(entityID, options, scene);
+	    },
+	    TiledGround: function TiledGround(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateTiledGround(entityID, options, scene);
+	    },
+	    Tube: function Tube(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateTube(entityID, options, scene);
+	    },
+	    Polyhedron: function Polyhedron(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreatePolyhedron(entityID, options, scene);
+	    },
+	    GroundFromHeightMap: function GroundFromHeightMap(scene, entityID, options) {
+	        return new _babylonjs.MeshBuilder.CreateGroundFromHeightMap(entityID, options.heightMap, options, scene);
 	    }
 	};
 
@@ -44385,19 +44341,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (type && shapeCreators[type]) {
 	            var scene = state().getIn(["entities", sceneID, "entity"]);
 	            var options = (0, _Helpers.convertShapeProps)(props);
+
 	            var shape = shapeCreators[type](scene, entityID, options, function () {/*action callback goes here.*/});
 
 	            var meshObj = _immutable2.default.Map({
 	                id: entityID,
 	                entity: shape,
 	                type: "mesh",
-	                shape: type
+	                shape: type.toLowerCase()
 	            });
 
 	            return state().setIn(["entities", entityID], meshObj);
 	        }
 
-	        return state();
+	        return null;
 	    },
 	    updateShape: function updateShape(state, actions, entityID, props) {
 	        var type = props.type;
@@ -55919,7 +55876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function PropsToContext() {
 	        (0, _classCallCheck3.default)(this, PropsToContext);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(PropsToContext).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (PropsToContext.__proto__ || (0, _getPrototypeOf2.default)(PropsToContext)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(PropsToContext, [{
@@ -56012,7 +55969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function BasicAnimation() {
 	        (0, _classCallCheck3.default)(this, BasicAnimation);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(BasicAnimation).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (BasicAnimation.__proto__ || (0, _getPrototypeOf2.default)(BasicAnimation)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(BasicAnimation, [{
@@ -56115,7 +56072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function Particles() {
 	        (0, _classCallCheck3.default)(this, Particles);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Particles).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (Particles.__proto__ || (0, _getPrototypeOf2.default)(Particles)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(Particles, [{
@@ -56256,7 +56213,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function HemisphericLight() {
 	        (0, _classCallCheck3.default)(this, HemisphericLight);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(HemisphericLight).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (HemisphericLight.__proto__ || (0, _getPrototypeOf2.default)(HemisphericLight)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(HemisphericLight, [{
@@ -56363,7 +56320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function PointLight() {
 	        (0, _classCallCheck3.default)(this, PointLight);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(PointLight).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (PointLight.__proto__ || (0, _getPrototypeOf2.default)(PointLight)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(PointLight, [{
@@ -56473,7 +56430,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function SpotLight() {
 	        (0, _classCallCheck3.default)(this, SpotLight);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(SpotLight).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (SpotLight.__proto__ || (0, _getPrototypeOf2.default)(SpotLight)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(SpotLight, [{
@@ -56587,7 +56544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function DirectionalLight() {
 	        (0, _classCallCheck3.default)(this, DirectionalLight);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(DirectionalLight).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (DirectionalLight.__proto__ || (0, _getPrototypeOf2.default)(DirectionalLight)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(DirectionalLight, [{
@@ -56722,7 +56679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function FreeCamera() {
 	        (0, _classCallCheck3.default)(this, FreeCamera);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(FreeCamera).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (FreeCamera.__proto__ || (0, _getPrototypeOf2.default)(FreeCamera)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(FreeCamera, [{
@@ -56818,7 +56775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function ArcRotateCamera() {
 	        (0, _classCallCheck3.default)(this, ArcRotateCamera);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ArcRotateCamera).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (ArcRotateCamera.__proto__ || (0, _getPrototypeOf2.default)(ArcRotateCamera)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(ArcRotateCamera, [{
@@ -56917,7 +56874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function WebVRFreeCamera() {
 	        (0, _classCallCheck3.default)(this, WebVRFreeCamera);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(WebVRFreeCamera).apply(this, arguments));
+	        return (0, _possibleConstructorReturn3.default)(this, (WebVRFreeCamera.__proto__ || (0, _getPrototypeOf2.default)(WebVRFreeCamera)).apply(this, arguments));
 	    }
 
 	    (0, _createClass3.default)(WebVRFreeCamera, [{
@@ -56976,61 +56933,78 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _Sphere = __webpack_require__(366);
+	var _extends2 = __webpack_require__(2);
 
-	var _Sphere2 = _interopRequireDefault(_Sphere);
+	var _extends3 = _interopRequireDefault(_extends2);
 
-	var _Box = __webpack_require__(367);
+	var _react = __webpack_require__(98);
 
-	var _Box2 = _interopRequireDefault(_Box);
+	var _react2 = _interopRequireDefault(_react);
 
-	var _Disc = __webpack_require__(368);
+	var _ShapeFactory = __webpack_require__(366);
 
-	var _Disc2 = _interopRequireDefault(_Disc);
-
-	var _Ground = __webpack_require__(369);
-
-	var _Ground2 = _interopRequireDefault(_Ground);
-
-	var _GroundFromHeightMap = __webpack_require__(370);
-
-	var _GroundFromHeightMap2 = _interopRequireDefault(_GroundFromHeightMap);
-
-	var _Cylinder = __webpack_require__(371);
-
-	var _Cylinder2 = _interopRequireDefault(_Cylinder);
-
-	var _Torus = __webpack_require__(372);
-
-	var _Torus2 = _interopRequireDefault(_Torus);
-
-	var _Lines = __webpack_require__(373);
-
-	var _Lines2 = _interopRequireDefault(_Lines);
-
-	var _DashedLines = __webpack_require__(374);
-
-	var _DashedLines2 = _interopRequireDefault(_DashedLines);
+	var _ShapeFactory2 = _interopRequireDefault(_ShapeFactory);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
-	    Sphere: _Sphere2.default,
-	    Box: _Box2.default,
-	    Disc: _Disc2.default,
-	    Ground: _Ground2.default,
-	    GroundFromHeightMap: _GroundFromHeightMap2.default,
-	    Cylinder: _Cylinder2.default,
-	    Torus: _Torus2.default,
-	    Lines: _Lines2.default,
-	    DashedLines: _DashedLines2.default
+	// import Sphere from "./Sphere";
+	// import Box from "./Box";
+	// import Disc from "./Disc";
+	// import Ground from "./Ground";
+	// import GroundFromHeightMap from "./GroundFromHeightMap";
+	// import Cylinder from "./Cylinder";
+	// import Torus from "./Torus";
+	// import Lines from "./Lines";
+	// import DashedLines from "./DashedLines";
+
+	// export default {
+	//     Sphere,
+	//     Box,
+	//     Disc,
+	//     Ground,
+	//     GroundFromHeightMap,
+	//     Cylinder,
+	//     Torus,
+	//     Lines,
+	//     DashedLines
+	// };
+
+	var shapes = ['Box', 'Sphere', 'IcoSphere', 'Ribbon', 'Cylinder', 'Torus', 'TorusKnot', 'LineSystem', 'Lines', 'DashedLines', 'Lathe', 'Ground', 'TiledGround', 'Tube', 'Polyhedron', 'GroundFromHeightMap'];
+
+	exports.default = shapes.reduce(function (acc, shape) {
+	    acc[shape] = function (props) {
+	        return _react2.default.createElement(_ShapeFactory2.default, (0, _extends3.default)({ type: shape }, props));
+	    };
+	    return acc;
+	}, {});
+
+	/*
+	export default {
+	    Box(props){return <ShapeFactory type={'Box'} {...props} />;},
+	    Sphere(props){return <ShapeFactory type={'Sphere'} {...props} />;},
+	    IcoSphere(props){return <ShapeFactory type={'IcoSphere'} {...props} />;},
+	    Ribbon(props){return <ShapeFactory type={'Ribbon'} {...props} />;},
+	    Cylinder(props){return <ShapeFactory type={'Cylinder'} {...props} />;},
+	    Torus(props){return <ShapeFactory type={'Torus'} {...props} />;},
+	    TorusKnot(props){return <ShapeFactory type={'TorusKnot'} {...props} />;},
+	    LineSystem(props){return <ShapeFactory type={'LineSystem'} {...props} />;},
+	    DashedLines(props){return <ShapeFactory type={'DashedLines'} {...props} />;},
+	    Lines(props){return <ShapeFactory type={'Lines'} {...props} />;},
+	    Lathe(props){return <ShapeFactory type={'Lathe'} {...props} />;},
+	    Plane(props){return <ShapeFactory type={'Plane'} {...props} />;},
+	    Ground(props){return <ShapeFactory type={'Ground'} {...props} />;},
+	    TiledGround(props){return <ShapeFactory type={'TiledGround'} {...props} />;},
+	    Tube(props){return <ShapeFactory type={'Tube'} {...props} />;},
+	    Polyhedron(props){return <ShapeFactory type={'Polyhedron'} {...props} />;},
+	    GroundFromHeightMap(props){return <ShapeFactory type={'GroundFromHeightMap'} {...props} />;}
 	};
+	*/
 
 /***/ },
 /* 366 */
@@ -57042,6 +57016,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
+	var _extends2 = __webpack_require__(2);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
 	var _getPrototypeOf = __webpack_require__(46);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -57065,6 +57043,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(98);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _lodash = __webpack_require__(104);
 
 	var _Entity = __webpack_require__(114);
 
@@ -57082,852 +57062,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Sphere = function (_AkkadAbstractCompone) {
-	    (0, _inherits3.default)(Sphere, _AkkadAbstractCompone);
+	var ShapeFactory = function (_AkkadAbstractCompone) {
+	    (0, _inherits3.default)(ShapeFactory, _AkkadAbstractCompone);
 
-	    function Sphere() {
-	        (0, _classCallCheck3.default)(this, Sphere);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Sphere).apply(this, arguments));
+	    function ShapeFactory() {
+	        (0, _classCallCheck3.default)(this, ShapeFactory);
+	        return (0, _possibleConstructorReturn3.default)(this, (ShapeFactory.__proto__ || (0, _getPrototypeOf2.default)(ShapeFactory)).apply(this, arguments));
 	    }
 
-	    (0, _createClass3.default)(Sphere, [{
-	        key: "componentWillMount",
-	        value: function componentWillMount() {
-	            console.log("componentWillMount, duder!!");
-	        }
-	    }, {
-	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {
-	            console.log('testing unmounting of sphere');
-	        }
-	    }, {
+	    (0, _createClass3.default)(ShapeFactory, [{
 	        key: "render",
 	        value: function render() {
-	            var _props = this.props;
-	            var segments = _props.segments;
-	            var diameterX = _props.diameterX;
-	            var diameterY = _props.diameterY;
-	            var diameterZ = _props.diameterZ;
-	            var children = _props.children;
-
 	            return _react2.default.createElement(
 	                _Entity2.default,
 	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "sphere",
-	                    segments: segments,
-	                    diameter: Math.sqrt(Math.pow(diameterX, 2) + Math.pow(diameterY, 2) + Math.pow(diameterZ, 2))
-	                }),
+	                _react2.default.createElement(_systems.RenderShape, (0, _extends3.default)({
+	                    type: this.props.type
+	                }, (0, _lodash.omit)(this.props, ['children']))),
 	                _react2.default.createElement(
 	                    _EntityLoaded2.default,
 	                    null,
-	                    children
+	                    this.props.children
 	                )
 	            );
 	        }
 	    }]);
-	    return Sphere;
+	    return ShapeFactory;
 	}(_AkkadAbstractComponent2.default);
 
-	Sphere.propTypes = {
-	    segments: _react.PropTypes.number,
-	    diameterX: _react.PropTypes.number,
-	    diameterY: _react.PropTypes.number,
-	    diameterZ: _react.PropTypes.number
+	ShapeFactory.propTypes = {
+	    type: _react.PropTypes.string.isRequired
 	};
-	exports.default = Sphere;
-
-/***/ },
-/* 367 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	var _AkkadAbstractComponent = __webpack_require__(115);
-
-	var _AkkadAbstractComponent2 = _interopRequireDefault(_AkkadAbstractComponent);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	* Adds a Box to the Scene
-	* @extends AkkadAbstractComponent
-	*/
-	var Box = function (_AkkadAbstractCompone) {
-	    (0, _inherits3.default)(Box, _AkkadAbstractCompone);
-
-	    function Box() {
-	        (0, _classCallCheck3.default)(this, Box);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Box).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Box, [{
-	        key: "render",
-
-	        /**
-	        * @name contextTypes
-	        * @property {object} contextTypes
-	        * @property {object} contextTypes.appState
-	        * @property {object} contextTypes.actions
-	        */
-	        value: function render() {
-	            var _props = this.props;
-	            var _props$size = _props.size;
-	            var size = _props$size === undefined ? 1 : _props$size;
-	            var _props$height = _props.height;
-	            var height = _props$height === undefined ? 1 : _props$height;
-	            var _props$width = _props.width;
-	            var width = _props$width === undefined ? 1 : _props$width;
-	            var _props$updatable = _props.updatable;
-	            var updatable = _props$updatable === undefined ? false : _props$updatable;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "box",
-	                    size: size,
-	                    height: height,
-	                    width: width,
-	                    updatable: updatable || false
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Box;
-	}(_AkkadAbstractComponent2.default);
-
-	Box.contextTypes = {
-	    appState: _react.PropTypes.object,
-	    actions: _react.PropTypes.object
-	};
-	Box.propTypes = {
-	    size: _react.PropTypes.number,
-	    height: _react.PropTypes.number,
-	    width: _react.PropTypes.number
-	};
-	exports.default = Box;
-
-/***/ },
-/* 368 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Disc = function (_React$Component) {
-	    (0, _inherits3.default)(Disc, _React$Component);
-
-	    function Disc() {
-	        (0, _classCallCheck3.default)(this, Disc);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Disc).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Disc, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var _props$radius = _props.radius;
-	            var radius = _props$radius === undefined ? 10 : _props$radius;
-	            var _props$tessellation = _props.tessellation;
-	            var tessellation = _props$tessellation === undefined ? 0 : _props$tessellation;
-	            var _props$sideOrientatio = _props.sideOrientation;
-	            var sideOrientation = _props$sideOrientatio === undefined ? null : _props$sideOrientatio;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "disc",
-	                    radius: radius,
-	                    tessellation: tessellation,
-	                    sideOrientation: sideOrientation
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Disc;
-	}(_react2.default.Component);
-
-	Disc.contextTypes = {
-	    appState: _react.PropTypes.object,
-	    actions: _react.PropTypes.object
-	};
-	Disc.propTypes = {
-	    radius: _react.PropTypes.number,
-	    tessellation: _react.PropTypes.number,
-	    sideOrientation: _react.PropTypes.number
-	};
-	exports.default = Disc;
-
-/***/ },
-/* 369 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Ground = function (_React$Component) {
-	    (0, _inherits3.default)(Ground, _React$Component);
-
-	    function Ground() {
-	        (0, _classCallCheck3.default)(this, Ground);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Ground).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Ground, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var _props$height = _props.height;
-	            var height = _props$height === undefined ? 6 : _props$height;
-	            var _props$width = _props.width;
-	            var width = _props$width === undefined ? 6 : _props$width;
-	            var _props$subdivisions = _props.subdivisions;
-	            var subdivisions = _props$subdivisions === undefined ? 2 : _props$subdivisions;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "ground",
-	                    width: width,
-	                    height: height,
-	                    subdivisions: subdivisions
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Ground;
-	}(_react2.default.Component);
-
-	Ground.propTypes = {
-	    height: _react.PropTypes.number,
-	    width: _react.PropTypes.number
-	};
-	exports.default = Ground;
-
-/***/ },
-/* 370 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Ground = function (_React$Component) {
-	    (0, _inherits3.default)(Ground, _React$Component);
-
-	    function Ground() {
-	        (0, _classCallCheck3.default)(this, Ground);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Ground).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Ground, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var meshHeight = _props.meshHeight;
-	            var meshWidth = _props.meshWidth;
-	            var heightMap = _props.heightMap;
-	            var subdivisions = _props.subdivisions;
-	            var minHeight = _props.minHeight;
-	            var maxHeight = _props.maxHeight;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "groundFromHeightMap",
-	                    meshHeight: meshHeight,
-	                    meshWidth: meshWidth,
-	                    subdivisions: subdivisions,
-	                    minHeight: minHeight,
-	                    maxHeight: maxHeight,
-	                    heightMap: heightMap
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Ground;
-	}(_react2.default.Component);
-
-	Ground.propTypes = {
-	    meshHeight: _react.PropTypes.number,
-	    meshWidth: _react.PropTypes.number,
-	    heightMap: _react.PropTypes.string,
-	    subdivisions: _react.PropTypes.number,
-	    minHeight: _react.PropTypes.number,
-	    maxHeight: _react.PropTypes.number
-	};
-	exports.default = Ground;
-
-/***/ },
-/* 371 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Cylinder = function (_React$Component) {
-	    (0, _inherits3.default)(Cylinder, _React$Component);
-
-	    function Cylinder() {
-	        (0, _classCallCheck3.default)(this, Cylinder);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Cylinder).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Cylinder, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var height = _props.height;
-	            var diameterTop = _props.diameterTop;
-	            var diameterBottom = _props.diameterBottom;
-	            var tessellation = _props.tessellation;
-	            var subdivisions = _props.subdivisions;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "cylinder",
-	                    heigh: height,
-	                    diameterTop: diameterTop,
-	                    diameterBottom: diameterBottom,
-	                    tessellation: tessellation,
-	                    subdivisions: subdivisions
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Cylinder;
-	}(_react2.default.Component);
-
-	Cylinder.contextTypes = {
-	    appState: _react.PropTypes.object,
-	    actions: _react.PropTypes.object
-	};
-	Cylinder.propTypes = {
-	    height: _react.PropTypes.number,
-	    diameterTop: _react.PropTypes.number,
-	    diameterBottom: _react.PropTypes.number,
-	    tessellation: _react.PropTypes.number,
-	    subdivisions: _react.PropTypes.any
-	};
-	exports.default = Cylinder;
-
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Torus = function (_React$Component) {
-	    (0, _inherits3.default)(Torus, _React$Component);
-
-	    function Torus() {
-	        (0, _classCallCheck3.default)(this, Torus);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Torus).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Torus, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var diameter = _props.diameter;
-	            var thickness = _props.thickness;
-	            var tessellation = _props.tessellation;
-	            var updatable = _props.updatable;
-	            var sideOrientation = _props.sideOrientation;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "torus",
-	                    diameter: diameter,
-	                    thickness: thickness,
-	                    tessellation: tessellation,
-	                    updatable: updatable,
-	                    sideOrientation: sideOrientation
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Torus;
-	}(_react2.default.Component);
-
-	Torus.contextTypes = {
-	    appState: _react.PropTypes.object,
-	    actions: _react.PropTypes.object
-	};
-	Torus.propTypes = {
-	    diameter: _react.PropTypes.number,
-	    thickness: _react.PropTypes.number,
-	    tessellation: _react.PropTypes.number,
-	    updatable: _react.PropTypes.bool,
-	    sideOrientation: _react.PropTypes.number
-	};
-	exports.default = Torus;
-
-/***/ },
-/* 373 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Lines = function (_React$Component) {
-	    (0, _inherits3.default)(Lines, _React$Component);
-
-	    function Lines() {
-	        (0, _classCallCheck3.default)(this, Lines);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Lines).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(Lines, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var _props$vectors = _props.vectors;
-	            var vectors = _props$vectors === undefined ? [] : _props$vectors;
-	            var children = _props.children;
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "lines",
-	                    vectors: vectors
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return Lines;
-	}(_react2.default.Component);
-
-	Lines.propTypes = {
-	    vectors: _react.PropTypes.arrayOf(_react.PropTypes.array)
-	};
-	exports.default = Lines;
-
-/***/ },
-/* 374 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(46);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(50);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(51);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(55);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(90);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(98);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Entity = __webpack_require__(114);
-
-	var _Entity2 = _interopRequireDefault(_Entity);
-
-	var _EntityLoaded = __webpack_require__(116);
-
-	var _EntityLoaded2 = _interopRequireDefault(_EntityLoaded);
-
-	var _systems = __webpack_require__(101);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var DashedLines = function (_React$Component) {
-	    (0, _inherits3.default)(DashedLines, _React$Component);
-
-	    function DashedLines() {
-	        (0, _classCallCheck3.default)(this, DashedLines);
-	        return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(DashedLines).apply(this, arguments));
-	    }
-
-	    (0, _createClass3.default)(DashedLines, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var _props$vectors = _props.vectors;
-	            var vectors = _props$vectors === undefined ? [] : _props$vectors;
-	            var _props$dashSize = _props.dashSize;
-	            var dashSize = _props$dashSize === undefined ? null : _props$dashSize;
-	            var _props$gapSize = _props.gapSize;
-	            var gapSize = _props$gapSize === undefined ? null : _props$gapSize;
-	            var _props$dashNumber = _props.dashNumber;
-	            var dashNumber = _props$dashNumber === undefined ? null : _props$dashNumber;
-	            var children = _props.children;
-
-
-	            return _react2.default.createElement(
-	                _Entity2.default,
-	                null,
-	                _react2.default.createElement(_systems.RenderShape, {
-	                    type: "dashedLines",
-	                    vectors: vectors,
-	                    dashSize: dashSize,
-	                    gapSize: gapSize,
-	                    dashNumber: dashNumber
-	                }),
-	                _react2.default.createElement(
-	                    _EntityLoaded2.default,
-	                    null,
-	                    children
-	                )
-	            );
-	        }
-	    }]);
-	    return DashedLines;
-	}(_react2.default.Component);
-
-	DashedLines.propTypes = {
-	    vectors: _react.PropTypes.arrayOf(_react.PropTypes.array),
-	    dashSize: _react.PropTypes.number,
-	    gapSize: _react.PropTypes.number,
-	    dashNumber: _react.PropTypes.number
-	};
-	exports.default = DashedLines;
+	exports.default = ShapeFactory;
 
 /***/ }
 /******/ ])

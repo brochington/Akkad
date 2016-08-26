@@ -99,16 +99,24 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 ## `<Box />`
 
 ### Props:
+- `size<Number>`
 - `height<Number>`: Height of box
 - `width<Number>`: Width of box
+- `depth<Number>`
+- `sideOrientation<Number>`
 
 ## `<Sphere />`
 
 ### Props:
 - `segments<Number>`
+- `diameter<Number>`
 - `diameterX<Number>`
 - `diameterY<Number>`
 - `diameterZ<Number>`
+- `arc<Number>`
+- `slice<Number>`
+- `sideOrientation<Number>`
+- `updatable<Boolean>`
 
 ## `<Cylinder />`
 
@@ -148,12 +156,12 @@ Every Akkad scene will require a camera See the [Babylon Camera tutorial](http:/
 ## `<Lines />`
 
 ### Props:
-- `vectors<Array>`: An array of vector (x, y, z) arrays
+- `points<Array>`: An array of vector (x, y, z) arrays
 
 ## `<DashedLines />`
 
 ### Props:
-- `vectors<Array>`: An array of vector (x, y, z) arrays
+- `points<Array>`: An array of vector (x, y, z) arrays
 - `dashSize<Number>`: size of dash, relative to gapSize
 - `gapSize<Number>`: size of gaps between dashes
 - `dashNumber<Number>`: Number of gaps per line

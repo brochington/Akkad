@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Akkad, Scene, shapes, cameras, lights, systems} from "akkad";
+import {Vector3} from 'babylonjs';
 
 const {FreeCamera} = cameras;
 const {HemisphericLight} = lights;
@@ -73,10 +74,18 @@ class ShapesPage extends Component {
                             />
                         </Torus>
                         <Lines
-                            vectors={[[2, 3, 4], [3, 4, 7], [5, 3, 6]]}
+                            points={[
+                                new Vector3(2, 3, 4),
+                                new Vector3(3, 4, 7),
+                                new Vector3(5, 3, 6)
+                            ]}
                         />
                         <DashedLines
-                            vectors={[[4, 2, 8], [7, 4, 4], [9, 1, 6]]}
+                            points={[
+                                new Vector3(4, 2, 8),
+                                new Vector3(7, 4, 4),
+                                new Vector3(9, 1, 6)
+                            ]}
                             dashSize={600}
                             gapSize={1000}
                         />

@@ -25,8 +25,8 @@ class HeightMapScene extends Component {
                 />
                 <HemisphericLight />
                 <GroundFromHeightMap
-                    meshHeight={200}
-                    meshWidth={200}
+                    height={200}
+                    width={200}
                     subdivisions={300}
                     heightMap={worldHeightMap}
                     minHeight={0}

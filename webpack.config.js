@@ -1,3 +1,4 @@
+/* eslint-disable */
 var path = require('path');
 var webpack = require("webpack");
 
@@ -11,9 +12,6 @@ module.exports = {
         publicPath: '/build/',
         library: "akkad",
         libraryTarget: "umd"
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
     },
     externals: {
         "babylonjs": "babylonjs",
