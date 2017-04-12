@@ -5,6 +5,14 @@ Akkad
 
 `npm install --save akkad`
 
+***
+
+## Akkad is no longer being supported.
+
+If you would like to use React like syntax for libraries such as (but not limited to) Babylon, please check out my other project [Declarity](https://github.com/brochington/declarity).
+
+***
+
 #### Docs:
 
 [Getting Started](https://github.com/brochington/Akkad/blob/master/docs/getting_started.md)
